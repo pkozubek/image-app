@@ -1,0 +1,24 @@
+.hamburger-icon {
+  width: 3rem;
+  height: 3rem;
+  background: transparent;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-right: 2rem;
+  cursor: pointer;
+}
+
+.hamburger-icon__bar {
+  display: block;
+  width: 3rem;
+  height: 2.5px;
+  background: white;
+}
+
+@media (min-width: 768px) {
+  .hamburger-icon {
+    display: none;
+  }
+}

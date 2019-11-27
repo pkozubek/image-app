@@ -1,0 +1,13 @@
+.header {
+  width: 100%;
+  background: black;
+  margin: 0;
+
+  &__link {
+    text-decoration: none;
+  }
+
+  &__site-name {
+    color: white;
+  }
+}
