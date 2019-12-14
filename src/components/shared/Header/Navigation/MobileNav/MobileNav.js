@@ -2,10 +2,9 @@ import React from "react";
 import ReactDom from "react-dom";
 import { CSSTransition } from "react-transition-group";
 
-import NavItems from "../NavItems/NavItems";
 import "./MobileNav.scss";
 
-const MobileNav = ({ isVisible }) => {
+const MobileNav = ({ isVisible, children }) => {
   const mobileMenu = (
     <CSSTransition
       in={isVisible}
@@ -14,9 +13,7 @@ const MobileNav = ({ isVisible }) => {
       mountOnEnter
       unmountOnExit
     >
-      <aside className="mobile-menu">
-        <NavItems />
-      </aside>
+      <aside className="mobile-menu">{children}</aside>
     </CSSTransition>
   );
   return ReactDom.createPortal(

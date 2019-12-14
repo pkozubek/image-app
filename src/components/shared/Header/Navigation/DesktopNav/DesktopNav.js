@@ -1,14 +1,9 @@
 import React from "react";
 
-import NavItems from "../NavItems/NavItems";
 import "./DesktopNav.scss";
 
-const DesktopNav = () => {
-  return (
-    <nav className="desktop-navigation">
-      <NavItems />
-    </nav>
-  );
+const DesktopNav = ({ children }) => {
+  return <nav className="desktop-navigation">{children}</nav>;
 };
 
 export default DesktopNav;

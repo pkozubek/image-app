@@ -1,24 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 
 import DesktopNav from "./DesktopNav/DesktopNav";
 import MobileNav from "./MobileNav/MobileNav";
-import Hamburger from "./Hamburger/Hamburger";
 import Backdrop from "../../Backdrop/Backdrop";
+import NavItems from "./NavItems/NavItems";
 
-const Navigation = () => {
-  const [mobileMenuVisible, mobileMenuClickHandler] = useState(false);
-
+const Navigation = ({ isMobileMenuVisible, hideMenu }) => {
   return (
     <>
-      <DesktopNav />
-      <Hamburger
-        clickHandler={() => mobileMenuClickHandler(!mobileMenuVisible)}
-      />
-      <MobileNav isVisible={mobileMenuVisible} />
-      {mobileMenuVisible ? (
-        <Backdrop
-          clickHandler={() => mobileMenuClickHandler(!mobileMenuVisible)}
-        />
+      <DesktopNav>
+        <NavItems />
+      </DesktopNav>
+      <MobileNav isVisible={isMobileMenuVisible}>
+        <NavItems />
+      </MobileNav>
+      {isMobileMenuVisible ? (
+        <Backdrop clickHandler={() => hideMenu(!isMobileMenuVisible)} />
       ) : null}
     </>
   );
