@@ -9,6 +9,7 @@
   min-width: 17.5rem;
 
   &__container {
+    color: black;
     border-radius: 8px;
     text-decoration: none;
     display: flex;
@@ -48,7 +49,16 @@
     flex-basis: calc(100% - 5.5rem);
   }
 
+  &__container:visited {
+    color: black;
+  }
+
+  &__container:hover {
+    color: white;
+  }
+
   &:hover {
     background: lightgreen;
+    color: white;
   }
 }
