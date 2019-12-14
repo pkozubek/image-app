@@ -9,5 +9,14 @@
 
   &__site-name {
     color: white;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .header__site-name {
+    width: 100%;
+    text-align: center;
   }
 }

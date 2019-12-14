@@ -7,10 +7,10 @@ import "./Header.scss";
 const Header = () => {
   return (
     <header className="header">
-      <Navigation />
       <Link className="header__link" to="/">
         <h1 className="header__site-name">Image-app</h1>
       </Link>
+      <Navigation />
     </header>
   );
 };

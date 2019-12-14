@@ -2,7 +2,7 @@ import React from "react";
 import ReactDom from "react-dom";
 import { CSSTransition } from "react-transition-group";
 
-import NavItem from "../NavItem/NavItem";
+import NavItems from "../NavItems/NavItems";
 import "./MobileNav.scss";
 
 const MobileNav = ({ isVisible }) => {
@@ -15,8 +15,7 @@ const MobileNav = ({ isVisible }) => {
       unmountOnExit
     >
       <aside className="mobile-menu">
-        <NavItem link={"/users"}>Users</NavItem>
-        <NavItem link={"/images"}>Images</NavItem>
+        <NavItems />
       </aside>
     </CSSTransition>
   );

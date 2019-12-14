@@ -1,0 +1,21 @@
+.menu-item {
+  &__link {
+    width: 100%;
+    color: black;
+    text-decoration: none;
+  }
+  &:hover {
+    color: lightgreen;
+  }
+}
+
+@media (min-width: 768px) {
+  .menu-item__link {
+    color: white;
+    width: auto;
+
+    &:not(:first-child) {
+      padding: 0px 0 5px 20px;
+    }
+  }
+}

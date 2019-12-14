@@ -1,17 +1,12 @@
 import React from "react";
-import NavItem from "../NavItem/NavItem";
+
+import NavItems from "../NavItems/NavItems";
+import "./DesktopNav.scss";
 
 const DesktopNav = () => {
   return (
     <nav className="desktop-navigation">
-      <ul>
-        <NavItem link="/users" exact>
-          Users
-        </NavItem>
-        <NavItem link="/images" exact>
-          Images
-        </NavItem>
-      </ul>
+      <NavItems />
     </nav>
   );
 };

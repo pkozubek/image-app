@@ -8,8 +8,11 @@ html {
   font-family: "Open Sans", sans-serif;
 }
 
+html,
 body {
-  margin: 0;
+  margin: 0px;
+  padding: 0px;
+  background: rgb(53, 53, 53);
 }
 
 .slide-in-left-enter {
