@@ -1,0 +1,10 @@
+.user-images {
+  width: 50%;
+  margin: 5px auto;
+
+  & img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+}

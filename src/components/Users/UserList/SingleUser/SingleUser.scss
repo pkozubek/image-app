@@ -1,24 +1,21 @@
 .single-user {
-  margin: 0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  border-radius: 6px;
-  padding: 1rem;
-  overflow: hidden;
-  background: white;
-  width: calc(30% - 2rem);
+  margin: 1rem;
+  width: calc(45% - 2rem);
   min-width: 17.5rem;
 
   &__container {
-    color: black;
-    border-radius: 8px;
-    text-decoration: none;
     display: flex;
-    flex-wrap: wrap;
-    overflow: hidden;
+    align-items: center;
     width: 100%;
     height: 100%;
+    text-decoration: none;
     padding: 1rem;
-    align-items: center;
+    color: gray;
+    background: white;
+  }
+
+  &__content {
+    padding: 0;
   }
 
   &__details {
@@ -35,13 +32,6 @@
     padding-left: 10px;
   }
 
-  &__avatar {
-    width: 4rem;
-    height: 4rem;
-    margin: 0 1rem 0 0.5rem;
-    border-radius: 50%;
-  }
-
   &__name {
     font-size: 1.5rem;
     margin: 0 0 0.5rem 0;
@@ -54,11 +44,6 @@
   }
 
   &__container:hover {
-    color: white;
-  }
-
-  &:hover {
-    background: lightgreen;
-    color: white;
+    color: lightgreen;
   }
 }

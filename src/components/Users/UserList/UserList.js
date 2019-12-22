@@ -1,6 +1,7 @@
 import React from "react";
 
 import SingleUser from "./SingleUser/SingleUser";
+import "./UserList.scss";
 
 const UserList = ({ users }) => {
   let renderedUserList = (
@@ -11,7 +12,7 @@ const UserList = ({ users }) => {
 
   if (users && users.length > 0) {
     renderedUserList = (
-      <ul>
+      <ul className="users_list">
         {users.map(({ id, name, avatar, views, imagesCount }) => {
           return (
             <SingleUser

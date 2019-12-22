@@ -6,10 +6,12 @@ import {
   Switch
 } from "react-router-dom";
 
+import Header from "./components/shared/Header/Header";
+
 import Users from "./pages/Users";
 import Images from "./pages/Images";
 import Welcome from "./pages/Welcome.js";
-import Header from "./components/shared/Header/Header";
+import UserScreen from "./pages/UserScreen/UserScreen";
 
 function App() {
   return (
@@ -25,6 +27,9 @@ function App() {
           </Route>
           <Route path="/users" exact>
             <Users />
+          </Route>
+          <Route path="/users/:id" exact>
+            <UserScreen />
           </Route>
           <Redirect to="/" />
         </Switch>

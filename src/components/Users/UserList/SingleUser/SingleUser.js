@@ -2,23 +2,26 @@ import React from "react";
 import "./SingleUser.scss";
 import { Link } from "react-router-dom";
 
+import Card from "../../../shared/InterfaceElements/Card/Card";
+import AvatarImage from "../../../shared/InterfaceElements/AvatarImage/AvatarImage";
+
 const SingleUser = ({ id, userName, avatar, numberOfViews, imagesCount }) => {
   return (
     <li className="single-user">
-      <Link to={`images/${id}`} className="single-user__container">
-        <img
-          alt={`${userName}img`}
-          className="single-user__avatar"
-          src={avatar}
-        ></img>
-        <div className="single-user__info">
-          <h2 className="single-user__name">{userName}</h2>
-          <div className="single-user__details">
-            <p className="single-user__details-item">Images: {imagesCount}</p>
-            <p className="single-user__details-item">Views: {numberOfViews}</p>
+      <Card className="single-user__content">
+        <Link to={`users/${id}`} className="single-user__container">
+          <AvatarImage src={avatar} alt={`${userName}img`} />
+          <div className="single-user__info">
+            <h2 className="single-user__name">{userName}</h2>
+            <div className="single-user__details">
+              <p className="single-user__details-item">Images: {imagesCount}</p>
+              <p className="single-user__details-item">
+                Views: {numberOfViews}
+              </p>
+            </div>
           </div>
-        </div>
-      </Link>
+        </Link>
+      </Card>
     </li>
   );
 };
