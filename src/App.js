@@ -12,7 +12,7 @@ import Users from "./pages/Users";
 import Images from "./pages/Images";
 import Welcome from "./pages/Welcome.js";
 import UserScreen from "./pages/UserScreen/UserScreen";
-
+import AddImage from "./pages/AddImage/AddImage";
 function App() {
   return (
     <Router>
@@ -30,6 +30,9 @@ function App() {
           </Route>
           <Route path="/users/:id" exact>
             <UserScreen />
+          </Route>
+          <Route path="/add_image" exact>
+            <AddImage />
           </Route>
           <Redirect to="/" />
         </Switch>

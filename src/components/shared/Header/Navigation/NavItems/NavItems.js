@@ -7,6 +7,7 @@ const NavItemContainer = () => {
     <ul className="menu-items">
       <NavItem link={"/users"}>Users</NavItem>
       <NavItem link={"/images"}>Images</NavItem>
+      <NavItem link={"/add_image"}>Add Image</NavItem>
     </ul>
   );
 };

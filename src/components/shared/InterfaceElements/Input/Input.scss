@@ -1,0 +1,14 @@
+.form-input {
+  &__input {
+    border: 1px solid green;
+  }
+
+  &__input--error {
+    border: 1px solid red;
+    background: rgb(255, 133, 133);
+  }
+
+  &__label {
+    display: block;
+  }
+}
