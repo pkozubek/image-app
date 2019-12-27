@@ -1,0 +1,13 @@
+.modal-content {
+  &__image {
+    max-width: 75vh;
+  }
+
+  &__image-name {
+    padding-left: 15px;
+  }
+
+  &__buttons-container {
+    padding: 0 15px 10px 15px;
+  }
+}

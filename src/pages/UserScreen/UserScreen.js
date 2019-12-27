@@ -20,7 +20,6 @@ const UserScreen = () => {
           src="https://image.winudf.com/v2/image/Y29tLmVib2wuY3V0ZWdpcmxfc2NyZWVuXzJfMTUyMzc3MDEzMF8wNDI/screen-2.jpg?fakeurl=1&type=.jpg"
           title="test"
         />
-        <h3></h3>
       </Modal>
       <UserInfo
         nickname="test"
