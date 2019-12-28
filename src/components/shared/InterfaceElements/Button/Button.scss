@@ -1,6 +1,8 @@
 .button {
   cursor: pointer;
+  margin: 10px 5px 10px 0;
   text-decoration: none;
+  min-height: 25px;
 
   &--red {
     color: red;
@@ -8,6 +10,19 @@
 
   &--green {
     color: green;
+  }
+
+  &--confirm {
+    border: none;
+    background: lightgreen;
+    color: white;
+  }
+
+  &--disabled {
+    border: 1px solid gray;
+    background: white;
+    color: gray;
+    cursor: not-allowed;
   }
 
   &--transparent {
