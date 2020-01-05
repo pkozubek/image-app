@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useForm } from "../../hooks/form-hook";
 import Card from "../../components/shared/InterfaceElements/Card/Card";
 import Input from "../../components/shared/InterfaceElements/Input/Input";
@@ -8,6 +8,7 @@ import {
   VALIDATOR_EMAIL
 } from "../../components/utils/validators";
 import Button from "../../components/shared/InterfaceElements/Button/Button";
+import { AuthContext } from "../../context/auth-context";
 
 export const Authenticate = () => {
   const [formState, inputHandler, setForm] = useForm({
@@ -27,6 +28,7 @@ export const Authenticate = () => {
   });
 
   const [isLoginMode, changeLoginMode] = useState(true);
+  const auth = useContext(AuthContext);
 
   const handleLogChange = () => {
     if (!isLoginMode) {
@@ -106,7 +108,14 @@ export const Authenticate = () => {
     <Card>
       <form>
         {formInputs}
-        <Button isDisabled={!formState.isValid} type="confirm">
+        <Button
+          isDisabled={!formState.isValid}
+          type="confirm"
+          action={event => {
+            event.preventDefault();
+            auth.login();
+          }}
+        >
           {isLoginMode ? "Log in" : "Create Account"}
         </Button>
         <p onClick={handleLogChange}>
