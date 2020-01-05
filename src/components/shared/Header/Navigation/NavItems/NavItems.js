@@ -8,6 +8,7 @@ const NavItemContainer = () => {
       <NavItem link={"/users"}>Users</NavItem>
       <NavItem link={"/images"}>Images</NavItem>
       <NavItem link={"/add_image"}>Add Image</NavItem>
+      <NavItem link={"/authenticate"}>Authenticate</NavItem>
     </ul>
   );
 };

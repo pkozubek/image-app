@@ -7,22 +7,22 @@ import {
   VALIDATOR_MINLENGTH
 } from "../../components/utils/validators";
 import Button from "../../components/shared/InterfaceElements/Button/Button";
-import "./AddImage.scss";
 
-const AddImage = () => {
-  const [formState, inputHandler] = useForm(
+const EditImage = () => {
+  const [formState, inputHandler, setForm] = useForm(
     {
       title: {
-        value: "",
-        isValid: false
+        value: "testowa_nazwa",
+        isValid: true
       },
       description: {
-        value: "",
-        isValid: false
+        value: "test_desc",
+        isValid: true
       }
     },
-    false
+    true
   );
+
   const submitForm = event => {
     event.prevetDefault();
   };
@@ -35,12 +35,16 @@ const AddImage = () => {
           onInput={inputHandler}
           label="Image name:"
           validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(5)]}
+          value={formState.inputs.title.value}
+          valid={formState.inputs.title.isValid}
         />
         <Input
           id="description"
           onInput={inputHandler}
           label="Description :"
           validators={[VALIDATOR_REQUIRE()]}
+          value={formState.inputs.description.value}
+          valid={formState.inputs.description.isValid}
         />
         <Button isDisabled={!formState.isValid} type="confirm">
           Submit
@@ -50,4 +54,4 @@ const AddImage = () => {
   );
 };
 
-export default AddImage;
+export default EditImage;
