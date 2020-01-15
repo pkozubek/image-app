@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const imagesRoutes = require("./routes/images");
-const usersRoutes = require("./routes/user");
+const usersRoutes = require("./routes/users");
 const HttpError = require("./models/httpError");
 const app = express();
 
@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 app.use("/api/images", imagesRoutes);
 app.use("/api/users/", usersRoutes);
 app.use((req, res, next) => {
-  throw HttpError("this route does not exist", 404);
+  throw new HttpError("this route does not exist", 404);
 });
 
 app.use((error, req, res, next) => {

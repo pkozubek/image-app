@@ -1,9 +1,35 @@
 const HttpError = require("../models/httpError");
-const uuuid = require("uuid/v4");
-const DUMMY_DATA = [
-  { id: 1, name: "test", url: "test.pl", views: 1, likes: 10, userID: 1 },
-  { id: 2, name: "test2", url: "test2.pl", views: 1, likes: 10, userID: 1 },
-  { id: 3, name: "test3", url: "test3.pl", views: 1, likes: 10, userID: 2 }
+const uuid = require("uuid/v4");
+const { validationResult } = require("express-validator");
+
+let DUMMY_DATA = [
+  {
+    id: 1,
+    name: "test",
+    url: "test.pl",
+    description: "trala",
+    views: 1,
+    likes: 10,
+    userID: 1
+  },
+  {
+    id: 2,
+    name: "test2",
+    url: "test2.pl",
+    description: "trala",
+    views: 1,
+    likes: 10,
+    userID: 1
+  },
+  {
+    id: 3,
+    name: "test3",
+    url: "test3.pl",
+    description: "trala",
+    views: 1,
+    likes: 10,
+    userID: 2
+  }
 ];
 
 const getImageById = (req, res, next) => {
@@ -23,7 +49,6 @@ const getImageById = (req, res, next) => {
 const getUserImages = (req, res, next) => {
   const userID = req.params.id;
   const findImages = DUMMY_DATA.filter(image => {
-    console.log(Number(image.userID), "-", Number(userID));
     return Number(image.userID) === Number(userID);
   });
   if (findImages.length === 0) {
@@ -35,19 +60,47 @@ const getUserImages = (req, res, next) => {
 };
 
 const createImage = (req, res) => {
-  const { title, description, author } = req.body;
-  /*todo
-    insert to database
-  */
+  const { title, url, description, author } = req.body;
+  const errors = validationResult(req);
+  if (errors.isEmpty()) {
+    DUMMY_DATA.push({
+      id: uuid(),
+      name: title,
+      description: "test",
+      url: url,
+      views: 0,
+      likes: 0,
+      userID: author
+    });
+  } else {
+    throw new HttpError("bledne dane", 400);
+  }
+
+  res.status(200).json(DUMMY_DATA);
 };
 
 const updateImage = (req, res) => {
-  const imageID = req.params.id;
-  const { title, description, author } = req.body;
+  const id = req.params.id;
+  const { title, description } = req.body;
+  const errors = validationResult(req);
+  if (errors.isEmpty()) {
+    const updateImageData = { ...DUMMY_DATA.find(row => row.id == id) };
+    const imageIndex = DUMMY_DATA.findIndex(row => row.id == id);
+    updateImageData.name = title;
+    updateImageData.description = description;
+    DUMMY_DATA[imageIndex] = updateImageData;
+  } else {
+    throw new HttpError("bledne dane", 400);
+  }
+
+  res.status(200).json(DUMMY_DATA);
 };
 
 const deleteImage = (req, res) => {
-  const imageID = req.params.id;
+  const id = req.params.id;
+  DUMMY_DATA = DUMMY_DATA.filter(row => row.id != id);
+
+  res.status(200).json(DUMMY_DATA);
 };
 
 module.exports = {
