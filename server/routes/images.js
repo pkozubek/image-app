@@ -12,7 +12,7 @@ router.post(
     check("name")
       .not()
       .isEmpty(),
-    check("userid")
+    check("author")
       .not()
       .isEmpty()
   ],
@@ -23,9 +23,6 @@ router.patch(
   "/:id",
   [
     check("name")
-      .not()
-      .isEmpty(),
-    check("userid")
       .not()
       .isEmpty()
   ],

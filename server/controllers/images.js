@@ -1,106 +1,116 @@
 const HttpError = require("../models/httpError");
 const uuid = require("uuid/v4");
 const { validationResult } = require("express-validator");
+const Image = require("../models/image");
 
-let DUMMY_DATA = [
-  {
-    id: 1,
-    name: "test",
-    url: "test.pl",
-    description: "trala",
-    views: 1,
-    likes: 10,
-    userID: 1
-  },
-  {
-    id: 2,
-    name: "test2",
-    url: "test2.pl",
-    description: "trala",
-    views: 1,
-    likes: 10,
-    userID: 1
-  },
-  {
-    id: 3,
-    name: "test3",
-    url: "test3.pl",
-    description: "trala",
-    views: 1,
-    likes: 10,
-    userID: 2
-  }
-];
-
-const getImageById = (req, res, next) => {
+const getImageById = async (req, res, next) => {
   const imageID = req.params.id;
-  const findImage = DUMMY_DATA.find(image => {
-    return Number(image.id) === Number(imageID);
-  });
+  let gatheredImage;
 
-  if (!findImage) {
+  try {
+    gatheredImage = await Image.findById(imageID);
+    console.log("gat", gatheredImage, imageID);
+  } catch (error) {
+    return next(error);
+  }
+
+  if (!gatheredImage) {
     const error = new HttpError(`No images with ${imageID} id`, 404);
     return next(error);
   }
 
-  res.json({ image: findImage });
+  res.json({ image: gatheredImage.toObject({ getters: true }) });
 };
 
-const getUserImages = (req, res, next) => {
+const getUserImages = async (req, res, next) => {
   const userID = req.params.id;
-  const findImages = DUMMY_DATA.filter(image => {
-    return Number(image.userID) === Number(userID);
-  });
-  if (findImages.length === 0) {
+  let gatheredImage;
+
+  try {
+    gatheredImage = await Image.find({ userID: userID });
+  } catch (error) {
+    return next(error);
+  }
+
+  if (gatheredImage.length === 0) {
     const error = new HttpError(" No images for user", 404);
     return next(error);
   }
 
-  res.status(200).json({ images: findImages });
+  res.status(200).json({
+    images: gatheredImage.map(singleImage =>
+      singleImage.toObject({ getters: true })
+    )
+  });
 };
 
-const createImage = (req, res) => {
-  const { title, url, description, author } = req.body;
+const createImage = async (req, res, next) => {
+  const { name, url, description, author } = req.body;
   const errors = validationResult(req);
-  if (errors.isEmpty()) {
-    DUMMY_DATA.push({
-      id: uuid(),
-      name: title,
-      description: "test",
-      url: url,
-      views: 0,
-      likes: 0,
-      userID: author
-    });
-  } else {
-    throw new HttpError("bledne dane", 400);
+  if (!errors.isEmpty()) throw new HttpError("bledne dane", 400);
+  const createdImage = new Image({
+    id: uuid(),
+    name,
+    description,
+    url,
+    views: 1,
+    likes: 1,
+    userID: author
+  });
+
+  try {
+    await createdImage.save();
+  } catch (err) {
+    return next(err);
   }
 
-  res.status(200).json(DUMMY_DATA);
+  res.status(200).json(createdImage);
 };
 
-const updateImage = (req, res) => {
+const updateImage = async (req, res, next) => {
   const id = req.params.id;
-  const { title, description } = req.body;
+  const { name, description } = req.body;
+
   const errors = validationResult(req);
+  let updatedImage;
   if (errors.isEmpty()) {
-    const updateImageData = { ...DUMMY_DATA.find(row => row.id == id) };
-    const imageIndex = DUMMY_DATA.findIndex(row => row.id == id);
-    updateImageData.name = title;
-    updateImageData.description = description;
-    DUMMY_DATA[imageIndex] = updateImageData;
+    try {
+      updatedImage = await Image.findById(id);
+
+      updatedImage.name = name;
+      updatedImage.description = description;
+
+      try {
+        await updatedImage.save();
+      } catch (error) {
+        return next(error);
+      }
+    } catch (error) {
+      return next(error);
+    }
   } else {
-    throw new HttpError("bledne dane", 400);
+    return next(new HttpError("Wrong data, change and try again", 400));
   }
 
-  res.status(200).json(DUMMY_DATA);
+  res.status(200).json(updatedImage.toObject({ getters: true }));
 };
 
-const deleteImage = (req, res) => {
+const deleteImage = async (req, res, next) => {
   const id = req.params.id;
-  DUMMY_DATA = DUMMY_DATA.filter(row => row.id != id);
+  let deletedImage;
+  try {
+    deletedImage = await Image.findById(id);
+  } catch (error) {
+    return next(error);
+  }
 
-  res.status(200).json(DUMMY_DATA);
+  try {
+    await deletedImage.remove();
+  } catch (error) {
+    return next(error);
+  }
+
+  res.status(200).json("Image deleted");
 };
 
 module.exports = {
