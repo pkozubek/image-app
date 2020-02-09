@@ -1,87 +1,112 @@
 const HttpError = require("../models/httpError");
 const { validationResult } = require("express-validator");
-const uuid = require("uuid/v4");
+const User = require("../models/user");
 
-const DUMMY_DATA = [
-  {
-    id: 1,
-    name: "justyna",
-    email: "mail@pl",
-    password: "aaa"
-  }
-];
-
-const getUserData = (req, res, next) => {
+const getUserData = async (req, res, next) => {
   const userID = req.params.id;
-  const findUser = DUMMY_DATA.find(user => {
-    return Number(user.id) === Number(userID);
-  });
-
-  if (!findUser) {
-    throw new HttpError("Nie ma takiego uzytkownika", 404);
+  let existingUser;
+  try {
+    existingUser = await User.findOne({ _id: userID }, "-password");
+  } catch (error) {
+    return next(new HttpError("Something went wrong", 500));
   }
 
-  res.json({ user: findUser });
+  if (existingUser.length === 0) {
+    return next(new HttpError("User doesnt exist", 404));
+  }
+  console.log(existingUser);
+  res.json({
+    user: existingUser.toObject({ getters: true })
+  });
 };
 
-const loginUser = (req, res, next) => {
+const loginUser = async (req, res, next) => {
   const body = req.body;
   const { name, password } = body;
 
-  const findUser = DUMMY_DATA.find(user => {
-    return user.name == name && user.password == password;
-  });
-
-  if (!findUser) {
-    throw new HttpError("Taka kombinacja nie istnieje", 401);
+  let existingUser;
+  try {
+    existingUser = await User.findOne({ name, password });
+  } catch (error) {
+    return next(new HttpError("Something went wrong", 401));
   }
 
-  res.status(200).json({ message: "logged" });
+  if (!existingUser) {
+    return next(new HttpError("Wrong name, password combination", 401));
+  }
+
+  res.status(200).json({ message: "Login correct" });
 };
 
-const registerUser = (req, res, next) => {
+const registerUser = async (req, res, next) => {
   const body = req.body;
   const { name, email, password } = body;
   const errors = validationResult(req);
-
+  let newUser;
   if (errors.isEmpty()) {
-    DUMMY_DATA.push({
-      id: uuid(),
+    let registeredUser;
+    try {
+      registeredUser = await User.findOne({ email: email });
+    } catch (error) {
+      return next(new HttpError("Register incomplete", 400));
+    }
+    if (registeredUser) return next(new HttpError("User already exist", 400));
+
+    newUser = new User({
       name,
       email,
-      password
+      password,
+      images: []
     });
+
+    try {
+      console.log(newUser);
+      await newUser.save();
+    } catch (error) {
+      return next(new HttpError("Register incomplete", 400));
+    }
   } else {
-    throw new HttpError("Bledne dane rejestracji", 400);
+    return next(new HttpError("Wrong register data", 400));
   }
 
-  res.status(200).json({ message: DUMMY_DATA });
+  res.status(200).json({ user: newUser.toObject() });
 };
 
-const updateUser = (req, res) => {
+const updateUser = async (req, res, next) => {
   const { id } = req.params;
   const { name, password, email } = req.body;
   const errors = validationResult(req);
 
+  let updatedUser;
   if (errors.isEmpty()) {
-    const updatedUser = { ...DUMMY_DATA.find(row => row.id == id) };
-    const userArrayIndex = DUMMY_DATA.findIndex(row => row.id == id);
+    updatedUser = await User.findById(id);
+  } else {
+    return next(new HttpError("Wrong data", 400));
+  }
+
+  if (updateUser) {
     updatedUser.name = name;
     updatedUser.password = password;
     updatedUser.email = email;
-    DUMMY_DATA[userArrayIndex] = updatedUser;
   } else {
-    throw new HttpError("Bledne dane przy aktualizacji", 400);
+    return next(new HttpError("User does not exist", 400));
   }
 
-  res.status(200).json(DUMMY_DATA);
+  res.status(200).json(updateUser.toObject({ getters: true }));
 };
 
-const deleteUser = (req, res) => {
+const deleteUser = async (req, res, next) => {
   const { id } = req.params;
 
-  DUMMY_DATA = DUMMY_DATA.filter(row => row.id != id);
-  res.json(DUMMY_DATA);
+  let user;
+  try {
+    user = await User.findById(id);
+  } catch (error) {
+    return next(new HttpError("Something went wrong", 400));
+  }
+
+  await user.remove();
+  res.json("user deleted");
 };
 
 module.exports = {
