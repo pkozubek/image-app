@@ -14,7 +14,6 @@ const getUserData = async (req, res, next) => {
   if (existingUser.length === 0) {
     return next(new HttpError("User doesnt exist", 404));
   }
-  console.log(existingUser);
   res.json({
     user: existingUser.toObject({ getters: true })
   });
@@ -42,6 +41,7 @@ const registerUser = async (req, res, next) => {
   const body = req.body;
   const { name, email, password } = body;
   const errors = validationResult(req);
+  console.log(body);
   let newUser;
   if (errors.isEmpty()) {
     let registeredUser;
@@ -60,7 +60,6 @@ const registerUser = async (req, res, next) => {
     });
 
     try {
-      console.log(newUser);
       await newUser.save();
     } catch (error) {
       return next(new HttpError("Register incomplete", 400));

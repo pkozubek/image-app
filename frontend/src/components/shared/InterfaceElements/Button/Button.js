@@ -21,9 +21,7 @@ const Button = ({
   textColor,
   isDisabled
 }) => {
-  console.log(type);
   const classNames = returnClassNames(isDisabled, className, textColor, type);
-  console.log(classNames);
   return (
     <button
       disabled={isDisabled}

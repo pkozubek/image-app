@@ -30,6 +30,23 @@ export const Authenticate = () => {
   const [isLoginMode, changeLoginMode] = useState(true);
   const auth = useContext(AuthContext);
 
+  const onSendForm = async event => {
+    event.preventDefault();
+
+    await fetch("http://localhost:4000/api/users/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+        name: formState.inputs.nickname.value,
+        password: formState.inputs.password.value,
+        email: formState.inputs.email.value
+      })
+    });
+  };
+
   const handleLogChange = () => {
     if (!isLoginMode) {
       setForm(
@@ -55,7 +72,6 @@ export const Authenticate = () => {
     changeLoginMode(prevIsLogin => !prevIsLogin);
   };
 
-  console.log(isLoginMode, formState, "dziala");
   const formInputs = isLoginMode ? (
     <>
       <Input
@@ -113,6 +129,7 @@ export const Authenticate = () => {
           type="confirm"
           action={event => {
             event.preventDefault();
+            onSendForm(event);
             auth.login();
           }}
         >
