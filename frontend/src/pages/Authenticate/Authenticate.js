@@ -9,6 +9,8 @@ import {
 } from "../../components/utils/validators";
 import Button from "../../components/shared/InterfaceElements/Button/Button";
 import { AuthContext } from "../../context/auth-context";
+import axios from "axios";
+import "./Authenticate.scss";
 
 export const Authenticate = () => {
   const [formState, inputHandler, setForm] = useForm({
@@ -27,24 +29,41 @@ export const Authenticate = () => {
     isValid: false
   });
 
+  const [isLoading, setLoading] = useState(false);
   const [isLoginMode, changeLoginMode] = useState(true);
   const auth = useContext(AuthContext);
 
   const onSendForm = async event => {
     event.preventDefault();
 
-    await fetch("http://localhost:4000/api/users/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
+    let path = "http://localhost:4000/api/users/register";
+    let formData = {
+      name: formState.inputs.nickname.value,
+      password: formState.inputs.password.value,
+      email: formState.inputs.email.value
+    };
 
-      body: JSON.stringify({
+    if (isLoginMode) {
+      path = "http://localhost:4000/api/users/login";
+      formData = {
         name: formState.inputs.nickname.value,
-        password: formState.inputs.password.value,
-        email: formState.inputs.email.value
+        password: formState.inputs.password.value
+      };
+    }
+
+    setLoading(true);
+    const response = await axios
+      .post(path, formData)
+      .then(response => {
+        console.log(response);
+        if (response.status === 200) {
+          auth.login();
+        }
       })
-    });
+      .catch(err => {
+        setLoading(false);
+        console.log(err.response);
+      });
   };
 
   const handleLogChange = () => {
@@ -121,7 +140,7 @@ export const Authenticate = () => {
   );
 
   return (
-    <Card>
+    <Card className="authenticate">
       <form>
         {formInputs}
         <Button

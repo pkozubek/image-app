@@ -9,12 +9,13 @@ const formReducer = (state, action) => {
         if (!state.inputs[inputID]) {
           continue;
         }
-        if (inputID === action.inputId) {
+        if (inputID === action.inputID) {
           isFormValid = isFormValid && action.isValid;
         } else {
           isFormValid = isFormValid && state.inputs[inputID].isValid;
         }
       }
+
       return {
         ...state,
         inputs: {
@@ -54,7 +55,7 @@ export const useForm = (initialInputs, initialValidity) => {
       inputs: inputData,
       isValid: formValidity
     });
-  });
+  }, []);
 
   return [formState, inputHandler, setForm];
 };
