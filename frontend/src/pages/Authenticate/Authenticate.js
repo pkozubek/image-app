@@ -33,7 +33,7 @@ export const Authenticate = () => {
 
   const [error, setError] = useState(null);
   const [isLoginMode, changeLoginMode] = useState(true);
-  const { setLogged } = useContext(AuthContext);
+  const auth = useContext(AuthContext);
 
   const onSendForm = async event => {
     event.preventDefault();
@@ -57,7 +57,7 @@ export const Authenticate = () => {
       .post(path, formData)
       .then(response => {
         if (response.status === 200) {
-          setLogged(true);
+          auth.setLogged(true);
         }
       })
       .catch(({ response }) => {
@@ -147,10 +147,7 @@ export const Authenticate = () => {
           <Button
             isDisabled={!formState.isValid}
             type="confirm"
-            action={event => {
-              event.preventDefault();
-              onSendForm(event);
-            }}
+            action={onSendForm}
           >
             {isLoginMode ? "Log in" : "Create Account"}
           </Button>

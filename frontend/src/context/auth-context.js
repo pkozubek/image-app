@@ -23,14 +23,14 @@ export function AuthProvider({ children }) {
 
   const setLogged = willBeLogged => {
     dispatch({
-      action: "SET_LOGGED",
+      type: "SET_LOGGED",
       willBeLogged
     });
   };
 
   const setModalVisible = willBeModalVisible => {
     dispatch({
-      action: "SET_MODAL_VISIBLE",
+      type: "SET_MODAL_VISIBLE",
       willBeModalVisible
     });
   };
