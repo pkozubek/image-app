@@ -6,7 +6,7 @@ import "./Modal.scss";
 import Backdrop from "../Backdrop/Backdrop";
 import ModalContent from "./ModalContent/ModalContent";
 
-const Modal = ({ isVisible, setVisible, children }) => {
+const Modal = ({ isVisible, onclose, children }) => {
   return (
     <>
       {isVisible && <Backdrop />}
@@ -17,7 +17,7 @@ const Modal = ({ isVisible, setVisible, children }) => {
         timeout={200}
         classNames="modal"
       >
-        <ModalContent close={() => setVisible(false)}>{children}</ModalContent>
+        <ModalContent close={onclose}>{children}</ModalContent>
       </CSSTransition>
     </>
   );

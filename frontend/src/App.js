@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useContext } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -14,25 +14,22 @@ import UserScreen from "./pages/UserScreen/UserScreen";
 import AddImage from "./pages/AddImage/AddImage";
 import EditImage from "./pages/EditImage/EditImage";
 import Authenticate from "./pages/Authenticate/Authenticate";
-
 import { AuthContext } from "./context/auth-context";
 
 function App() {
-  const [isLoggedIn, setLoginIn] = useState(false);
+  const { isLogged } = useContext(AuthContext);
 
-  const login = useCallback(() => {
-    setLoginIn(true);
-  }, []);
+  let routes = (
+    <Switch>
+      <Route path="/" exact>
+        <Authenticate />
+      </Route>
+    </Switch>
+  );
 
-  const logout = useCallback(() => {
-    setLoginIn(false);
-  }, []);
-
-  return (
-    <AuthContext.Provider
-      value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}
-    >
-      <Router>
+  if (isLogged) {
+    routes = (
+      <>
         <Header />
         <main>
           <Switch>
@@ -54,15 +51,14 @@ function App() {
             <Route path="/edit_image/:id" exact>
               <EditImage />
             </Route>
-            <Route path="/Authenticate" exact>
-              <Authenticate />
-            </Route>
             <Redirect to="/" />
           </Switch>
         </main>
-      </Router>
-    </AuthContext.Provider>
-  );
+      </>
+    );
+  }
+
+  return <Router>{routes}</Router>;
 }
 
 export default App;

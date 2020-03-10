@@ -8,6 +8,7 @@ import ImagesContainer from "../../components/shared/InterfaceElements/ImagesCon
 import Modal from "../../components/shared/InterfaceElements/Modal/Modal";
 import ImageModal from "../../components/UserScreen/ImageModal/ImageModal";
 import ConfirmationModal from "../../components/UserScreen/ConifrmationModal/ConfirmationModal";
+
 const UserScreen = () => {
   const userId = useParams().id;
 

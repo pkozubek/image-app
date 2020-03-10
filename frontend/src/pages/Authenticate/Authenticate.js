@@ -10,6 +10,8 @@ import {
 import Button from "../../components/shared/InterfaceElements/Button/Button";
 import { AuthContext } from "../../context/auth-context";
 import axios from "axios";
+import LoadingSpinner from "../../components/shared/InterfaceElements/LoadingSpinner/LoadingSpinner";
+import ErrorModal from "../../components/shared/InterfaceElements/ErrorModal";
 import "./Authenticate.scss";
 
 export const Authenticate = () => {
@@ -29,9 +31,9 @@ export const Authenticate = () => {
     isValid: false
   });
 
-  const [isLoading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [isLoginMode, changeLoginMode] = useState(true);
-  const auth = useContext(AuthContext);
+  const { setLogged } = useContext(AuthContext);
 
   const onSendForm = async event => {
     event.preventDefault();
@@ -51,18 +53,15 @@ export const Authenticate = () => {
       };
     }
 
-    setLoading(true);
-    const response = await axios
+    await axios
       .post(path, formData)
       .then(response => {
-        console.log(response);
         if (response.status === 200) {
-          auth.login();
+          setLogged(true);
         }
       })
-      .catch(err => {
-        setLoading(false);
-        console.log(err.response);
+      .catch(({ response }) => {
+        setError(response.data.message);
       });
   };
 
@@ -140,25 +139,27 @@ export const Authenticate = () => {
   );
 
   return (
-    <Card className="authenticate">
-      <form>
-        {formInputs}
-        <Button
-          isDisabled={!formState.isValid}
-          type="confirm"
-          action={event => {
-            event.preventDefault();
-            onSendForm(event);
-            auth.login();
-          }}
-        >
-          {isLoginMode ? "Log in" : "Create Account"}
-        </Button>
-        <p onClick={handleLogChange}>
-          {isLoginMode ? "Dont have account? Register!" : "Want to log in!"}
-        </p>
-      </form>
-    </Card>
+    <>
+      <ErrorModal error={error} onCancel={() => setError(null)} />
+      <Card className="authenticate">
+        <form>
+          {formInputs}
+          <Button
+            isDisabled={!formState.isValid}
+            type="confirm"
+            action={event => {
+              event.preventDefault();
+              onSendForm(event);
+            }}
+          >
+            {isLoginMode ? "Log in" : "Create Account"}
+          </Button>
+          <p onClick={handleLogChange}>
+            {isLoginMode ? "Dont have account? Register!" : "Want to log in!"}
+          </p>
+        </form>
+      </Card>
+    </>
   );
 };
 
