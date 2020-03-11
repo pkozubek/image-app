@@ -15,7 +15,7 @@ const returnClassNames = (disabled, className, textColor, type) => {
 
 const Button = ({
   children,
-  action,
+  onClick,
   type,
   className,
   textColor,
@@ -25,7 +25,7 @@ const Button = ({
   return (
     <button
       disabled={isDisabled}
-      onClick={action}
+      onClick={onClick}
       className={classNames.join(" ")}
     >
       {children}

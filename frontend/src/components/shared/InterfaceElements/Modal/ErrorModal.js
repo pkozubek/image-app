@@ -1,7 +1,7 @@
 import React from "react";
 
-import Modal from "./Modal/Modal";
-import Button from "./Button/Button";
+import Modal from "./Modal";
+import Button from "../Button/Button";
 
 const ErrorModal = ({ onCancel, error }) => {
   return (

@@ -10,8 +10,7 @@ import {
 import Button from "../../components/shared/InterfaceElements/Button/Button";
 import { AuthContext } from "../../context/auth-context";
 import axios from "axios";
-import LoadingSpinner from "../../components/shared/InterfaceElements/LoadingSpinner/LoadingSpinner";
-import ErrorModal from "../../components/shared/InterfaceElements/ErrorModal";
+import ErrorModal from "../../components/shared/InterfaceElements/Modal/ErrorModal";
 import "./Authenticate.scss";
 
 export const Authenticate = () => {
@@ -38,18 +37,17 @@ export const Authenticate = () => {
   const onSendForm = async event => {
     event.preventDefault();
 
-    let path = "http://localhost:4000/api/users/register";
+    let path = "http://localhost:4000/api/users/login";
     let formData = {
       name: formState.inputs.nickname.value,
-      password: formState.inputs.password.value,
-      email: formState.inputs.email.value
+      password: formState.inputs.password.value
     };
-
-    if (isLoginMode) {
-      path = "http://localhost:4000/api/users/login";
+    if (!isLoginMode) {
+      path = "http://localhost:4000/api/users/register";
       formData = {
         name: formState.inputs.nickname.value,
-        password: formState.inputs.password.value
+        password: formState.inputs.password.value,
+        email: formState.inputs.email.value
       };
     }
 
@@ -137,17 +135,23 @@ export const Authenticate = () => {
       />
     </>
   );
-
+  console.log(formState);
   return (
     <>
-      <ErrorModal error={error} onCancel={() => setError(null)} />
+      <ErrorModal
+        error={error}
+        onCancel={() => {
+          setError(null);
+          console.log("click");
+        }}
+      />
       <Card className="authenticate">
         <form>
           {formInputs}
           <Button
             isDisabled={!formState.isValid}
             type="confirm"
-            action={onSendForm}
+            onClick={onSendForm}
           >
             {isLoginMode ? "Log in" : "Create Account"}
           </Button>
