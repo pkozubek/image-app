@@ -3,6 +3,7 @@ const router = express.Router();
 const { check } = require("express-validator");
 const controllers = require("../controllers/users");
 
+router.get("/", controllers.getUsersData);
 router.get("/:id", controllers.getUserData);
 
 router.post(

@@ -1,7 +1,10 @@
 import React from "react";
 
-import SingleUser from "./SingleUser/SingleUser";
+import SingleUser from "./SingleUser";
 import "./UserList.scss";
+
+const defaultImage =
+  "https://images.pexels.com/photos/839011/pexels-photo-839011.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260";
 
 const UserList = ({ users }) => {
   let renderedUserList = (
@@ -19,7 +22,7 @@ const UserList = ({ users }) => {
               key={id}
               id={id}
               userName={name}
-              avatar={avatar}
+              avatar={avatar || defaultImage}
               numberOfViews={views}
               imagesCount={imagesCount}
             />

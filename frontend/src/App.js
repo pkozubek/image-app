@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 
 import Header from "./components/shared/Header/Header";
-import Users from "./pages/Users";
+import UsersPage from "./pages/UsersPage/UsersPage";
 import Images from "./pages/Images";
 import Welcome from "./pages/Welcome.js";
 import UserScreen from "./pages/UserScreen/UserScreen";
@@ -40,7 +40,7 @@ function App() {
               <Images />
             </Route>
             <Route path="/users" exact>
-              <Users />
+              <UsersPage />
             </Route>
             <Route path="/users/:id" exact>
               <UserScreen />

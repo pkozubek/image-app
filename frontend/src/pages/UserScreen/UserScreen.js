@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import "./UserScreen.scss";
@@ -8,6 +8,7 @@ import ImagesContainer from "../../components/shared/InterfaceElements/ImagesCon
 import Modal from "../../components/shared/InterfaceElements/Modal/Modal";
 import ImageModal from "../../components/UserScreen/ImageModal/ImageModal";
 import ConfirmationModal from "../../components/UserScreen/ConifrmationModal/ConfirmationModal";
+import axios from "axios";
 
 const UserScreen = () => {
   const userId = useParams().id;

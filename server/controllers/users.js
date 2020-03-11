@@ -2,6 +2,11 @@ const HttpError = require("../models/httpError");
 const { validationResult } = require("express-validator");
 const User = require("../models/user");
 
+const getUsersData = async (req, res) => {
+  const users = await User.find({}, "-password");
+  res.json(users.map(user => user.toObject({ getters: true })));
+};
+
 const getUserData = async (req, res, next) => {
   const userID = req.params.id;
   let existingUser;
@@ -110,6 +115,7 @@ const deleteUser = async (req, res, next) => {
 
 module.exports = {
   getUserData,
+  getUsersData,
   loginUser,
   registerUser,
   updateUser,
