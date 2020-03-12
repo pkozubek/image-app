@@ -10,7 +10,7 @@ import Header from "./components/shared/Header/Header";
 import UsersPage from "./pages/UsersPage/UsersPage";
 import Images from "./pages/Images";
 import Welcome from "./pages/Welcome.js";
-import UserScreen from "./pages/UserScreen/UserScreen";
+import UserPage from "./pages/UserPage/UserPage";
 import AddImage from "./pages/AddImage/AddImage";
 import EditImage from "./pages/EditImage/EditImage";
 import Authenticate from "./pages/Authenticate/Authenticate";
@@ -43,7 +43,7 @@ function App() {
               <UsersPage />
             </Route>
             <Route path="/users/:id" exact>
-              <UserScreen />
+              <UserPage />
             </Route>
             <Route path="/add_image" exact>
               <AddImage />

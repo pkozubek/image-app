@@ -16,14 +16,20 @@ const UserList = ({ users }) => {
   if (users && users.length > 0) {
     renderedUserList = (
       <ul className="users_list">
-        {users.map(({ id, name, avatar, views, imagesCount }) => {
+        {users.map(({ id, name, avatar, images }) => {
+          const imagesCount = images.length;
+          const viewsCount =
+            images.length > 0
+              ? images.reduce((prev, current) => prev.views + current.views)
+              : 0;
+
           return (
             <SingleUser
               key={id}
               id={id}
               userName={name}
               avatar={avatar || defaultImage}
-              numberOfViews={views}
+              numberOfViews={viewsCount}
               imagesCount={imagesCount}
             />
           );

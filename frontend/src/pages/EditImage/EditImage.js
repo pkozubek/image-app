@@ -2,10 +2,7 @@ import React from "react";
 import Card from "../../components/shared/InterfaceElements/Card/Card";
 import Input from "../../components/shared/InterfaceElements/Input/Input";
 import { useForm } from "../../hooks/form-hook";
-import {
-  VALIDATOR_REQUIRE,
-  VALIDATOR_MINLENGTH
-} from "../../components/utils/validators";
+import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from "../../utils/validators";
 import Button from "../../components/shared/InterfaceElements/Button/Button";
 
 const EditImage = () => {

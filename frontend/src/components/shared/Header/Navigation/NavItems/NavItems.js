@@ -5,7 +5,6 @@ import "./NavItem.scss";
 
 const NavItemContainer = () => {
   const auth = useContext(AuthContext);
-  console.log(auth);
   return (
     <ul className="menu-items">
       <NavItem link={"/users"}>Users</NavItem>

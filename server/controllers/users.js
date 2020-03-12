@@ -3,7 +3,7 @@ const { validationResult } = require("express-validator");
 const User = require("../models/user");
 
 const getUsersData = async (req, res) => {
-  const users = await User.find({}, "-password");
+  const users = await User.find({}, "-password").populate("images");
   res.json(users.map(user => user.toObject({ getters: true })));
 };
 
@@ -46,7 +46,6 @@ const registerUser = async (req, res, next) => {
   const body = req.body;
   const { name, email, password } = body;
   const errors = validationResult(req);
-  console.log(body);
   let newUser;
   if (errors.isEmpty()) {
     let registeredUser;

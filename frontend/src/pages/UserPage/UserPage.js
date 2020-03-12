@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import "./UserScreen.scss";
+import "./UserPage.scss";
 
 import UserInfo from "../../components/UserScreen/UserInfo/UserInfo";
 import ImagesContainer from "../../components/shared/InterfaceElements/ImagesContainer/ImagesContainer";
@@ -10,7 +10,7 @@ import ImageModal from "../../components/UserScreen/ImageModal/ImageModal";
 import ConfirmationModal from "../../components/UserScreen/ConifrmationModal/ConfirmationModal";
 import axios from "axios";
 
-const UserScreen = () => {
+const UserPage = () => {
   const userId = useParams().id;
 
   const [isImageModalVisible, setImageModalVisible] = useState(false);
@@ -73,4 +73,4 @@ const UserScreen = () => {
   );
 };
 
-export default UserScreen;
+export default UserPage;

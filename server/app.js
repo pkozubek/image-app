@@ -22,7 +22,6 @@ app.use((error, req, res, next) => {
   if (res.headerSent) {
     next();
   }
-  console.log(res);
   res.status(error.code || 500);
   res.json({ message: error.message || "Unknown error" });
 });
@@ -36,5 +35,5 @@ mongoose
     app.listen(4000);
   })
   .catch(error => {
-    console.log(error);
+    console.error(error);
   });

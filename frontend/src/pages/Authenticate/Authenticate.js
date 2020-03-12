@@ -6,7 +6,7 @@ import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
   VALIDATOR_EMAIL
-} from "../../components/utils/validators";
+} from "../../utils/validators";
 import Button from "../../components/shared/InterfaceElements/Button/Button";
 import { AuthContext } from "../../context/auth-context";
 import axios from "axios";
@@ -135,14 +135,13 @@ export const Authenticate = () => {
       />
     </>
   );
-  console.log(formState);
+
   return (
     <>
       <ErrorModal
         error={error}
         onCancel={() => {
           setError(null);
-          console.log("click");
         }}
       />
       <Card className="authenticate">
