@@ -6,16 +6,48 @@ export const useHttp = () => {
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
 
-  const get = url => {
+  function handleError(err) {
+    setLoading(false);
+    setError(err);
+  }
+
+  function handleSuccess({ data }) {
+    setLoading(false);
+    setError(null);
+    setData(data);
+  }
+
+  const get = async url => {
     setLoading(true);
-    axios
+    await axios
       .get(url)
-      .then(({ data }) => {
-        setData(data);
-        setLoading(false);
-      })
-      .catch(err => setError(err));
+      .then(handleSuccess)
+      .catch(handleError);
   };
 
-  return { get, error, data, isLoading };
+  const post = async (url, data) => {
+    setLoading(true);
+    await axios
+      .post(url, data)
+      .then(handleSuccess)
+      .catch(handleError);
+  };
+
+  const patch = (url, data) => {
+    setLoading(true);
+    axios
+      .patch((url, data))
+      .then(handleSuccess)
+      .catch(handleError);
+  };
+
+  const del = (url, data) => {
+    setLoading(true);
+    axios
+      .delete(url, data)
+      .then(handleSuccess)
+      .catch(handleError);
+  };
+
+  return { get, post, patch, del, error, data, isLoading };
 };

@@ -8,10 +8,13 @@ import ImagesContainer from "../../components/shared/InterfaceElements/ImagesCon
 import Modal from "../../components/shared/InterfaceElements/Modal/Modal";
 import ImageModal from "../../components/UserScreen/ImageModal/ImageModal";
 import ConfirmationModal from "../../components/UserScreen/ConifrmationModal/ConfirmationModal";
-import axios from "axios";
+import { useHttp } from "../../hooks/http-hook";
+import { API_IMAGES } from "../../helpers/url";
 
 const UserPage = () => {
   const userId = useParams().id;
+
+  const { get, data, error, isLoading } = useHttp();
 
   const [isImageModalVisible, setImageModalVisible] = useState(false);
   const [isConfirmationModalVisible, setConfirmationModalVisible] = useState(
@@ -22,6 +25,19 @@ const UserPage = () => {
     setImageModalVisible(false);
     setConfirmationModalVisible(true);
   };
+
+  useEffect(() => {
+    get(API_IMAGES + `/user/${userId}`);
+  }, []);
+
+  let gatheredImages = null;
+
+  if (!isLoading && data !== null) {
+    const { images } = data;
+    gatheredImages = images.map(singleImg => (
+      <img key={images.name} src={singleImg.url} alt={singleImg.name} />
+    ));
+  }
 
   return (
     <div>
@@ -46,27 +62,7 @@ const UserPage = () => {
       <div className="user-images">
         <h2 className="user-images__title">Images: </h2>
         <ImagesContainer className="user-images__container">
-          <img
-            onClick={() => setImageModalVisible(true)}
-            alt="1"
-            src="https://image.winudf.com/v2/image/Y29tLmVib2wuY3V0ZWdpcmxfc2NyZWVuXzJfMTUyMzc3MDEzMF8wNDI/screen-2.jpg?fakeurl=1&type=.jpg"
-          />
-          <img
-            alt="2"
-            src="https://image.winudf.com/v2/image/Y29tLmVib2wuY3V0ZWdpcmxfc2NyZWVuXzJfMTUyMzc3MDEzMF8wNDI/screen-2.jpg?fakeurl=1&type=.jpg"
-          />
-          <img
-            alt="3"
-            src="https://image.winudf.com/v2/image/Y29tLmVib2wuY3V0ZWdpcmxfc2NyZWVuXzJfMTUyMzc3MDEzMF8wNDI/screen-2.jpg?fakeurl=1&type=.jpg"
-          />
-          <img
-            alt="4"
-            src="https://image.winudf.com/v2/image/Y29tLmVib2wuY3V0ZWdpcmxfc2NyZWVuXzJfMTUyMzc3MDEzMF8wNDI/screen-2.jpg?fakeurl=1&type=.jpg"
-          />
-          <img
-            alt="5"
-            src="https://image.winudf.com/v2/image/Y29tLmVib2wuY3V0ZWdpcmxfc2NyZWVuXzJfMTUyMzc3MDEzMF8wNDI/screen-2.jpg?fakeurl=1&type=.jpg"
-          />
+          {gatheredImages}
         </ImagesContainer>
       </div>
     </div>

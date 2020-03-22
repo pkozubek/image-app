@@ -5,14 +5,13 @@ import "./NavItem.scss";
 
 const NavItemContainer = () => {
   const auth = useContext(AuthContext);
+  console.log(auth);
   return (
     <ul className="menu-items">
       <NavItem link={"/users"}>Users</NavItem>
       <NavItem link={"/images"}>Images</NavItem>
-      {auth.isLoggedIn ? (
-        <NavItem link={"/add_image"}>Add Image</NavItem>
-      ) : null}
-      {!auth.isLoggedIn ? (
+      {auth.isLogged ? <NavItem link={"/add_image"}>Add Image</NavItem> : null}
+      {!auth.isLogged ? (
         <NavItem link={"/authenticate"}>Authenticate</NavItem>
       ) : (
         <NavItem link={"/logout"}>Logout</NavItem>
