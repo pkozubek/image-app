@@ -26,6 +26,8 @@ const ModalContent = ({ children, close, header, footer }) => {
 };
 
 const Modal = ({ isVisible, onCancel, children, ...props }) => {
+  console.log("in modal", isVisible);
+
   return (
     <>
       {isVisible && <Backdrop />}
