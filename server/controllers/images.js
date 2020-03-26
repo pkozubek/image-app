@@ -79,7 +79,7 @@ const createImage = async (req, res, next) => {
     return next(err);
   }
 
-  res.status(200).json(createdImage);
+  res.status(200).json({ id: createdImage.id });
 };
 
 const updateImage = async (req, res, next) => {

@@ -2,16 +2,13 @@ import React from "react";
 
 import SingleUser from "./SingleUser";
 import "./UserList.scss";
+import Spinner from "../../../components/shared/InterfaceElements/LoadingSpinner/LoadingSpinner";
 
 const defaultImage =
   "https://images.pexels.com/photos/839011/pexels-photo-839011.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260";
 
 const UserList = ({ users }) => {
-  let renderedUserList = (
-    <div>
-      <h2>No users</h2>
-    </div>
-  );
+  let renderedUserList = <Spinner />;
 
   if (users && users.length > 0) {
     renderedUserList = (

@@ -6,10 +6,14 @@ import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from "../../utils/validators";
 import Button from "../../components/shared/InterfaceElements/Button/Button";
 import { useHttp } from "../../hooks/http-hook";
 import { API_IMAGES } from "../../helpers/url";
+import { useHistory } from "react-router-dom";
 import "./AddImage.scss";
+import Modal from "../../components/shared/InterfaceElements/Modal/Modal";
+import Spinner from "../../components/shared/InterfaceElements/LoadingSpinner/LoadingSpinner";
 
 const AddImage = () => {
-  const { post, data, isLoading, error } = useHttp();
+  const { post, data, isLoading } = useHttp();
+  const history = useHistory();
   const [formState, inputHandler] = useForm(
     {
       title: {
@@ -30,7 +34,7 @@ const AddImage = () => {
 
   const submitForm = async ev => {
     ev.preventDefault();
-    console.log(formState);
+
     const { isValid, inputs } = formState;
     const { title, description, url } = inputs;
 
@@ -43,6 +47,10 @@ const AddImage = () => {
       });
     }
   };
+
+  if (data !== null) {
+    history.push(`/image/${data.id}`);
+  }
 
   return (
     <form className="image-add" onSubmit={submitForm}>
@@ -68,6 +76,9 @@ const AddImage = () => {
         <Button isDisabled={!formState.isValid} type="confirm">
           Submit
         </Button>
+        <Modal isVisible={isLoading}>
+          <Spinner />
+        </Modal>
       </Card>
     </form>
   );

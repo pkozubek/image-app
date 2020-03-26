@@ -12,6 +12,7 @@ export const useHttp = () => {
   }
 
   function handleSuccess({ data }) {
+    console.log("inHandler", data);
     setLoading(false);
     setError(null);
     setData(data);

@@ -14,6 +14,7 @@ import UserPage from "./pages/UserPage/UserPage";
 import AddImage from "./pages/AddImage/AddImage";
 import EditImage from "./pages/EditImage/EditImage";
 import Authenticate from "./pages/Authenticate/Authenticate";
+import Image from "./pages/Image/Image";
 import { AuthContext } from "./context/auth-context";
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
 
   let routes = (
     <Switch>
-      <Route path="/" exact>
+      <Route path="/">
         <Authenticate />
       </Route>
     </Switch>
@@ -47,6 +48,9 @@ function App() {
             </Route>
             <Route path="/add_image" exact>
               <AddImage />
+            </Route>
+            <Route path="/image/:id" exact>
+              <Image />
             </Route>
             <Route path="/edit_image/:id" exact>
               <EditImage />

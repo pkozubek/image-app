@@ -2,8 +2,8 @@ import React from "react";
 import "./SingleUser.scss";
 import { Link } from "react-router-dom";
 
-import Card from "../../components/shared/InterfaceElements/Card/Card";
-import AvatarImage from "../../components/shared/InterfaceElements/AvatarImage/AvatarImage";
+import Card from "../../../components/shared/InterfaceElements/Card/Card";
+import AvatarImage from "../../../components/shared/InterfaceElements/AvatarImage/AvatarImage";
 
 const SingleUser = ({ id, userName, avatar, numberOfViews, imagesCount }) => {
   return (
