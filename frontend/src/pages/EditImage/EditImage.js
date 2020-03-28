@@ -1,9 +1,9 @@
 import React from "react";
-import Card from "../../components/shared/InterfaceElements/Card/Card";
-import Input from "../../components/shared/InterfaceElements/Input/Input";
+import Card from "../../components/Card/Card";
+import Input from "../../components/Input/Input";
 import { useForm } from "../../hooks/form-hook";
 import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from "../../utils/validators";
-import Button from "../../components/shared/InterfaceElements/Button/Button";
+import Button from "../../components/Button/Button";
 
 const EditImage = () => {
   const [formState, inputHandler, setForm] = useForm(

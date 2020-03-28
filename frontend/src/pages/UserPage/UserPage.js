@@ -4,11 +4,11 @@ import { useParams } from "react-router-dom";
 
 import "./UserPage.scss";
 
-import UserInfo from "../../components/UserScreen/UserInfo/UserInfo";
-import ImagesContainer from "../../components/shared/InterfaceElements/ImagesContainer/ImagesContainer";
+import UserInfo from "./UserInfo/UserInfo";
+import ImagesContainer from "../../components/ImagesContainer/ImagesContainer";
 import { useHttp } from "../../hooks/http-hook";
 import { API_IMAGES } from "../../helpers/url";
-import Spinner from "../../components/shared/InterfaceElements/LoadingSpinner/LoadingSpinner";
+import Spinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 const UserPage = props => {
   const userId = useParams().id;

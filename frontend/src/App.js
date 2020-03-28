@@ -6,10 +6,9 @@ import {
   Switch
 } from "react-router-dom";
 
-import Header from "./components/shared/Header/Header";
+import Header from "./components/Header/Header";
 import UsersPage from "./pages/UsersPage/UsersPage";
 import Images from "./pages/Images";
-import Welcome from "./pages/Welcome.js";
 import UserPage from "./pages/UserPage/UserPage";
 import AddImage from "./pages/AddImage/AddImage";
 import EditImage from "./pages/EditImage/EditImage";
@@ -35,9 +34,6 @@ function App() {
         <main>
           <Switch>
             <Route path="/" exact>
-              <Welcome />
-            </Route>
-            <Route path="/images" exact>
               <Images />
             </Route>
             <Route path="/users" exact>

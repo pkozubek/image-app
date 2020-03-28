@@ -2,7 +2,7 @@ import React from "react";
 
 import SingleUser from "./SingleUser";
 import "./UserList.scss";
-import Spinner from "../../../components/shared/InterfaceElements/LoadingSpinner/LoadingSpinner";
+import Spinner from "../../../components/LoadingSpinner/LoadingSpinner";
 
 const defaultImage =
   "https://images.pexels.com/photos/839011/pexels-photo-839011.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260";

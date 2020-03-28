@@ -1,7 +1,7 @@
 import React from "react";
 
-import Card from "../../shared/InterfaceElements/Card/Card";
-import AvatarImage from "../../shared/InterfaceElements/AvatarImage/AvatarImage";
+import Card from "../../../components/Card/Card";
+import AvatarImage from "../../../components/AvatarImage/AvatarImage";
 import "./UserInfo.scss";
 
 const UserInfo = ({ nickname, description, src }) => {

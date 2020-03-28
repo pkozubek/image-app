@@ -1,15 +1,15 @@
 import React from "react";
-import Card from "../../components/shared/InterfaceElements/Card/Card";
-import Input from "../../components/shared/InterfaceElements/Input/Input";
+import Card from "../../components/Card/Card";
+import Input from "../../components/Input/Input";
 import { useForm } from "../../hooks/form-hook";
 import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from "../../utils/validators";
-import Button from "../../components/shared/InterfaceElements/Button/Button";
+import Button from "../../components/Button/Button";
 import { useHttp } from "../../hooks/http-hook";
 import { API_IMAGES } from "../../helpers/url";
 import { useHistory } from "react-router-dom";
 import "./AddImage.scss";
-import Modal from "../../components/shared/InterfaceElements/Modal/Modal";
-import Spinner from "../../components/shared/InterfaceElements/LoadingSpinner/LoadingSpinner";
+import Modal from "../../components/Modal/Modal";
+import Spinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 const AddImage = () => {
   const { post, data, isLoading } = useHttp();

@@ -1,16 +1,16 @@
 import React, { useState, useContext } from "react";
 import { useForm } from "../../hooks/form-hook";
-import Card from "../../components/shared/InterfaceElements/Card/Card";
-import Input from "../../components/shared/InterfaceElements/Input/Input";
+import Card from "../../components/Card/Card";
+import Input from "../../components/Input/Input";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
   VALIDATOR_EMAIL
 } from "../../utils/validators";
-import Button from "../../components/shared/InterfaceElements/Button/Button";
+import Button from "../../components/Button/Button";
 import { AuthContext } from "../../context/auth-context";
 import axios from "axios";
-import ErrorModal from "../../components/shared/InterfaceElements/Modal/ErrorModal";
+import ErrorModal from "../../components/Modal/ErrorModal";
 import "./Authenticate.scss";
 
 export const Authenticate = () => {
