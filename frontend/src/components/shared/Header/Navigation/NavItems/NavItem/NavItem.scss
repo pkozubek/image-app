@@ -3,23 +3,32 @@
     width: 100%;
     color: black;
     text-decoration: none;
+
+    @media (min-width: 768px) {
+      color: white;
+      width: auto;
+
+      &:not(:first-child) {
+        padding: 0px 0 5px 20px;
+      }
+    }
   }
+
   &:hover {
     color: lightgreen;
   }
 
   &__active-link {
-    color: lightgreen !important;
+    color: lightgreen;
   }
 }
 
-@media (min-width: 768px) {
-  .menu-item__link {
-    color: white;
-    width: auto;
+.menu_item--add {
+  border: 1px solid white;
+  border-radius: 4px;
+  padding: 2px 4px 2px 4px;
 
-    &:not(:first-child) {
-      padding: 0px 0 5px 20px;
-    }
+  &:hover {
+    border: 1px solid lightgreen;
   }
 }

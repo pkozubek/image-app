@@ -1,0 +1,21 @@
+.UserLogged {
+  color: white;
+  background: rgba(37, 37, 37, 0.1);
+  width: 100%;
+  height: auto;
+  padding: 5px 15px 5px 0;
+  text-align: right;
+
+  &__nickname {
+    font-weight: bold;
+  }
+
+  &__logout {
+    color: lightgreen;
+    padding-left: 5px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

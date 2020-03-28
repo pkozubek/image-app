@@ -38,8 +38,6 @@ export default function Image() {
     );
   }
 
-  console.log(isConfirmationVisible);
-
   return (
     <div>
       {content}
