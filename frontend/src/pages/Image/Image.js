@@ -4,20 +4,26 @@ import { useHttp } from "../../hooks/http-hook";
 import { API_IMAGES } from "../../helpers/url";
 import Button from "../../components/Button/Button";
 import ConfirmationModal from "../../components/Modal/ConfirmationModal";
+import ImageForm from "./ImageForm";
 
 export default function Image() {
   const imageId = useParams().id;
   const history = useHistory();
 
   const [isConfirmationVisible, setConfirmationVisible] = useState(false);
-  const { get, del, data, isLoading } = useHttp();
+  const [isEdited, setEdited] = useState(false);
+  const { get, update, del, data, isLoading } = useHttp();
 
   useEffect(() => {
     get(`${API_IMAGES}/${imageId}`);
   }, []);
 
-  const onButtonClick = () => {
+  const onDelete = () => {
     setConfirmationVisible(true);
+  };
+
+  const onEdit = () => {
+    setEdited(true);
   };
 
   const onConfirm = () => {
@@ -29,11 +35,20 @@ export default function Image() {
 
   if (!isLoading && data !== null) {
     const { image } = data;
-
+    console.log(image);
     content = (
       <>
-        <img src={image.url} />
-        <Button onClick={onButtonClick}>Delete Image</Button>
+        <img src={image.url} alt={image.name} />
+        {isEdited ? (
+          <ImageForm name={image.name} />
+        ) : (
+          <>
+            <h2>{image.name}</h2>
+            <p>{image.description}</p>
+            <Button onClick={onEdit}>Edit Image data</Button>
+          </>
+        )}
+        <Button onClick={onDelete}>Delete Image</Button>
       </>
     );
   }

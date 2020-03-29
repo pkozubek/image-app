@@ -8,10 +8,9 @@ import {
 
 import Header from "./components/Header/Header";
 import UsersPage from "./pages/UsersPage/UsersPage";
-import Images from "./pages/Images";
+import Images from "./pages/Images/Images";
 import UserPage from "./pages/UserPage/UserPage";
 import AddImage from "./pages/AddImage/AddImage";
-import EditImage from "./pages/EditImage/EditImage";
 import Authenticate from "./pages/Authenticate/Authenticate";
 import Image from "./pages/Image/Image";
 import { AuthContext } from "./context/auth-context";
@@ -47,9 +46,6 @@ function App() {
             </Route>
             <Route path="/image/:id" exact>
               <Image />
-            </Route>
-            <Route path="/edit_image/:id" exact>
-              <EditImage />
             </Route>
             <Redirect to="/" />
           </Switch>

@@ -15,9 +15,6 @@ const Header = () => {
     <>
       <UserLogged />
       <header className="header">
-        <Hamburger
-          clickHandler={() => mobileMenuClickHandler(!mobileMenuVisible)}
-        />
         <Link className="header__link" to="/">
           <h1 className="header__site-name">
             <IoIosImages className="header__icon" />
@@ -27,6 +24,9 @@ const Header = () => {
         <Navigation
           isMobileMenuVisible={mobileMenuVisible}
           hideMenu={mobileMenuClickHandler}
+        />
+        <Hamburger
+          clickHandler={() => mobileMenuClickHandler(!mobileMenuVisible)}
         />
       </header>
     </>

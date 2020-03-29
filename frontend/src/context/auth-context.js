@@ -1,7 +1,7 @@
 import React, { createContext, useReducer } from "react";
 
 const initialState = {
-  isLogged: false,
+  isLogged: true,
   isModalVisible: false
 };
 

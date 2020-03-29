@@ -5,6 +5,11 @@ const Image = require("../models/image");
 const User = require("../models/user");
 const mongoose = require("mongoose");
 
+const getAllImages = async (req, res, next) => {
+  const images = await Image.find({}).populate("userID", "name id");
+  res.status(200).json(images.map(image => image.toObject({ getters: true })));
+};
+
 const getImageById = async (req, res, next) => {
   const imageID = req.params.id;
   let gatheredImage;
@@ -137,6 +142,7 @@ const deleteImage = async (req, res, next) => {
 };
 
 module.exports = {
+  getAllImages,
   getImageById,
   getUserImages,
   createImage,

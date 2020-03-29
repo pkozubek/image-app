@@ -3,6 +3,7 @@ const { check } = require("express-validator");
 const controllers = require("../controllers/images");
 const router = express.Router();
 
+router.get("/", controllers.getAllImages);
 router.get("/user/:id", controllers.getUserImages);
 router.get("/:id", controllers.getImageById);
 
