@@ -1,10 +1,12 @@
-const express = require("express");
-const cors = require("cors");
-const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
-const imagesRoutes = require("./routes/images");
-const usersRoutes = require("./routes/users");
-const HttpError = require("./models/httpError");
+import express, { NextFunction } from "express";
+import cors from "cors";
+import bodyParser from "body-parser";
+import mongoose from "mongoose";
+
+import imagesRoutes from "./routes/images";
+import usersRoutes from "./routes/users";
+import HttpError from "./models/httpError";
+
 require("dotenv").config();
 
 const app = express();
@@ -14,11 +16,11 @@ app.use(bodyParser.json());
 app.use("/api/images", imagesRoutes);
 app.use("/api/users/", usersRoutes);
 
-app.use((req, res, next) => {
+app.use((req, res, next: NextFunction) => {
   throw new HttpError("this route does not exist", 404);
 });
 
-app.use((error, req, res, next) => {
+app.use((error, req, res, next: NextFunction) => {
   if (res.headerSent) {
     next();
   }
@@ -34,6 +36,6 @@ mongoose
     console.log("App listen");
     app.listen(4000);
   })
-  .catch(error => {
+  .catch((error) => {
     console.error(error);
   });

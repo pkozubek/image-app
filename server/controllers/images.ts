@@ -1,16 +1,18 @@
-const HttpError = require("../models/httpError");
-const uuid = require("uuid/v4");
-const { validationResult } = require("express-validator");
-const Image = require("../models/image");
-const User = require("../models/user");
-const mongoose = require("mongoose");
+import HttpError from "../models/httpError";
+import uuid from "uuid/v4";
+import { validationResult } from "express-validator";
+import Image from "../models/image";
+import User from "../models/user";
+import mongoose from "mongoose";
 
-const getAllImages = async (req, res, next) => {
+export const getAllImages = async (req, res, next) => {
   const images = await Image.find({}).populate("userID", "name id");
-  res.status(200).json(images.map(image => image.toObject({ getters: true })));
+  res
+    .status(200)
+    .json(images.map((image) => image.toObject({ getters: true })));
 };
 
-const getImageById = async (req, res, next) => {
+export const getImageById = async (req, res, next) => {
   const imageID = req.params.id;
   let gatheredImage;
 
@@ -28,7 +30,7 @@ const getImageById = async (req, res, next) => {
   res.json({ image: gatheredImage.toObject({ getters: true }) });
 };
 
-const getUserImages = async (req, res, next) => {
+export const getUserImages = async (req, res, next) => {
   const userID = req.params.id;
 
   let user;
@@ -44,13 +46,13 @@ const getUserImages = async (req, res, next) => {
   }
 
   res.status(200).json({
-    images: user.images.map(singleImage =>
+    images: user.images.map((singleImage) =>
       singleImage.toObject({ getters: true })
-    )
+    ),
   });
 };
 
-const createImage = async (req, res, next) => {
+export const createImage = async (req, res, next) => {
   const { name, url, description, author } = req.body;
   const errors = validationResult(req);
   if (!errors.isEmpty()) return next(new HttpError("Wrong data", 400));
@@ -70,7 +72,7 @@ const createImage = async (req, res, next) => {
     url,
     views: 1,
     likes: 1,
-    userID: author
+    userID: author,
   });
 
   try {
@@ -87,7 +89,7 @@ const createImage = async (req, res, next) => {
   res.status(200).json({ id: createdImage.id });
 };
 
-const updateImage = async (req, res, next) => {
+export const updateImage = async (req, res, next) => {
   const id = req.params.id;
   const { name, description } = req.body;
 
@@ -116,7 +118,7 @@ const updateImage = async (req, res, next) => {
   res.status(200).json(updatedImage.toObject({ getters: true }));
 };
 
-const deleteImage = async (req, res, next) => {
+export const deleteImage = async (req, res, next) => {
   const id = req.params.id;
 
   let deletedImage;
@@ -139,13 +141,4 @@ const deleteImage = async (req, res, next) => {
   }
 
   res.status(200).json("Image deleted");
-};
-
-module.exports = {
-  getAllImages,
-  getImageById,
-  getUserImages,
-  createImage,
-  updateImage,
-  deleteImage
 };

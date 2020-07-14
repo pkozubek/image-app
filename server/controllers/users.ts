@@ -1,13 +1,13 @@
-const HttpError = require("../models/httpError");
-const { validationResult } = require("express-validator");
-const User = require("../models/user");
+import HttpError from "../models/httpError";
+import { validationResult } from "express-validator";
+import User from "../models/user";
 
-const getUsersData = async (req, res) => {
+export const getUsersData = async (req, res) => {
   const users = await User.find({}, "-password").populate("images");
-  res.json(users.map(user => user.toObject({ getters: true })));
+  res.json(users.map((user) => user.toObject({ getters: true })));
 };
 
-const getUserData = async (req, res, next) => {
+export const getUserData = async (req, res, next) => {
   const userID = req.params.id;
   let existingUser;
   try {
@@ -20,11 +20,11 @@ const getUserData = async (req, res, next) => {
     return next(new HttpError("User doesnt exist", 404));
   }
   res.json({
-    user: existingUser.toObject({ getters: true })
+    user: existingUser.toObject({ getters: true }),
   });
 };
 
-const loginUser = async (req, res, next) => {
+export const loginUser = async (req, res, next) => {
   const body = req.body;
   const { name, password } = body;
 
@@ -42,7 +42,7 @@ const loginUser = async (req, res, next) => {
   res.status(200).json({ message: "Login correct" });
 };
 
-const registerUser = async (req, res, next) => {
+export const registerUser = async (req, res, next) => {
   const body = req.body;
   const { name, email, password } = body;
   const errors = validationResult(req);
@@ -60,7 +60,7 @@ const registerUser = async (req, res, next) => {
       name,
       email,
       password,
-      images: []
+      images: [],
     });
 
     try {
@@ -75,7 +75,7 @@ const registerUser = async (req, res, next) => {
   res.status(200).json({ user: newUser.toObject() });
 };
 
-const updateUser = async (req, res, next) => {
+export const updateUser = async (req, res, next) => {
   const { id } = req.params;
   const { name, password, email } = req.body;
   const errors = validationResult(req);
@@ -95,10 +95,10 @@ const updateUser = async (req, res, next) => {
     return next(new HttpError("User does not exist", 400));
   }
 
-  res.status(200).json(updateUser.toObject({ getters: true }));
+  res.status(200).json(updateUser);
 };
 
-const deleteUser = async (req, res, next) => {
+export const deleteUser = async (req, res, next) => {
   const { id } = req.params;
 
   let user;
@@ -110,13 +110,4 @@ const deleteUser = async (req, res, next) => {
 
   await user.remove();
   res.json("user deleted");
-};
-
-module.exports = {
-  getUserData,
-  getUsersData,
-  loginUser,
-  registerUser,
-  updateUser,
-  deleteUser
 };
