@@ -1,65 +1,74 @@
 import React, { useState, useContext } from "react";
-import { useForm } from "../../hooks/form-hook";
+import axios from "axios";
+
+import { useForm } from "../../hooks/useForm";
 import Card from "../../components/Card/Card";
 import Input from "../../components/Input/Input";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
-  VALIDATOR_EMAIL
+  VALIDATOR_EMAIL,
 } from "../../utils/validators";
 import Button from "../../components/Button/Button";
 import { AuthContext } from "../../context/auth-context";
-import axios from "axios";
 import ErrorModal from "../../components/Modal/ErrorModal";
-import "./Authenticate.scss";
+
+import "./Login.scss";
+
+interface IformDateInterface {
+  name: string;
+  password: string;
+  email?: string;
+}
 
 export const Authenticate = () => {
   const [formState, inputHandler, setForm] = useForm({
     nickname: {
       value: "",
-      isValid: true
+      isValid: true,
     },
     password: {
       value: "",
-      isValid: true
+      isValid: true,
     },
     email: {
       value: "",
-      isValid: true
+      isValid: true,
     },
-    isValid: false
+    isValid: false,
   });
 
   const [error, setError] = useState(null);
   const [isLoginMode, changeLoginMode] = useState(true);
   const auth = useContext(AuthContext);
 
-  const onSendForm = async event => {
+  const onSendForm = async (event) => {
     event.preventDefault();
 
     let path = "http://localhost:4000/api/users/login";
-    let formData = {
+    let formData: IformDateInterface = {
       name: formState.inputs.nickname.value,
-      password: formState.inputs.password.value
+      password: formState.inputs.password.value,
     };
     if (!isLoginMode) {
       path = "http://localhost:4000/api/users/register";
       formData = {
         name: formState.inputs.nickname.value,
         password: formState.inputs.password.value,
-        email: formState.inputs.email.value
+        email: formState.inputs.email.value,
       };
     }
 
     await axios
       .post(path, formData)
-      .then(response => {
+      .then((response) => {
         if (response.status === 200) {
           auth.setLogged(true);
         }
       })
-      .catch(({ response }) => {
-        setError(response.data.message);
+      .catch((error) => {
+        const errorMessage = error.response.data.message;
+        setError(errorMessage);
       });
   };
 
@@ -68,7 +77,7 @@ export const Authenticate = () => {
       setForm(
         {
           ...formState.inputs,
-          email: undefined
+          email: undefined,
         },
         false
       );
@@ -78,14 +87,14 @@ export const Authenticate = () => {
           ...formState.inputs,
           email: {
             value: "",
-            isValid: false
-          }
+            isValid: false,
+          },
         },
         false
       );
     }
 
-    changeLoginMode(prevIsLogin => !prevIsLogin);
+    changeLoginMode((prevIsLogin) => !prevIsLogin);
   };
 
   const formInputs = isLoginMode ? (
@@ -96,15 +105,16 @@ export const Authenticate = () => {
         label="Nickname:"
         validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(5)]}
         value={formState.inputs.nickname.value}
-        valid={formState.inputs.nickname.isValid}
+        isValid={formState.inputs.nickname.isValid}
       />
       <Input
         id="password"
         onInput={inputHandler}
         label="Password:"
+        type="password"
         validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(5)]}
         value={formState.inputs.password.value}
-        valid={formState.inputs.password.isValid}
+        isValid={formState.inputs.password.isValid}
       />
     </>
   ) : (
@@ -115,15 +125,16 @@ export const Authenticate = () => {
         label="Nickname:"
         validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(5)]}
         value={formState.inputs.nickname.value}
-        valid={formState.inputs.nickname.isValid}
+        isValid={formState.inputs.nickname.isValid}
       />
       <Input
         id="password"
         onInput={inputHandler}
+        type="password"
         label="Password:"
         validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(5)]}
         value={formState.inputs.password.value}
-        valid={formState.inputs.password.isValid}
+        isValid={formState.inputs.password.isValid}
       />
       <Input
         id="email"
@@ -131,7 +142,7 @@ export const Authenticate = () => {
         label="Email:"
         validators={[VALIDATOR_REQUIRE(), VALIDATOR_EMAIL()]}
         value={formState.inputs.email.value}
-        valid={formState.inputs.email.isValid}
+        isValid={formState.inputs.email.isValid}
       />
     </>
   );

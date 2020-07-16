@@ -1,14 +1,26 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { CSSTransition } from "react-transition-group";
-
-import "./Modal.scss";
+import { IoIosClose } from "react-icons/io";
 
 import Backdrop from "../Backdrop/Backdrop";
 import Button from "../Button/Button";
-import { IoIosClose } from "react-icons/io";
 
-const ModalContent = ({ children, close, header, footer }) => {
+import "./Modal.scss";
+
+interface ModalContentProps {
+  children: JSX.Element | string;
+  close: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  header?: string;
+  footer?: JSX.Element;
+}
+
+const ModalContent = ({
+  children,
+  close,
+  header,
+  footer,
+}: ModalContentProps) => {
   const content = (
     <div className="modal">
       <header className="header">
@@ -26,8 +38,6 @@ const ModalContent = ({ children, close, header, footer }) => {
 };
 
 const Modal = ({ isVisible, onCancel, children, ...props }) => {
-  console.log("in modal", isVisible);
-
   return (
     <>
       {isVisible && <Backdrop />}

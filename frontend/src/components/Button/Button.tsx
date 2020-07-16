@@ -2,7 +2,21 @@ import React from "react";
 
 import "./Button.scss";
 
-const returnClassNames = (disabled, className, textColor, type) => {
+interface ButtonProps {
+  children: JSX.Element | string;
+  type?: string;
+  className?: string;
+  textColor?: string;
+  isDisabled?: boolean;
+  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+}
+
+const returnClassNames = (
+  disabled: boolean,
+  className: string,
+  textColor: string,
+  type: string
+) => {
   const classNames = ["button"];
 
   if (type) classNames.push(`button--${type}`);
@@ -19,8 +33,8 @@ const Button = ({
   type,
   className,
   textColor,
-  isDisabled
-}) => {
+  isDisabled,
+}: ButtonProps) => {
   const classNames = returnClassNames(isDisabled, className, textColor, type);
   return (
     <button

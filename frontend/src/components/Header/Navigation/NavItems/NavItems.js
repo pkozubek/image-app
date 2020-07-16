@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import NavItem from "./NavItem/NavItem";
-import { AuthContext } from "../../../../context/auth-context";
 import "./NavItem.scss";
 
 const NavItemContainer = () => {

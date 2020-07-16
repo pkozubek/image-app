@@ -3,10 +3,14 @@ import ReactDOM from "react-dom";
 
 import "./Backdrop.scss";
 
-const Backdrop = ({ clickHandler }) => {
+interface BackdropInterface {
+  clickHandler?: () => void;
+}
+
+const Backdrop = ({ clickHandler }: BackdropInterface) => {
   return ReactDOM.createPortal(
     <div className="backdrop" onClick={clickHandler}></div>,
-    document.getElementById("backdrop-hook")
+    document.getElementById("backdrop-hook") as HTMLElement
   );
 };
 

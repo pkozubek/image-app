@@ -1,10 +1,10 @@
 import React from "react";
 import Card from "../../components/Card/Card";
 import Input from "../../components/Input/Input";
-import { useForm } from "../../hooks/form-hook";
+import { useForm } from "../../hooks/useForm";
 import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from "../../utils/validators";
 import Button from "../../components/Button/Button";
-import { useHttp } from "../../hooks/http-hook";
+import { useHttp } from "../../hooks/useHttp";
 import { API_IMAGES } from "../../helpers/url";
 import { useHistory } from "react-router-dom";
 import "./AddImage.scss";
@@ -18,21 +18,21 @@ const AddImage = () => {
     {
       title: {
         value: "",
-        isValid: false
+        isValid: false,
       },
       description: {
         value: "",
-        isValid: false
+        isValid: false,
       },
       url: {
         value: "",
-        isValid: false
-      }
+        isValid: false,
+      },
     },
     false
   );
 
-  const submitForm = async ev => {
+  const submitForm = async (ev) => {
     ev.preventDefault();
 
     const { isValid, inputs } = formState;
@@ -43,7 +43,7 @@ const AddImage = () => {
         name: title.value,
         description: description.value,
         url: url.value,
-        author: "5e5ec63223439e067c5671fd"
+        author: "5e5ec63223439e067c5671fd",
       });
     }
   };

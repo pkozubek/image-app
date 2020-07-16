@@ -3,18 +3,29 @@ import React, { useReducer, useEffect } from "react";
 import "./Input.scss";
 import { validate } from "../../utils/validators";
 
+interface IInputProps {
+  label: string;
+  id: string;
+  placeholder?: string;
+  type?: "text" | "password";
+  value: string;
+  isValid: boolean;
+  validators;
+  onInput;
+}
+
 const inputReduer = (state, action) => {
   switch (action.type) {
     case "CHANGE":
       return {
         ...state,
         value: action.value,
-        isValid: validate(action.value, action.validators)
+        isValid: validate(action.value, action.validators),
       };
     case "TOUCH":
       return {
         ...state,
-        isTouched: true
+        isTouched: true,
       };
     default:
       return state;
@@ -29,19 +40,19 @@ const Input = ({
   value,
   isValid,
   validators,
-  onInput
-}) => {
+  onInput,
+}: IInputProps) => {
   const [inputState, dispatchChange] = useReducer(inputReduer, {
     value: value || "",
     isValid: isValid || false,
-    isTouched: false
+    isTouched: false,
   });
 
-  const changeHandler = event => {
+  const changeHandler = (event: React.ChangeEvent<HTMLInputElement>): void => {
     dispatchChange({
       type: "CHANGE",
       value: event.target.value,
-      validators: validators
+      validators: validators,
     });
   };
 
@@ -65,9 +76,11 @@ const Input = ({
         placeholder={placeholder}
         type={type}
         onBlur={handleTouching}
-        className={`form-input__input ${!inputState.isValid &&
+        className={`form-input__input ${
+          !inputState.isValid &&
           inputState.isTouched &&
-          "form-input__input--error"}`}
+          "form-input__input--error"
+        }`}
       />
     </div>
   );

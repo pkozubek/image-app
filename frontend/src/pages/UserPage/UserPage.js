@@ -6,11 +6,11 @@ import "./UserPage.scss";
 
 import UserInfo from "./UserInfo/UserInfo";
 import ImagesContainer from "../../components/ImagesContainer/ImagesContainer";
-import { useHttp } from "../../hooks/http-hook";
+import { useHttp } from "../../hooks/useHttp";
 import { API_IMAGES } from "../../helpers/url";
 import Spinner from "../../components/LoadingSpinner/LoadingSpinner";
 
-const UserPage = props => {
+const UserPage = (props) => {
   const userId = useParams().id;
   const history = useHistory();
 
@@ -20,7 +20,7 @@ const UserPage = props => {
     get(API_IMAGES + `/user/${userId}`);
   }, []);
 
-  const onImageClick = id => {
+  const onImageClick = (id) => {
     history.push(`/image/${id}`);
   };
 
@@ -28,7 +28,7 @@ const UserPage = props => {
 
   if (!isLoading && data !== null) {
     const { images } = data;
-    gatheredImages = images.map(singleImg => (
+    gatheredImages = images.map((singleImg) => (
       <img
         key={images.name}
         src={singleImg.url}

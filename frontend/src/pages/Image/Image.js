@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { useHttp } from "../../hooks/http-hook";
+import { useHttp } from "../../hooks/useHttp";
 import { API_IMAGES } from "../../helpers/url";
 import Button from "../../components/Button/Button";
 import ConfirmationModal from "../../components/Modal/ConfirmationModal";
@@ -12,7 +12,7 @@ export default function Image() {
 
   const [isConfirmationVisible, setConfirmationVisible] = useState(false);
   const [isEdited, setEdited] = useState(false);
-  const { get, update, del, data, isLoading } = useHttp();
+  const { get, del, data, isLoading } = useHttp();
 
   useEffect(() => {
     get(`${API_IMAGES}/${imageId}`);

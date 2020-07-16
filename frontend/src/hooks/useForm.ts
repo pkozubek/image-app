@@ -22,10 +22,10 @@ const formReducer = (state, action) => {
           ...state.inputs,
           [action.inputID]: {
             value: action.value,
-            isValid: action.isValid
-          }
+            isValid: action.isValid,
+          },
         },
-        isValid: isFormValid
+        isValid: isFormValid,
       };
     case "SET_FORM":
       return { ...state, inputs: action.inputs, isValid: action.isFormValid };
@@ -34,10 +34,10 @@ const formReducer = (state, action) => {
   }
 };
 
-export const useForm = (initialInputs, initialValidity) => {
+export function useForm<T>(initialInputs: T, initialValidity?: boolean) {
   const [formState, dispatchFormChange] = useReducer(formReducer, {
     inputs: initialInputs,
-    isValid: initialValidity
+    isValid: initialValidity,
   });
 
   const inputHandler = useCallback((id, value, isValid) => {
@@ -45,7 +45,7 @@ export const useForm = (initialInputs, initialValidity) => {
       type: "INPUT_CHANGE",
       value: value,
       isValid: isValid,
-      inputID: id
+      inputID: id,
     });
   }, []);
 
@@ -53,9 +53,9 @@ export const useForm = (initialInputs, initialValidity) => {
     dispatchFormChange({
       type: "SET_FORM",
       inputs: inputData,
-      isValid: formValidity
+      isValid: formValidity,
     });
   }, []);
 
   return [formState, inputHandler, setForm];
-};
+}

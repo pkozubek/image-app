@@ -1,6 +1,7 @@
 import HttpError from "../models/httpError";
 import { validationResult } from "express-validator";
 import User from "../models/user";
+import { NextFunction } from "express";
 
 export const getUsersData = async (req, res) => {
   const users = await User.find({}, "-password").populate("images");
@@ -24,7 +25,7 @@ export const getUserData = async (req, res, next) => {
   });
 };
 
-export const loginUser = async (req, res, next) => {
+export const loginUser = async (req, res, next: NextFunction) => {
   const body = req.body;
   const { name, password } = body;
 
@@ -42,7 +43,7 @@ export const loginUser = async (req, res, next) => {
   res.status(200).json({ message: "Login correct" });
 };
 
-export const registerUser = async (req, res, next) => {
+export const registerUser = async (req, res, next: NextFunction) => {
   const body = req.body;
   const { name, email, password } = body;
   const errors = validationResult(req);
@@ -75,7 +76,7 @@ export const registerUser = async (req, res, next) => {
   res.status(200).json({ user: newUser.toObject() });
 };
 
-export const updateUser = async (req, res, next) => {
+export const updateUser = async (req, res, next: NextFunction) => {
   const { id } = req.params;
   const { name, password, email } = req.body;
   const errors = validationResult(req);

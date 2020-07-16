@@ -12,42 +12,29 @@ export const useHttp = () => {
   }
 
   function handleSuccess({ data }) {
-    console.log("inHandler", data);
     setLoading(false);
     setError(null);
     setData(data);
   }
 
-  const get = async url => {
+  const get = async (url: string) => {
     setLoading(true);
-    await axios
-      .get(url)
-      .then(handleSuccess)
-      .catch(handleError);
+    await axios.get(url).then(handleSuccess).catch(handleError);
   };
 
-  const post = async (url, data) => {
+  const post = async (url: string, data) => {
     setLoading(true);
-    await axios
-      .post(url, data)
-      .then(handleSuccess)
-      .catch(handleError);
+    await axios.post(url, data).then(handleSuccess).catch(handleError);
   };
 
-  const patch = (url, data) => {
+  const patch = (url: string, data) => {
     setLoading(true);
-    axios
-      .patch((url, data))
-      .then(handleSuccess)
-      .catch(handleError);
+    axios.patch(url, data).then(handleSuccess).catch(handleError);
   };
 
-  const del = (url, data) => {
+  const del = (url: string, data) => {
     setLoading(true);
-    axios
-      .delete(url, data)
-      .then(handleSuccess)
-      .catch(handleError);
+    axios.delete(url, data).then(handleSuccess).catch(handleError);
   };
 
   return { get, post, patch, del, error, data, isLoading };

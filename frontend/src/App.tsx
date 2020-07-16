@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router,
   Route,
   Redirect,
-  Switch
+  Switch,
 } from "react-router-dom";
 
 import Header from "./components/Header/Header";
@@ -11,11 +11,11 @@ import UsersPage from "./pages/UsersPage/UsersPage";
 import Images from "./pages/Images/Images";
 import UserPage from "./pages/UserPage/UserPage";
 import AddImage from "./pages/AddImage/AddImage";
-import Authenticate from "./pages/Authenticate/Authenticate";
+import Authenticate from "./pages/Login/Login";
 import Image from "./pages/Image/Image";
 import { AuthContext } from "./context/auth-context";
 
-function App() {
+export default (): JSX.Element => {
   const { isLogged } = useContext(AuthContext);
 
   let routes = (
@@ -55,6 +55,4 @@ function App() {
   }
 
   return <Router>{routes}</Router>;
-}
-
-export default App;
+};

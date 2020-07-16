@@ -4,15 +4,16 @@ import { validationResult } from "express-validator";
 import Image from "../models/image";
 import User from "../models/user";
 import mongoose from "mongoose";
+import { NextFunction } from "express";
 
-export const getAllImages = async (req, res, next) => {
+export const getAllImages = async (req, res) => {
   const images = await Image.find({}).populate("userID", "name id");
   res
     .status(200)
     .json(images.map((image) => image.toObject({ getters: true })));
 };
 
-export const getImageById = async (req, res, next) => {
+export const getImageById = async (req, res, next: NextFunction) => {
   const imageID = req.params.id;
   let gatheredImage;
 
@@ -30,7 +31,7 @@ export const getImageById = async (req, res, next) => {
   res.json({ image: gatheredImage.toObject({ getters: true }) });
 };
 
-export const getUserImages = async (req, res, next) => {
+export const getUserImages = async (req, res, next: NextFunction) => {
   const userID = req.params.id;
 
   let user;
@@ -52,7 +53,7 @@ export const getUserImages = async (req, res, next) => {
   });
 };
 
-export const createImage = async (req, res, next) => {
+export const createImage = async (req, res, next: NextFunction) => {
   const { name, url, description, author } = req.body;
   const errors = validationResult(req);
   if (!errors.isEmpty()) return next(new HttpError("Wrong data", 400));
@@ -60,7 +61,7 @@ export const createImage = async (req, res, next) => {
   let existingUser;
   try {
     existingUser = await User.findById(author);
-    if (!existingUser) return next(new HttpError("User doesnt exist"), 500);
+    if (!existingUser) return next(new HttpError("User doesnt exist", 500));
   } catch (error) {
     return next(new HttpError("Something went wrong", 400));
   }
@@ -89,7 +90,7 @@ export const createImage = async (req, res, next) => {
   res.status(200).json({ id: createdImage.id });
 };
 
-export const updateImage = async (req, res, next) => {
+export const updateImage = async (req, res, next: NextFunction) => {
   const id = req.params.id;
   const { name, description } = req.body;
 

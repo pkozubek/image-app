@@ -1,10 +1,12 @@
 .form-input {
   &__input {
+    padding: 5px;
+    background: white;
+    border: 1px solid gray;
   }
 
   &__input--error {
-    border: 1px solid red;
-    background: rgb(255, 133, 133);
+    border: 1px solid rgb(255, 133, 133);
   }
 
   &__label {

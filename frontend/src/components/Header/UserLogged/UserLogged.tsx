@@ -9,7 +9,7 @@ export default function UserLogged({ userName = "test" }) {
   const history = useHistory();
 
   const onClick = () => {
-    setLogged(false);
+    setLogged!(false);
     history.push("/");
   };
 
