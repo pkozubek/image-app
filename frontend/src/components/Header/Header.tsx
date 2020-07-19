@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-
 import Navigation from "./Navigation/Navigation";
 import Hamburger from "./Hamburger/Hamburger";
 import UserLogged from "./UserLogged/UserLogged";
-import { IoIosImages } from "react-icons/io";
+import Logo from "../Logo/Logo";
 
 import "./Header.scss";
 
@@ -15,12 +13,7 @@ const Header = () => {
     <>
       <UserLogged />
       <header className="header">
-        <Link className="header__link" to="/">
-          <h1 className="header__site-name">
-            <IoIosImages className="header__icon" />
-            Image-app
-          </h1>
-        </Link>
+        <Logo clickable />
         <Navigation
           isMobileMenuVisible={mobileMenuVisible}
           hideMenu={mobileMenuClickHandler}

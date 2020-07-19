@@ -25,7 +25,7 @@ const ModalContent = ({
     <div className="modal">
       <header className="header">
         <h2 className="header__text">{header}</h2>
-        <Button onClick={close} type="transparent">
+        <Button onClick={close} transparent>
           <IoIosClose className="header__close-icon" />
         </Button>
       </header>

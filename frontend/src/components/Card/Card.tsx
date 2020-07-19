@@ -3,8 +3,8 @@ import React from "react";
 import "./Cards.scss";
 
 interface CardPropsInterface {
-  children: JSX.Element | string;
-  className: string;
+  children: JSX.Element | JSX.Element[];
+  className?: string;
 }
 
 const Card = ({ children, className }: CardPropsInterface) => {

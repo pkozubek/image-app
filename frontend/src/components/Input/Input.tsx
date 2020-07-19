@@ -66,7 +66,14 @@ const Input = ({
 
   return (
     <div className="form-input">
-      <label className="form-input__label" htmlFor={id}>
+      <label
+        className={`form-input__label ${
+          !inputState.isValid &&
+          inputState.isTouched &&
+          "form-input__label--error"
+        }`}
+        htmlFor={id}
+      >
         {label}
       </label>
       <input

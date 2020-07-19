@@ -1,26 +1,27 @@
 .button {
   cursor: pointer;
-  margin: 10px 5px 10px 0;
+  margin-bottom: 5px;
   text-decoration: none;
   min-height: 25px;
 
-  &--red {
-    color: red;
-  }
-
-  &--green {
-    color: green;
-  }
-
-  &--confirm {
-    border: none;
+  &--primary {
     background: lightgreen;
+  }
+
+  &--secondary {
+    background: black;
+  }
+
+  &--form {
+    border: none;
+    width: 100%;
+    padding: 1em;
+    border: none;
     color: white;
   }
 
   &--disabled {
     border: 1px solid gray;
-    background: white;
     color: gray;
     cursor: not-allowed;
   }

@@ -5,25 +5,4 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  &__link {
-    text-decoration: none;
-  }
-
-  &__site-name {
-    color: white;
-    margin: 0;
-    padding: 0 0 0 25px;
-  }
-
-  &__icon {
-    padding-right: 5px;
-  }
-}
-
-@media (min-width: 768px) {
-  .header__site-name {
-    width: 100%;
-    text-align: center;
-  }
 }
