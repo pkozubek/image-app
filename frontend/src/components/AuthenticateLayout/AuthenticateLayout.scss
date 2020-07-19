@@ -6,5 +6,10 @@
   &__form {
     margin: 5% 10%;
     width: 80%;
+
+    &__title {
+      color: gray;
+      font-size: 1.4em;
+    }
   }
 }

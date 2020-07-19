@@ -1,12 +1,12 @@
 .modal-enter {
-  transform: translateY(-2rem);
+  transform: translateY(-4rem);
   opacity: 0;
 }
 
 .modal-enter-active {
   transform: translateY(0);
   opacity: 1;
-  transition: all 200ms;
+  transition: all 100ms;
 }
 
 .modal-exit {
@@ -15,9 +15,9 @@
 }
 
 .modal-exit-active {
-  transform: translateY(-2rem);
+  transform: translateY(-4rem);
   opacity: 0;
-  transition: all 200ms;
+  transition: all 100ms;
 }
 
 .modal {
@@ -27,22 +27,24 @@
   left: 40%;
   width: auto;
   height: auto;
-  background: gray;
+  background: white;
 
   .header {
+    font-size: 0.7em;
     padding: 0 10px 0 10px;
     width: 100%;
-    background: lightgreen;
+    background: black;
     color: white;
     display: flex;
+    align-items: center;
 
     &__text {
-      min-width: calc(100% - 25px);
+      min-width: calc(100% - 30px);
     }
 
     &__close-icon {
-      width: 25px;
-      height: 25px;
+      width: 30px;
+      height: 30px;
       color: white;
     }
   }
@@ -50,6 +52,11 @@
   .content {
     padding: 5%;
     text-align: center;
+
+    &__icon {
+      width: 100px;
+      height: 100%;
+    }
   }
 
   .footer {

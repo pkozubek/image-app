@@ -11,6 +11,7 @@ interface ButtonProps {
   primary?: boolean;
   secondary?: boolean;
   transparent?: boolean;
+  modalElement?: boolean;
   onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
@@ -23,6 +24,7 @@ const Button = ({
   primary,
   secondary,
   transparent,
+  modalElement,
 }: ButtonProps) => {
   const returnClassNames = () => {
     const classNames = ["button"];
@@ -30,6 +32,7 @@ const Button = ({
     if (isDisabled) classNames.push("button--disabled");
     if (className) classNames.push(className);
     if (formElement) classNames.push(`button--form`);
+    if (modalElement) classNames.push(`button--modal`);
     if (primary) classNames.push(`button--primary`);
     if (secondary) classNames.push(`button--secondary`);
     if (transparent) classNames.push(`button--transparent`);

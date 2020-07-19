@@ -1,4 +1,5 @@
 import React from "react";
+import { IoIosWarning } from "react-icons/io";
 
 import Modal from "./Modal";
 import Button from "../Button/Button";
@@ -9,8 +10,13 @@ const ErrorModal = ({ onCancel, error }) => {
       onCancel={onCancel}
       header="An Error Occurred!"
       isVisible={!!error}
-      footer={<Button onClick={onCancel}>Okay</Button>}
+      footer={
+        <Button modalElement onClick={onCancel}>
+          Okay
+        </Button>
+      }
     >
+      <IoIosWarning class="content__icon" />
       <p>{error}</p>
     </Modal>
   );

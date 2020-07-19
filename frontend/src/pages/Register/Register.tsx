@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
 
 import Input from "../../components/Input/Input";
 import { useForm } from "../../hooks/useForm";
@@ -7,8 +9,15 @@ import {
   VALIDATOR_MINLENGTH,
   VALIDATOR_EMAIL,
 } from "../../utils/validators";
+import AuthenticateLayout from "../../components/AuthenticateLayout/AuthenticateLayout";
+import Button from "../../components/Button/Button";
+import { AuthContext } from "../../context/auth-context";
 
 export default (): JSX.Element => {
+  const history = useHistory();
+  const [error, setError] = useState(null);
+  const auth = useContext(AuthContext);
+
   const [formState, inputHandler, setForm] = useForm({
     nickname: {
       value: "",
@@ -25,19 +34,41 @@ export default (): JSX.Element => {
     isValid: false,
   });
 
-  const onRegisterAccount = (event: React.FormEvent<HTMLFormElement>) => {
+  const onRegisterAccount = async (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     event.preventDefault();
 
     const path = "http://localhost:4000/api/users/register";
+
     const formData = {
       name: formState.inputs.nickname.value,
       password: formState.inputs.password.value,
       email: formState.inputs.email.value,
     };
+
+    await axios
+      .post(path, formData)
+      .then((response) => {
+        if (response.status === 200) {
+          auth.setLogged(true);
+        }
+      })
+      .catch((error) => {
+        const errorMessage = error.response.data.message;
+        setError(errorMessage);
+      });
+  };
+
+  const onLoginRedirect = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    event.preventDefault();
+    history.push("/");
   };
 
   return (
-    <form>
+    <AuthenticateLayout title="Register">
       <Input
         id="nickname"
         onInput={inputHandler}
@@ -63,6 +94,17 @@ export default (): JSX.Element => {
         value={formState.inputs.email.value}
         isValid={formState.inputs.email.isValid}
       />
-    </form>
+      <Button
+        isDisabled={!formState.isValid}
+        formElement
+        primary
+        onClick={onRegisterAccount}
+      >
+        Register
+      </Button>
+      <Button formElement secondary onClick={onLoginRedirect}>
+        Back to Login
+      </Button>
+    </AuthenticateLayout>
   );
 };

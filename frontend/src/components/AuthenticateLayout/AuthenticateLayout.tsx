@@ -7,13 +7,17 @@ import "./AuthenticateLayout.scss";
 
 interface authenticateLayoutProps {
   children: JSX.Element | JSX.Element[];
+  title: string;
 }
 
-export default ({ children }: authenticateLayoutProps): JSX.Element => {
+export default ({ children, title }: authenticateLayoutProps): JSX.Element => {
   return (
     <Card className="Authenticate">
       <Logo dark />
-      <form className="Authenticate__form">{children}</form>
+      <form className="Authenticate__form">
+        <h1 className="Authenticate__form__title">{title}</h1>
+        {children}
+      </form>
     </Card>
   );
 };

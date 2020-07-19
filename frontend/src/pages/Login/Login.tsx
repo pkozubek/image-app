@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 import { useForm } from "../../hooks/useForm";
 import Input from "../../components/Input/Input";
@@ -15,8 +16,9 @@ interface IformDateInterface {
   email?: string;
 }
 
-export const Authenticate = () => {
-  const [formState, inputHandler, setForm] = useForm({
+export default (): JSX.Element => {
+  const history = useHistory();
+  const [formState, inputHandler] = useForm({
     nickname: {
       value: "",
       isValid: true,
@@ -31,7 +33,9 @@ export const Authenticate = () => {
   const [error, setError] = useState(null);
   const auth = useContext(AuthContext);
 
-  const onSendForm = async (event) => {
+  const onSendForm = async (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     event.preventDefault();
 
     const path = "http://localhost:4000/api/users/login";
@@ -53,6 +57,13 @@ export const Authenticate = () => {
       });
   };
 
+  const onRegisterRedirect = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    event.preventDefault();
+    history.push("/register");
+  };
+
   return (
     <>
       <ErrorModal
@@ -61,7 +72,7 @@ export const Authenticate = () => {
           setError(null);
         }}
       />
-      <AuthenticateLayout>
+      <AuthenticateLayout title="Log in">
         <Input
           id="nickname"
           onInput={inputHandler}
@@ -87,12 +98,10 @@ export const Authenticate = () => {
         >
           Log in
         </Button>
-        <Button formElement secondary onClick={onSendForm}>
+        <Button formElement secondary onClick={onRegisterRedirect}>
           Create Account
         </Button>
       </AuthenticateLayout>
     </>
   );
 };
-
-export default Authenticate;
