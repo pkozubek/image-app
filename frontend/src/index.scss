@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap");
+@import "./theme.scss";
 
 * {
   box-sizing: border-box;
@@ -12,7 +13,7 @@ html,
 body {
   margin: 0px;
   padding: 0px;
-  background: rgb(53, 53, 53);
+  background: $background;
 }
 
 .slide-in-left-enter {

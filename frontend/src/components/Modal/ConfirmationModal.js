@@ -6,7 +6,7 @@ const ConfirmationModal = ({
   question,
   onConfirm,
   declineAction,
-  isVisible
+  isVisible,
 }) => {
   return (
     <Modal isVisible={isVisible}>

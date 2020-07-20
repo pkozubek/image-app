@@ -2,7 +2,7 @@ import React from "react";
 
 import "./Button.scss";
 
-interface ButtonProps {
+interface IButtonProps {
   children: JSX.Element | string;
   className?: string;
   textColor?: string;
@@ -25,7 +25,7 @@ const Button = ({
   secondary,
   transparent,
   modalElement,
-}: ButtonProps) => {
+}: IButtonProps) => {
   const returnClassNames = () => {
     const classNames = ["button"];
 

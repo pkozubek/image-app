@@ -1,14 +1,16 @@
+@import "../../theme.scss";
+
 .button {
   cursor: pointer;
   text-decoration: none;
   min-height: 25px;
 
   &--primary {
-    background: lightgreen;
+    background: $primary-color;
   }
 
   &--secondary {
-    background: black;
+    background: $secondary-color;
   }
 
   &--form {
@@ -21,7 +23,7 @@
   }
 
   &--modal {
-    background: black;
+    background: $black;
     color: white;
     border: none;
     width: 50%;
@@ -30,8 +32,8 @@
   }
 
   &--disabled {
-    border: 1px solid gray;
-    color: gray;
+    border: 1px solid $disabled;
+    color: $disabled;
     cursor: not-allowed;
   }
 

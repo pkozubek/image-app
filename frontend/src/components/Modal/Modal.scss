@@ -1,3 +1,5 @@
+@import "../../theme.scss";
+
 .modal-enter {
   transform: translateY(-4rem);
   opacity: 0;
@@ -23,18 +25,18 @@
 .modal {
   z-index: 100;
   position: fixed;
-  top: 5vh;
+  top: 25vh;
   left: 40%;
   width: auto;
   height: auto;
-  background: white;
+  background: $white;
 
   .header {
     font-size: 0.7em;
     padding: 0 10px 0 10px;
     width: 100%;
-    background: black;
-    color: white;
+    background: $black;
+    color: $white;
     display: flex;
     align-items: center;
 
@@ -45,7 +47,7 @@
     &__close-icon {
       width: 30px;
       height: 30px;
-      color: white;
+      color: $white;
     }
   }
 

@@ -2,12 +2,13 @@ import React from "react";
 
 import "./Cards.scss";
 
-interface CardPropsInterface {
+interface ICardProps {
   children: JSX.Element | JSX.Element[];
   className?: string;
+  onClick?: () => void;
 }
 
-const Card = ({ children, className }: CardPropsInterface) => {
+const Card = ({ children, className }: ICardProps) => {
   return <div className={`card ${className}`}>{children}</div>;
 };
 

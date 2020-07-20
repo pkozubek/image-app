@@ -13,6 +13,7 @@ interface ModalContentProps {
   close: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   header?: string;
   footer?: JSX.Element;
+  isVisible?: boolean;
 }
 
 const ModalContent = ({

@@ -1,5 +1,7 @@
+@import "../../theme.scss";
+
 .Logo {
-  color: white;
+  color: $white;
   margin: 0;
 
   &__icon {
@@ -11,6 +13,6 @@
   }
 
   &__dark {
-    color: black;
+    color: $black;
   }
 }
