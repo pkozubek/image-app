@@ -8,38 +8,22 @@ import Button from "../Button/Button";
 
 import "./Modal.scss";
 
-interface ModalContentProps {
+interface IModalProps {
+  isVisible: boolean;
+  onCancel: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   children: JSX.Element | string;
-  close: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  header?: string;
-  footer?: JSX.Element;
-  isVisible?: boolean;
+  footer: JSX.Element;
+  header: string;
 }
 
-const ModalContent = ({
+const Modal = ({
+  isVisible,
+  onCancel,
   children,
-  close,
-  header,
   footer,
-}: ModalContentProps) => {
-  const content = (
-    <div className="modal">
-      <header className="header">
-        <h2 className="header__text">{header}</h2>
-        <Button onClick={close} transparent>
-          <IoIosClose className="header__close-icon" />
-        </Button>
-      </header>
-      <div className="content">{children}</div>
-      <div className="footer">{footer}</div>
-    </div>
-  );
-
-  return ReactDOM.createPortal(content, document.getElementById("modal-hook"));
-};
-
-const Modal = ({ isVisible, onCancel, children, ...props }) => {
-  return (
+  header,
+}: IModalProps) => {
+  const modalContent = (
     <>
       {isVisible && <Backdrop />}
       <CSSTransition
@@ -49,11 +33,23 @@ const Modal = ({ isVisible, onCancel, children, ...props }) => {
         timeout={200}
         classNames="modal"
       >
-        <ModalContent close={onCancel} {...props}>
-          {children}
-        </ModalContent>
+        <div className="modal">
+          <header className="header">
+            <h2 className="header__text">{header}</h2>
+            <Button onClick={onCancel} transparent>
+              <IoIosClose className="header__close-icon" />
+            </Button>
+          </header>
+          <div className="content">{children}</div>
+          <div className="footer">{footer}</div>
+        </div>
       </CSSTransition>
     </>
+  );
+
+  return ReactDOM.createPortal(
+    modalContent,
+    document.getElementById("modal-hook")
   );
 };
 
