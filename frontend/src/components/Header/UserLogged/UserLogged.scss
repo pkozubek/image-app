@@ -1,10 +1,12 @@
+@import "../../../index.scss";
+
 .UserLogged {
   color: white;
   background: rgba(37, 37, 37, 0.1);
   width: 100%;
-  height: auto;
   padding: 5px 15px 5px 0;
   text-align: right;
+  border-bottom: 1px solid $primary-color;
 
   &__nickname {
     font-weight: bold;

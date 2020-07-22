@@ -6,21 +6,15 @@ import { IoIosClose } from "react-icons/io";
 import Backdrop from "../Backdrop/Backdrop";
 import Button from "../Button/Button";
 
-import "./Modal.scss";
+import { IModalProps } from "../../interfaces/components/IModal";
 
-interface IModalProps {
-  isVisible: boolean;
-  onCancel: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  children: JSX.Element | string;
-  footer: JSX.Element;
-  header: string;
-}
+import "./Modal.scss";
 
 const Modal = ({
   isVisible,
   onCancel,
   children,
-  footer,
+  actions,
   header,
 }: IModalProps) => {
   const modalContent = (
@@ -35,13 +29,17 @@ const Modal = ({
       >
         <div className="modal">
           <header className="header">
-            <h2 className="header__text">{header}</h2>
-            <Button onClick={onCancel} transparent>
-              <IoIosClose className="header__close-icon" />
+            {header && <h2 className="header__text">{header}</h2>}
+            <Button
+              className="header__close__button"
+              onClick={onCancel}
+              transparent
+            >
+              <IoIosClose className="header__close__icon" />
             </Button>
           </header>
           <div className="content">{children}</div>
-          <div className="footer">{footer}</div>
+          <div className="actions">{actions}</div>
         </div>
       </CSSTransition>
     </>

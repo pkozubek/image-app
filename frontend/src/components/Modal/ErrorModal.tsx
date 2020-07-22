@@ -4,19 +4,21 @@ import { IoIosWarning } from "react-icons/io";
 import Modal from "./Modal";
 import Button from "../Button/Button";
 
-const ErrorModal = ({ onCancel, error }) => {
+import { IErrorModalProps } from "../../interfaces/components/IModal";
+
+const ErrorModal = ({ onCancel, error }: IErrorModalProps) => {
   return (
     <Modal
       onCancel={onCancel}
       header="An Error Occurred!"
       isVisible={!!error}
-      footer={
+      actions={
         <Button modalElement onClick={onCancel}>
           Okay
         </Button>
       }
     >
-      <IoIosWarning class="content__icon" />
+      <IoIosWarning className="content__icon" />
       <p>{error}</p>
     </Modal>
   );

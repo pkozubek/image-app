@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 
 import { useHttp } from "../../hooks/useHttp";
 import { API_IMAGES } from "../../helpers/url";
-import Spinner from "../../components/LoadingSpinner/LoadingSpinner";
+import Spinner from "../../components/Spinner/Spinner";
 import SingleImage from "./SingleImage/SingleImage";
 
 import "./Images.scss";

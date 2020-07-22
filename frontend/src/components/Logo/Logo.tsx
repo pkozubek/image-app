@@ -2,14 +2,11 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { IoIosImages } from "react-icons/io";
 
+import { ILogoProps } from "../../interfaces/components/ILogo";
+
 import "./Logo.scss";
 
-interface LogoProps {
-  dark?: boolean;
-  clickable?: boolean;
-}
-
-export default ({ dark, clickable }: LogoProps): JSX.Element => {
+export default ({ dark, clickable }: ILogoProps): JSX.Element => {
   const history = useHistory();
   const onClick = () => history.push("/");
 

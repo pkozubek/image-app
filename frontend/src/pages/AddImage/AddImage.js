@@ -9,7 +9,7 @@ import { API_IMAGES } from "../../helpers/url";
 import { useHistory } from "react-router-dom";
 import "./AddImage.scss";
 import Modal from "../../components/Modal/Modal";
-import Spinner from "../../components/LoadingSpinner/LoadingSpinner";
+import Spinner from "../../components/Spinner/Spinner";
 
 const AddImage = () => {
   const { post, data, isLoading } = useHttp();

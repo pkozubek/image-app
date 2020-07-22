@@ -28,7 +28,6 @@
     border: none;
     width: 50%;
     height: 50px;
-    margin-bottom: 25px;
   }
 
   &--disabled {
@@ -40,5 +39,22 @@
   &--transparent {
     background: transparent;
     border: none;
+  }
+
+  &--confirmation {
+    width: 25%;
+    padding: 5%;
+    background: $primary-color;
+    border: none;
+    color: $white;
+  }
+
+  &--decline {
+    width: 25%;
+    padding: 5%;
+    margin-left: 5%;
+    background: $secondary-color;
+    border: none;
+    color: $white;
   }
 }

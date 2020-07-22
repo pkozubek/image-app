@@ -6,7 +6,7 @@ import Logo from "../Logo/Logo";
 
 import "./Header.scss";
 
-const Header = () => {
+const Header = (): JSX.Element => {
   const [mobileMenuVisible, mobileMenuClickHandler] = useState(false);
 
   return (
@@ -18,9 +18,7 @@ const Header = () => {
           isMobileMenuVisible={mobileMenuVisible}
           hideMenu={mobileMenuClickHandler}
         />
-        <Hamburger
-          clickHandler={() => mobileMenuClickHandler(!mobileMenuVisible)}
-        />
+        <Hamburger onClick={() => mobileMenuClickHandler(!mobileMenuVisible)} />
       </header>
     </>
   );

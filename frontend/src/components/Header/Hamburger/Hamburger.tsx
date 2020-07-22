@@ -1,15 +1,15 @@
 import React from "react";
 
+import { IHamburgerProps } from "../../../interfaces/components/IHamburger";
+
 import "./Hamburger.scss";
 
-const Hamburger = ({ clickHandler }) => {
+export default ({ onClick }: IHamburgerProps): JSX.Element => {
   return (
-    <button onClick={clickHandler} className="hamburger-icon">
+    <button onClick={onClick} className="hamburger-icon">
       <span className="hamburger-icon__bar" />
       <span className="hamburger-icon__bar" />
       <span className="hamburger-icon__bar" />
     </button>
   );
 };
-
-export default Hamburger;
