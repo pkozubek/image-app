@@ -8,7 +8,7 @@ export interface IButtonProps {
   secondary?: boolean;
   transparent?: boolean;
   modalElement?: boolean;
-  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   confirmation?: boolean;
   decline?: boolean;
 }

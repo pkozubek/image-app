@@ -8,8 +8,8 @@ interface IInputProps {
   id: string;
   placeholder?: string;
   type?: "text" | "password";
-  value: string;
-  isValid: boolean;
+  value?: string;
+  isValid?: boolean;
   validators;
   onInput;
 }

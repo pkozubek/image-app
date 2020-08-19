@@ -10,6 +10,7 @@ import { useHistory } from "react-router-dom";
 import "./AddImage.scss";
 import Modal from "../../components/Modal/Modal";
 import Spinner from "../../components/Spinner/Spinner";
+import ImageUpload from "../../components/ImageUpload/ImageUpload";
 
 const AddImage = () => {
   const { post, data, isLoading } = useHttp();
@@ -73,7 +74,8 @@ const AddImage = () => {
           label="Image url :"
           validators={[VALIDATOR_REQUIRE()]}
         />
-        <Button isDisabled={!formState.isValid} type="confirm">
+        <ImageUpload alt="image-preview" />
+        <Button isDisabled={!formState.isValid} confirmation>
           Submit
         </Button>
         <Modal isVisible={isLoading}>
