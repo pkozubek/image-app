@@ -15,10 +15,10 @@ import { AuthContext } from "../../context/auth-context";
 
 export default (): JSX.Element => {
   const history = useHistory();
-  const [error, setError] = useState(null);
+  const [setError] = useState(null);
   const auth = useContext(AuthContext);
 
-  const [formState, inputHandler, setForm] = useForm({
+  const [formState, inputHandler] = useForm({
     nickname: {
       value: "",
       isValid: true,

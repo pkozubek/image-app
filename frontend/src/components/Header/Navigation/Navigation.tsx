@@ -5,7 +5,12 @@ import MobileNav from "./MobileNav/MobileNav";
 import Backdrop from "../../Backdrop/Backdrop";
 import NavItems from "./NavItems/NavItems";
 
-const Navigation = ({ isMobileMenuVisible, hideMenu }) => {
+interface INavigationProps {
+  isMobileMenuVisible: boolean;
+  hideMenu: (visible: boolean) => void;
+}
+
+const Navigation = ({ isMobileMenuVisible, hideMenu }: INavigationProps) => {
   return (
     <>
       <DesktopNav>

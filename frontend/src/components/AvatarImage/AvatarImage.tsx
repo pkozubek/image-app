@@ -5,7 +5,7 @@ import "./AvatarImage.scss";
 interface AvatarImageInterface {
   src: string;
   alt: string;
-  className: string;
+  className?: string;
 }
 
 const AvatarImage = ({ src, alt, className }: AvatarImageInterface) => {

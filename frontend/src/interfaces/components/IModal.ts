@@ -1,8 +1,8 @@
 export interface IModalProps {
   isVisible: boolean;
-  onCancel: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onCancel?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   children: JSX.Element | JSX.Element[] | string;
-  actions: JSX.Element;
+  actions?: JSX.Element;
   header?: string;
 }
 

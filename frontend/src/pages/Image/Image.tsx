@@ -5,9 +5,11 @@ import { API_IMAGES } from "../../helpers/url";
 import Button from "../../components/Button/Button";
 import ConfirmationModal from "../../components/Modal/ConfirmationModal";
 import ImageForm from "./ImageForm";
+import "./Image.scss";
 
 export default function Image() {
-  const imageId = useParams().id;
+  const params: { id: string } = useParams();
+  const imageId = params.id;
   const history = useHistory();
 
   const [isConfirmationVisible, setConfirmationVisible] = useState(false);
@@ -16,6 +18,7 @@ export default function Image() {
 
   useEffect(() => {
     get(`${API_IMAGES}/${imageId}`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onDelete = () => {
@@ -31,20 +34,21 @@ export default function Image() {
     history.push("/");
   };
 
-  let content = "loading";
+  let content: JSX.Element | String = "loading";
 
   if (!isLoading && data !== null) {
     const { image } = data;
-    console.log(image);
     content = (
       <>
-        <img src={image.url} alt={image.name} />
+        <figure className="image-page__figure">
+          <img className="image-page__img" src={image.url} alt={image.name} />
+        </figure>
         {isEdited ? (
           <ImageForm name={image.name} />
         ) : (
           <>
-            <h2>{image.name}</h2>
-            <p>{image.description}</p>
+            <h2 className="image-page__title">{image.name}</h2>
+            <p className="image-page__description">{image.description}</p>
             <Button onClick={onEdit}>Edit Image data</Button>
           </>
         )}
@@ -54,7 +58,7 @@ export default function Image() {
   }
 
   return (
-    <div>
+    <div className="image-page__container">
       {content}
       <ConfirmationModal
         question="Do you realy want to delete this ?"

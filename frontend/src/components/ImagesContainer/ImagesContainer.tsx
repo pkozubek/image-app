@@ -2,7 +2,12 @@ import React from "react";
 
 import "./ImagesContainer.scss";
 
-const ImagesContainer = ({ className, children, title }) => {
+interface IImagesContainer {
+  className: string;
+  children: JSX.Element | JSX.Element[];
+}
+
+const ImagesContainer = ({ className, children }: IImagesContainer) => {
   return <div className={`images-container ${className}`}>{children}</div>;
 };
 

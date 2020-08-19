@@ -12,6 +12,7 @@ const Images = (): JSX.Element => {
 
   useEffect(() => {
     get(API_IMAGES);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   let images: JSX.Element = <Spinner />;

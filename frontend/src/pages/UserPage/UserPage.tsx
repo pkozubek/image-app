@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 import "./UserPage.scss";
 
@@ -10,14 +9,16 @@ import { useHttp } from "../../hooks/useHttp";
 import { API_IMAGES } from "../../helpers/url";
 import Spinner from "../../components/Spinner/Spinner";
 
-const UserPage = (props) => {
-  const userId = useParams().id;
+const UserPage = () => {
+  const params: { id: string } = useParams();
+  const userId = params.id;
   const history = useHistory();
 
   const { get, data, isLoading } = useHttp();
 
   useEffect(() => {
     get(API_IMAGES + `/user/${userId}`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onImageClick = (id) => {

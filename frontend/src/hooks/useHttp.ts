@@ -32,7 +32,7 @@ export const useHttp = () => {
     axios.patch(url, data).then(handleSuccess).catch(handleError);
   };
 
-  const del = (url: string, data) => {
+  const del = (url: string, data?) => {
     setLoading(true);
     axios.delete(url, data).then(handleSuccess).catch(handleError);
   };

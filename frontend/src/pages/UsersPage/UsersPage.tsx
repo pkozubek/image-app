@@ -9,6 +9,7 @@ const UsersPage = () => {
     axios.get("http://localhost:4000/api/users").then(({ data }) => {
       setUsersList(data);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
