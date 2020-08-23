@@ -48,7 +48,7 @@ export default (): JSX.Element => {
       .post(path, formData)
       .then((response) => {
         if (response.status === 200) {
-          auth.setLogged(true);
+          auth.setLogged(response.data);
         }
       })
       .catch((error) => {

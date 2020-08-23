@@ -2,4 +2,15 @@
   &__input {
     display: none;
   }
+
+  &__preview {
+    max-width: 200px;
+    display: block;
+    margin-bottom: 1em;
+  }
+
+  &__preview_label {
+    color: gray;
+    font-size: 0.6em;
+  }
 }

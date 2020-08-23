@@ -8,13 +8,13 @@ import {
 } from "./contextInterface";
 
 const initialState: ReducerState = {
-  isLogged: true,
+  userData: null,
 };
 
 function reducer(state: ReducerState, action: ReducerAction) {
   switch (action.type) {
     case "SET_LOGGED":
-      return { ...state, isLogged: action.willBeLogged };
+      return { ...state, userData: action.userData };
     default:
       return state;
   }
@@ -27,10 +27,10 @@ export const AuthProvider: React.FC<AuthProviderInterface> = (
 ): JSX.Element => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const setLogged = (willBeLogged: boolean) => {
+  const setLogged = (userData) => {
     dispatch({
       type: "SET_LOGGED",
-      willBeLogged,
+      userData,
     });
   };
 

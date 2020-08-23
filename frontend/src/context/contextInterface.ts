@@ -1,5 +1,8 @@
 export interface ContextInterface {
-  isLogged: boolean;
+  userData: {
+    id: string;
+    name: string;
+  };
   setLogged: (willBeLogged: boolean) => void;
 }
 
@@ -8,7 +11,10 @@ export interface AuthProviderInterface {
 }
 
 export interface ReducerState {
-  isLogged: boolean;
+  userData: {
+    id: string;
+    name: string;
+  };
 }
 
 interface IActionInterface {
@@ -16,7 +22,10 @@ interface IActionInterface {
 }
 
 export interface ReducerAction extends IActionInterface {
-  willBeLogged: boolean;
+  userData: {
+    id: string;
+    name: string;
+  };
 }
 
 type ActionTypes = ReducerAction;

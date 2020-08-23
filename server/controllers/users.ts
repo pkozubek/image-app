@@ -40,7 +40,7 @@ export const loginUser = async (req, res, next: NextFunction) => {
     return next(new HttpError("Wrong name, password combination", 401));
   }
 
-  res.status(200).json({ message: "Login correct" });
+  res.status(200).json({ name: existingUser.name, id: existingUser._id });
 };
 
 export const registerUser = async (req, res, next: NextFunction) => {

@@ -17,7 +17,7 @@ import Image from "./pages/Image/Image";
 import { AuthContext } from "./context/auth-context";
 
 export default (): JSX.Element => {
-  const { isLogged } = useContext(AuthContext);
+  const { userData } = useContext(AuthContext);
 
   let routes = (
     <Switch>
@@ -30,7 +30,7 @@ export default (): JSX.Element => {
     </Switch>
   );
 
-  if (isLogged) {
+  if (userData) {
     routes = (
       <>
         <Header />

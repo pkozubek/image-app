@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Card from "../../components/Card/Card";
 import Input from "../../components/Input/Input";
 import { useForm } from "../../hooks/useForm";
@@ -11,10 +11,12 @@ import "./AddImage.scss";
 import Modal from "../../components/Modal/Modal";
 import Spinner from "../../components/Spinner/Spinner";
 import ImageUpload from "../../components/ImageUpload/ImageUpload";
+import { AuthContext } from "../../context/auth-context";
 
 const AddImage = () => {
   const { post, data, isLoading } = useHttp();
   const history = useHistory();
+  const { userData } = useContext(AuthContext);
   const [formState, inputHandler] = useForm(
     {
       title: {
@@ -25,27 +27,27 @@ const AddImage = () => {
         value: "",
         isValid: false,
       },
-      url: {
+      image: {
         value: "",
         isValid: false,
       },
     },
     false
   );
-
   const submitForm = async (ev) => {
     ev.preventDefault();
 
     const { isValid, inputs } = formState;
-    const { title, description, url } = inputs;
+    const { title, description, image } = inputs;
 
     if (isValid) {
-      await post(API_IMAGES, {
-        name: title.value,
-        description: description.value,
-        url: url.value,
-        author: "5e5ec63223439e067c5671fd",
-      });
+      const formData = new FormData();
+      formData.append("name", title.value);
+      formData.append("description", description.value);
+      formData.append("author", userData.id);
+      formData.append("image", image.value);
+
+      await post(API_IMAGES, formData);
     }
   };
 
@@ -62,19 +64,13 @@ const AddImage = () => {
           label="Image name:"
           validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(5)]}
         />
+        <ImageUpload id="image" onChange={inputHandler} alt="image-preview" />
         <Input
           id="description"
           onInput={inputHandler}
           label="Description :"
           validators={[VALIDATOR_REQUIRE()]}
         />
-        <Input
-          id="url"
-          onInput={inputHandler}
-          label="Image url :"
-          validators={[VALIDATOR_REQUIRE()]}
-        />
-        <ImageUpload alt="image-preview" />
         <Button isDisabled={!formState.isValid} confirmation>
           Submit
         </Button>

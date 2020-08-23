@@ -6,11 +6,15 @@ import "./ImageUpload.scss";
 
 interface IImageUploadProps {
   alt: string;
+  onChange: any;
+  id: string;
 }
 
 export default (props: IImageUploadProps): JSX.Element => {
   const [imageData, setImageData] = useState<File>(null);
   const [imageUrl, setImageUrl] = useState<string>();
+  const [isValid, setIsValid] = useState(false);
+
   const inputRef: React.MutableRefObject<HTMLInputElement> = useRef();
 
   const onClick = () => {
@@ -20,6 +24,10 @@ export default (props: IImageUploadProps): JSX.Element => {
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length === 1) {
       setImageData(event.target.files[0]);
+      setIsValid(true);
+    } else {
+      setImageData(null);
+      setIsValid(false);
     }
   };
 
@@ -33,11 +41,14 @@ export default (props: IImageUploadProps): JSX.Element => {
       setImageUrl(fileReader.result as string);
     };
     fileReader.readAsDataURL(imageData);
-  }, [imageData]);
+    props.onChange(props.id, imageData, isValid);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [imageData, props.id, props.onChange, isValid]);
 
   return (
     <div className="image-upload">
       <input
+        id={props.id}
         onChange={onChange}
         className="image-upload__input"
         type="file"
@@ -45,7 +56,16 @@ export default (props: IImageUploadProps): JSX.Element => {
         ref={inputRef}
       />
       <div>
-        {imageUrl && <img alt={props.alt} src={imageUrl} />}
+        {imageUrl && (
+          <>
+            <label className="image-upload__preview_label">preview</label>
+            <img
+              className="image-upload__preview"
+              alt={props.alt}
+              src={imageUrl}
+            />
+          </>
+        )}
         <Button onClick={onClick}>Upload image</Button>
       </div>
     </div>
