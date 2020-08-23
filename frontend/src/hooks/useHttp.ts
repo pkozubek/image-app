@@ -22,7 +22,7 @@ export const useHttp = () => {
     await axios.get(url).then(handleSuccess).catch(handleError);
   };
 
-  const post = async (url: string, data) => {
+  const post = async (url: string, data: object | FormData) => {
     setLoading(true);
     await axios.post(url, data).then(handleSuccess).catch(handleError);
   };

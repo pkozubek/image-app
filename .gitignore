@@ -2,6 +2,7 @@
 
 # server dependencies
 /server/node_modules
+/server/uploads/images
 /server/.env
 /.pnp
 .pnp.js

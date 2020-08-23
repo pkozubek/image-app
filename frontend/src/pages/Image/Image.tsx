@@ -36,12 +36,17 @@ export default function Image() {
 
   let content: JSX.Element | String = "loading";
 
+  console.log(data);
   if (!isLoading && data !== null) {
     const { image } = data;
     content = (
       <>
         <figure className="image-page__figure">
-          <img className="image-page__img" src={image.url} alt={image.name} />
+          <img
+            className="image-page__img"
+            src={`http://localhost:4000/${image.url}`}
+            alt={image.name}
+          />
         </figure>
         {isEdited ? (
           <ImageForm name={image.name} />

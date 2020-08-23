@@ -1,6 +1,7 @@
 import express from "express";
 import { check } from "express-validator";
 import * as controllers from "../controllers/images";
+import { fileUpload } from "../middlewares/fileUpload";
 
 const router = express.Router();
 
@@ -10,6 +11,7 @@ router.get("/:id", controllers.getImageById);
 
 router.post(
   "/",
+  fileUpload.single("image"),
   [check("name").not().isEmpty(), check("author").not().isEmpty()],
   controllers.createImage
 );

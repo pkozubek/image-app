@@ -8,7 +8,10 @@ import {
 } from "./contextInterface";
 
 const initialState: ReducerState = {
-  userData: null,
+  userData: {
+    id: "5e5ec63223439e067c5671fd",
+    name: "kozi0892",
+  },
 };
 
 function reducer(state: ReducerState, action: ReducerAction) {
@@ -28,6 +31,7 @@ export const AuthProvider: React.FC<AuthProviderInterface> = (
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const setLogged = (userData) => {
+    console.log(userData);
     dispatch({
       type: "SET_LOGGED",
       userData,

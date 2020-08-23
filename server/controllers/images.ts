@@ -70,7 +70,7 @@ export const createImage = async (req, res, next: NextFunction) => {
     id: uuid(),
     name,
     description,
-    url,
+    url: req.file.path,
     views: 1,
     likes: 1,
     userID: author,
