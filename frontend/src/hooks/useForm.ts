@@ -40,14 +40,18 @@ export function useForm<T>(initialInputs: T, initialValidity?: boolean) {
     isValid: initialValidity,
   });
 
-  const inputHandler = useCallback((id, value, isValid) => {
-    dispatchFormChange({
-      type: "INPUT_CHANGE",
-      value: value,
-      isValid: isValid,
-      inputID: id,
-    });
-  }, []);
+  const inputHandler = useCallback(
+    (id: string, value: string, isValid: boolean, isOptional?: boolean) => {
+      dispatchFormChange({
+        type: "INPUT_CHANGE",
+        value: value,
+        isValid: isValid,
+        inputID: id,
+        isOptional,
+      });
+    },
+    []
+  );
 
   const setForm = useCallback((inputData, formValidity) => {
     dispatchFormChange({

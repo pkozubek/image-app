@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { useHttp } from "../../hooks/useHttp";
-import { API_IMAGES } from "../../helpers/url";
+import { API_IMAGES } from "../../API/API";
 import Button from "../../components/Button/Button";
 import ConfirmationModal from "../../components/Modal/ConfirmationModal";
 import ImageForm from "./ImageForm";
@@ -44,7 +44,7 @@ export default function Image() {
         <figure className="image-page__figure">
           <img
             className="image-page__img"
-            src={`http://localhost:4000/${image.url}`}
+            src={`${image.url}`}
             alt={image.name}
           />
         </figure>

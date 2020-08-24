@@ -19,7 +19,7 @@ export default function SingleImage({ imageData }: ISingleImageProps) {
 
   return (
     <div className="Single-image" onClick={onClick}>
-      <img className="Single-image__image" src={url} alt={name} />
+      <img className="Single-image__image" src={`${url}`} alt={name} />
       <div className="Single-image__info">
         <IoIosEye /> {views} <IoMdHeart /> {likes}{" "}
         <span className="Single-image__info__author">author: {author}</span>

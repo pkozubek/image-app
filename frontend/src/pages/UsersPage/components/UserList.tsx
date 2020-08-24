@@ -9,6 +9,7 @@ const defaultImage =
 
 const UserList = ({ users }) => {
   let renderedUserList = <Spinner />;
+  console.log(users);
 
   if (users && users.length > 0) {
     renderedUserList = (

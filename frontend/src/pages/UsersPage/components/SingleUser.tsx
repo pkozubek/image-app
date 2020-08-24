@@ -15,9 +15,7 @@ const SingleUser = ({ id, userName, avatar, numberOfViews, imagesCount }) => {
             <h2 className="single-user__name">{userName}</h2>
             <div className="single-user__details">
               <p className="single-user__details-item">Images: {imagesCount}</p>
-              <p className="single-user__details-item">
-                Views: {numberOfViews}
-              </p>
+              <p className="single-user__details-item"></p>
             </div>
           </div>
         </Link>

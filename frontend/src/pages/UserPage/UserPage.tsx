@@ -6,7 +6,7 @@ import "./UserPage.scss";
 import UserInfo from "./UserInfo/UserInfo";
 import ImagesContainer from "../../components/ImagesContainer/ImagesContainer";
 import { useHttp } from "../../hooks/useHttp";
-import { API_IMAGES } from "../../helpers/url";
+import { API_IMAGES } from "../../API/API";
 import Spinner from "../../components/Spinner/Spinner";
 
 const UserPage = () => {

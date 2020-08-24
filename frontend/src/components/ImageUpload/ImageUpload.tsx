@@ -17,7 +17,8 @@ export default (props: IImageUploadProps): JSX.Element => {
 
   const inputRef: React.MutableRefObject<HTMLInputElement> = useRef();
 
-  const onClick = () => {
+  const onClick = (event) => {
+    event.preventDefault();
     inputRef.current.click();
   };
 

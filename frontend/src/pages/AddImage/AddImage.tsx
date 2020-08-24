@@ -5,7 +5,7 @@ import { useForm } from "../../hooks/useForm";
 import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from "../../utils/validators";
 import Button from "../../components/Button/Button";
 import { useHttp } from "../../hooks/useHttp";
-import { API_IMAGES } from "../../helpers/url";
+import { API_IMAGES } from "../../API/API";
 import { useHistory } from "react-router-dom";
 import "./AddImage.scss";
 import Modal from "../../components/Modal/Modal";

@@ -54,7 +54,7 @@ export const getUserImages = async (req, res, next: NextFunction) => {
 };
 
 export const createImage = async (req, res, next: NextFunction) => {
-  const { name, url, description, author } = req.body;
+  const { name, description, author } = req.body;
   const errors = validationResult(req);
   if (!errors.isEmpty()) return next(new HttpError("Wrong data", 400));
 
@@ -70,7 +70,7 @@ export const createImage = async (req, res, next: NextFunction) => {
     id: uuid(),
     name,
     description,
-    url: req.file.path,
+    url: `${req.protocol}://${req.headers.host}/${req.file.path}`,
     views: 1,
     likes: 1,
     userID: author,

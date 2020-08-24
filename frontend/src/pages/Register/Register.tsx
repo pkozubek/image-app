@@ -12,6 +12,8 @@ import {
 import AuthenticateLayout from "../../components/AuthenticateLayout/AuthenticateLayout";
 import Button from "../../components/Button/Button";
 import { AuthContext } from "../../context/auth-context";
+import ImageUpload from "../../components/ImageUpload/ImageUpload";
+import { API_USER_REGISTER } from "../../API/API";
 
 export default (): JSX.Element => {
   const history = useHistory();
@@ -31,6 +33,10 @@ export default (): JSX.Element => {
       value: "",
       isValid: true,
     },
+    avatar: {
+      value: "",
+      isValid: true,
+    },
     isValid: false,
   });
 
@@ -39,8 +45,6 @@ export default (): JSX.Element => {
   ) => {
     event.preventDefault();
 
-    const path = "http://localhost:4000/api/users/register";
-
     const formData = {
       name: formState.inputs.nickname.value,
       password: formState.inputs.password.value,
@@ -48,7 +52,7 @@ export default (): JSX.Element => {
     };
 
     await axios
-      .post(path, formData)
+      .post(API_USER_REGISTER, formData)
       .then((response) => {
         if (response.status === 200) {
           auth.setLogged(true);
@@ -86,6 +90,7 @@ export default (): JSX.Element => {
         value={formState.inputs.password.value}
         isValid={formState.inputs.password.isValid}
       />
+      <ImageUpload alt="avatar" id="avatar" onChange={inputHandler} />
       <Input
         id="email"
         onInput={inputHandler}

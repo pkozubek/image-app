@@ -2,6 +2,7 @@ import express, { NextFunction } from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
+import path from "path";
 
 import imagesRoutes from "./routes/images";
 import usersRoutes from "./routes/users";
@@ -15,6 +16,7 @@ app.use(bodyParser.json());
 
 app.use("/api/images", imagesRoutes);
 app.use("/api/users/", usersRoutes);
+app.use("/uploads/images", express.static(path.join("uploads", "images")));
 
 app.use((req, res, next: NextFunction) => {
   throw new HttpError("this route does not exist", 404);
