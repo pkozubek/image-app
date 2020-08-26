@@ -2,7 +2,7 @@ import React from "react";
 import Button from "../Button/Button";
 import Modal from "./Modal";
 
-import { IConfirmationModalProps } from "../../interfaces/components/IModal";
+import { IConfirmationModalProps } from "../../interfaces/IModal";
 
 const ConfirmationModal = ({
   question,

@@ -12,28 +12,35 @@ import Modal from "../../components/Modal/Modal";
 import Spinner from "../../components/Spinner/Spinner";
 import ImageUpload from "../../components/ImageUpload/ImageUpload";
 import { AuthContext } from "../../context/auth-context";
+import { IFormStateProperty } from "../../interfaces/IuseForm";
+
+interface IAddImageFormState {
+  title: IFormStateProperty;
+  description: IFormStateProperty;
+  image: IFormStateProperty;
+}
+
+const defaultAddImageForm: IAddImageFormState = {
+  title: {
+    value: "",
+    isValid: false,
+  },
+  description: {
+    value: "",
+    isValid: false,
+  },
+  image: {
+    value: "",
+    isValid: false,
+  },
+};
 
 const AddImage = () => {
   const { post, data, isLoading } = useHttp();
   const history = useHistory();
   const { userData } = useContext(AuthContext);
-  const [formState, inputHandler] = useForm(
-    {
-      title: {
-        value: "",
-        isValid: false,
-      },
-      description: {
-        value: "",
-        isValid: false,
-      },
-      image: {
-        value: "",
-        isValid: false,
-      },
-    },
-    false
-  );
+  const [formState, inputHandler] = useForm(defaultAddImageForm, false);
+
   const submitForm = async (ev) => {
     ev.preventDefault();
 

@@ -1,8 +1,21 @@
 import React from "react";
 
-import { IButtonProps } from "../../interfaces/components/IButton";
-
 import "./Button.scss";
+
+interface IButtonProps {
+  children: JSX.Element | string;
+  className?: string;
+  textColor?: string;
+  isDisabled?: boolean;
+  formElement?: boolean;
+  primary?: boolean;
+  secondary?: boolean;
+  transparent?: boolean;
+  modalElement?: boolean;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  confirmation?: boolean;
+  decline?: boolean;
+}
 
 const Button = ({
   children,

@@ -4,7 +4,7 @@ import { IoIosWarning } from "react-icons/io";
 import Modal from "./Modal";
 import Button from "../Button/Button";
 
-import { IErrorModalProps } from "../../interfaces/components/IModal";
+import { IErrorModalProps } from "../../interfaces/IModal";
 
 const ErrorModal = ({ onCancel, error }: IErrorModalProps) => {
   return (

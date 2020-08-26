@@ -1,8 +1,18 @@
-.header {
+.navigation {
   width: 100%;
   background: black;
   margin: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  &__hamburger {
+    color: white;
+
+    @media (min-width: 768px) {
+      & {
+        display: none;
+      }
+    }
+  }
 }

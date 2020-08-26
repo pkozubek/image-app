@@ -2,7 +2,14 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import "./NavItem.scss";
 
-const NavItem = ({ link, children: name, add, exact }) => {
+interface INavItemProps {
+  link: string;
+  exact?: boolean;
+  children: JSX.Element | string;
+  add?: boolean;
+}
+
+const NavItem = ({ link, children: name, add, exact }: INavItemProps) => {
   let classes = "menu-item";
   if (add) classes += " menu_item--add";
 

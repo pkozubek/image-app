@@ -47,6 +47,7 @@ export const registerUser = async (req, res, next: NextFunction) => {
   const body = req.body;
   const { name, email, password } = body;
   const errors = validationResult(req);
+
   let newUser;
   if (errors.isEmpty()) {
     let registeredUser;
@@ -61,6 +62,9 @@ export const registerUser = async (req, res, next: NextFunction) => {
       name,
       email,
       password,
+      avatar: req.file
+        ? `${req.protocol}://${req.headers.host}/${req.file.path}`
+        : undefined,
       images: [],
     });
 
@@ -73,7 +77,7 @@ export const registerUser = async (req, res, next: NextFunction) => {
     return next(new HttpError("Wrong register data", 400));
   }
 
-  res.status(200).json({ user: newUser.toObject() });
+  res.status(200).json({ name: newUser.name, id: newUser._id });
 };
 
 export const updateUser = async (req, res, next: NextFunction) => {

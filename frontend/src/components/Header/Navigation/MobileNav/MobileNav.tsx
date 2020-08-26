@@ -4,7 +4,12 @@ import { CSSTransition } from "react-transition-group";
 
 import "./MobileNav.scss";
 
-const MobileNav = ({ isVisible, children }) => {
+interface IMobileNavProps {
+  isVisible: boolean;
+  children: JSX.Element | JSX.Element[];
+}
+
+const MobileNav = ({ isVisible, children }: IMobileNavProps) => {
   const mobileMenu = (
     <CSSTransition
       in={isVisible}

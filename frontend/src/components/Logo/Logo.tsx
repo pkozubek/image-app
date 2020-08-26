@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { IoIosImages } from "react-icons/io";
 
-import { ILogoProps } from "../../interfaces/components/ILogo";
-
 import "./Logo.scss";
+
+interface ILogoProps {
+  dark?: boolean;
+  clickable?: boolean;
+}
 
 export default ({ dark, clickable }: ILogoProps): JSX.Element => {
   const history = useHistory();
-  const onClick = () => history.push("/");
+  const onClick = useCallback(() => history.push("/"), [history]);
 
   return (
     <h1

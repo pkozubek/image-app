@@ -6,7 +6,7 @@ import { IoIosClose } from "react-icons/io";
 import Backdrop from "../Backdrop/Backdrop";
 import Button from "../Button/Button";
 
-import { IModalProps } from "../../interfaces/components/IModal";
+import { IModalProps } from "../../interfaces/IModal";
 
 import "./Modal.scss";
 

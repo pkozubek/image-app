@@ -1,26 +1,37 @@
 import React, { useState } from "react";
-import Navigation from "./Navigation/Navigation";
-import Hamburger from "./Hamburger/Hamburger";
+import { GiHamburgerMenu } from "react-icons/gi";
+
 import UserLogged from "./UserLogged/UserLogged";
 import Logo from "../Logo/Logo";
+import DesktopNav from "./Navigation/DesktopNav/DesktopNav";
+import MobileNav from "./Navigation/MobileNav/MobileNav";
+import NavItems from "./Navigation/NavItems/NavItems";
+import Backdrop from "../Backdrop/Backdrop";
 
 import "./Header.scss";
 
 const Header = (): JSX.Element => {
-  const [mobileMenuVisible, mobileMenuClickHandler] = useState(false);
+  const [isMenuVisible, setIsMenuVisible] = useState(false);
+  const menuVisiblityHandler = () => setIsMenuVisible(!isMenuVisible);
 
   return (
-    <>
+    <header>
       <UserLogged />
-      <header className="header">
+      <nav className="navigation">
         <Logo clickable />
-        <Navigation
-          isMobileMenuVisible={mobileMenuVisible}
-          hideMenu={mobileMenuClickHandler}
+        <DesktopNav />
+        <MobileNav isVisible={isMenuVisible}>
+          <NavItems />
+        </MobileNav>
+        {isMenuVisible ? (
+          <Backdrop clickHandler={menuVisiblityHandler} />
+        ) : null}
+        <GiHamburgerMenu
+          className="navigation__hamburger"
+          onClick={menuVisiblityHandler}
         />
-        <Hamburger onClick={() => mobileMenuClickHandler(!mobileMenuVisible)} />
-      </header>
-    </>
+      </nav>
+    </header>
   );
 };
 

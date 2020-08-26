@@ -9,6 +9,8 @@ import Button from "../../components/Button/Button";
 import { AuthContext } from "../../context/auth-context";
 import ErrorModal from "../../components/Modal/ErrorModal";
 import AuthenticateLayout from "../../components/AuthenticateLayout/AuthenticateLayout";
+import { IFormStateProperty } from "../../interfaces/IuseForm";
+import { API_USER_LOGIN } from "../../API/API";
 
 interface IformDateInterface {
   name: string;
@@ -16,19 +18,27 @@ interface IformDateInterface {
   email?: string;
 }
 
+interface ILoginFormState {
+  nickname: IFormStateProperty;
+  password: IFormStateProperty;
+}
+
+const defaultLoginInputs: ILoginFormState = {
+  nickname: {
+    value: "",
+    isValid: true,
+  },
+  password: {
+    value: "",
+    isValid: true,
+  },
+};
+
 export default (): JSX.Element => {
   const history = useHistory();
-  const [formState, inputHandler] = useForm({
-    nickname: {
-      value: "",
-      isValid: true,
-    },
-    password: {
-      value: "",
-      isValid: true,
-    },
-    isValid: false,
-  });
+  const [formState, inputHandler] = useForm<ILoginFormState>(
+    defaultLoginInputs
+  );
 
   const [error, setError] = useState(null);
   const auth = useContext(AuthContext);
@@ -38,14 +48,13 @@ export default (): JSX.Element => {
   ) => {
     event.preventDefault();
 
-    const path = "http://localhost:4000/api/users/login";
     const formData: IformDateInterface = {
       name: formState.inputs.nickname.value,
       password: formState.inputs.password.value,
     };
 
     await axios
-      .post(path, formData)
+      .post(API_USER_LOGIN, formData)
       .then((response) => {
         if (response.status === 200) {
           auth.setLogged(response.data);
