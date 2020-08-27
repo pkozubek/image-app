@@ -1,17 +1,20 @@
-.navigation {
+.header {
+  position: sticky;
+  top: 0;
   width: 100%;
-  background: black;
-  margin: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 
-  &__hamburger {
-    color: white;
+  &__navigation {
+    width: 100%;
+    padding: 5px 0 5px 20px;
+    background: black;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
     @media (min-width: 768px) {
       & {
-        display: none;
+        padding: 0;
       }
     }
   }

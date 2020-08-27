@@ -31,7 +31,6 @@ export const AuthProvider: React.FC<AuthProviderInterface> = (
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const setLogged = (userData) => {
-    console.log(userData);
     dispatch({
       type: "SET_LOGGED",
       userData,

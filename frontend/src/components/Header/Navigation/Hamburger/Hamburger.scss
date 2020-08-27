@@ -1,0 +1,15 @@
+.hamburger {
+  color: white;
+  margin-right: 3em;
+
+  &__icon {
+    width: 300%;
+    height: 300%;
+  }
+
+  @media (min-width: 768px) {
+    & {
+      display: none;
+    }
+  }
+}

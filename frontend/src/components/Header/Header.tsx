@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { GiHamburgerMenu } from "react-icons/gi";
 
 import UserLogged from "./UserLogged/UserLogged";
 import Logo from "../Logo/Logo";
@@ -7,6 +6,7 @@ import DesktopNav from "./Navigation/DesktopNav/DesktopNav";
 import MobileNav from "./Navigation/MobileNav/MobileNav";
 import NavItems from "./Navigation/NavItems/NavItems";
 import Backdrop from "../Backdrop/Backdrop";
+import Hamburger from "./Navigation/Hamburger/Hamburger";
 
 import "./Header.scss";
 
@@ -15,19 +15,19 @@ const Header = (): JSX.Element => {
   const menuVisiblityHandler = () => setIsMenuVisible(!isMenuVisible);
 
   return (
-    <header>
+    <header className="header">
       <UserLogged />
-      <nav className="navigation">
+      <nav className="header__navigation">
         <Logo clickable />
         <DesktopNav />
         <MobileNav isVisible={isMenuVisible}>
-          <NavItems />
+          <NavItems onClick={menuVisiblityHandler} />
         </MobileNav>
         {isMenuVisible ? (
           <Backdrop clickHandler={menuVisiblityHandler} />
         ) : null}
-        <GiHamburgerMenu
-          className="navigation__hamburger"
+        <Hamburger
+          isMenuActive={isMenuVisible}
           onClick={menuVisiblityHandler}
         />
       </nav>

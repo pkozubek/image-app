@@ -36,7 +36,6 @@ export default function Image() {
 
   let content: JSX.Element | String = "loading";
 
-  console.log(data);
   if (!isLoading && data !== null) {
     const { image } = data;
     content = (

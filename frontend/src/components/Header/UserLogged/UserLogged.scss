@@ -2,11 +2,18 @@
 
 .UserLogged {
   color: white;
-  background: rgba(37, 37, 37, 0.1);
+  background: rgba(37, 37, 37, 0.95);
   width: 100%;
   padding: 5px 15px 5px 0;
   text-align: right;
   border-bottom: 1px solid $primary-color;
+  display: none;
+
+  @media (min-width: 768px) {
+    & {
+      display: block;
+    }
+  }
 
   &__nickname {
     font-weight: bold;
