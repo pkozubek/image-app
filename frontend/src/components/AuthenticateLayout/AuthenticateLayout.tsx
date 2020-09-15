@@ -12,7 +12,7 @@ interface authenticateLayoutProps {
 
 export default ({ children, title }: authenticateLayoutProps): JSX.Element => {
   return (
-    <Card className="Authenticate">
+    <Card center className="Authenticate">
       <Logo dark />
       <form className="Authenticate__form">
         <h1 className="Authenticate__form__title">{title}</h1>

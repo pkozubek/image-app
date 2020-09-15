@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
+import { FiImage } from "react-icons/fi";
 
 import Button from "../Button/Button";
 
@@ -67,7 +68,11 @@ export default (props: IImageUploadProps): JSX.Element => {
             />
           </>
         )}
-        <Button onClick={onClick}>Upload image</Button>
+        <Button className="image-upload__button" onClick={onClick}>
+          <>
+            Upload image <FiImage className="image-upload__button__icon" />
+          </>
+        </Button>
       </div>
     </div>
   );

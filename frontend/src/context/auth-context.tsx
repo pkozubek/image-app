@@ -2,10 +2,16 @@ import React, { useReducer } from "react";
 
 import {
   AuthProviderInterface,
-  ReducerState,
   ReducerAction,
   ContextInterface,
 } from "./contextInterface";
+
+interface ReducerState {
+  userData: {
+    id: string;
+    name: string;
+  };
+}
 
 const initialState: ReducerState = {
   userData: {

@@ -1,4 +1,18 @@
+@import "../../theme.scss";
+
 .image-upload {
+  &__button {
+    margin: auto;
+    background: $secondary-color;
+    color: $white;
+    padding: 25px;
+    border: none;
+
+    &__icon {
+      margin-left: 1em;
+    }
+  }
+
   &__input {
     display: none;
   }

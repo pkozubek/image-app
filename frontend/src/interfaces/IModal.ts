@@ -4,6 +4,7 @@ export interface IModalProps {
   children: JSX.Element | JSX.Element[] | string;
   actions?: JSX.Element;
   header?: string;
+  className?: string;
 }
 
 export interface IConfirmationModalProps extends Omit<IModalProps, "children"> {

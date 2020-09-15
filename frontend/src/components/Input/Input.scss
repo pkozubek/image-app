@@ -1,6 +1,7 @@
 .form-input {
   width: 100%;
   margin-bottom: 1em;
+  font-family: "Maven Pro", sans-serif;
 
   &__input {
     padding: 10px;
@@ -17,6 +18,7 @@
     font-size: 0.8em;
     display: block;
     text-align: left;
+    margin-bottom: 5px;
   }
 
   &__label--error {

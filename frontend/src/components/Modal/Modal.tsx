@@ -16,6 +16,7 @@ const Modal = ({
   children,
   actions,
   header,
+  className,
 }: IModalProps) => {
   const modalContent = (
     <>
@@ -27,7 +28,7 @@ const Modal = ({
         timeout={200}
         classNames="modal"
       >
-        <div className="modal">
+        <div className={`modal ${className || null}`}>
           <header className="header">
             {header && <h2 className="header__text">{header}</h2>}
             <Button

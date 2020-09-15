@@ -1,18 +1,17 @@
 import React, { useContext } from "react";
-import Card from "../../components/Card/Card";
-import Input from "../../components/Input/Input";
-import { useForm } from "../../hooks/useForm";
+import Modal from "./Modal";
+import ImageUpload from "../ImageUpload/ImageUpload";
+import Input from "../Input/Input";
 import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from "../../utils/validators";
-import Button from "../../components/Button/Button";
-import { useHttp } from "../../hooks/useHttp";
-import { API_IMAGES } from "../../API/API";
-import { useHistory } from "react-router-dom";
-import "./AddImage.scss";
-import Modal from "../../components/Modal/Modal";
-import Spinner from "../../components/Spinner/Spinner";
-import ImageUpload from "../../components/ImageUpload/ImageUpload";
-import { AuthContext } from "../../context/auth-context";
+import Button from "../Button/Button";
+import { useForm } from "../../hooks/useForm";
 import { IFormStateProperty } from "../../interfaces/IuseForm";
+import { AuthContext } from "../../context/auth-context";
+import { API_IMAGES } from "../../API/API";
+import { useHttp } from "../../hooks/useHttp";
+
+import "./ImageModal.scss";
+import { ImageModalContext } from "../../context/image-modal-context";
 
 interface IAddImageFormState {
   title: IFormStateProperty;
@@ -35,11 +34,14 @@ const defaultAddImageForm: IAddImageFormState = {
   },
 };
 
-const AddImage = () => {
-  const { post, data, isLoading } = useHttp();
-  const history = useHistory();
-  const { userData } = useContext(AuthContext);
+const ImageModal = () => {
   const [formState, inputHandler] = useForm(defaultAddImageForm, false);
+  const { userData } = useContext(AuthContext);
+  const imageContext: any = useContext(ImageModalContext);
+
+  const { isValid, inputs } = formState;
+  const { title, description, image } = inputs;
+  const { post, data, isLoading } = useHttp();
 
   const submitForm = async (ev) => {
     ev.preventDefault();
@@ -58,13 +60,13 @@ const AddImage = () => {
     }
   };
 
-  if (data !== null) {
-    history.push(`/image/${data.id}`);
-  }
-
   return (
-    <form className="image-add" onSubmit={submitForm}>
-      <Card>
+    <Modal
+      onCancel={imageContext.closeImageModal}
+      isVisible={imageContext.isActive}
+      className="image-modal"
+    >
+      <form onSubmit={submitForm}>
         <Input
           id="title"
           onInput={inputHandler}
@@ -81,12 +83,9 @@ const AddImage = () => {
         <Button isDisabled={!formState.isValid} confirmation>
           Submit
         </Button>
-        <Modal isVisible={isLoading}>
-          <Spinner />
-        </Modal>
-      </Card>
-    </form>
+      </form>
+    </Modal>
   );
 };
 
-export default AddImage;
+export default ImageModal;
