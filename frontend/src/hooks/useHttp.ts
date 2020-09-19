@@ -27,14 +27,14 @@ export const useHttp = () => {
     await axios.post(url, data).then(handleSuccess).catch(handleError);
   };
 
-  const patch = (url: string, data) => {
+  const patch = async (url: string, data) => {
     setLoading(true);
-    axios.patch(url, data).then(handleSuccess).catch(handleError);
+    await axios.patch(url, data).then(handleSuccess).catch(handleError);
   };
 
-  const del = (url: string, data?) => {
+  const del = async (url: string, data?) => {
     setLoading(true);
-    axios.delete(url, data).then(handleSuccess).catch(handleError);
+    await axios.delete(url, data).then(handleSuccess).catch(handleError);
   };
 
   return { get, post, patch, del, error, data, isLoading };

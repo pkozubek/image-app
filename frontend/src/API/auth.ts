@@ -1,4 +1,5 @@
 import axios from "axios";
+import { IUserDataDTO } from "../interfaces/IUserDataDTO";
 
 export const API_USER_REGISTER = "http://localhost:4000/api/users/register";
 export const API_USER_LOGIN = "http://localhost:4000/api/users/login";
@@ -11,20 +12,19 @@ interface IFormDateInterface {
 
 export const sendLoginRequest = async (
   formData: IFormDateInterface,
-  setLoggedCallback,
   setErrorCallback
-) => {
+): Promise<IUserDataDTO> => {
+  let response: IUserDataDTO = null;
+
   await axios
     .post(API_USER_LOGIN, formData)
-    .then((response) => {
-      if (response.status === 200) {
-        setLoggedCallback(response.data);
-      }
-    })
+    .then((response) => (response = response.data))
     .catch((error) => {
       const errorMessage = error.response.data.message;
       setErrorCallback(errorMessage);
     });
+
+  return response;
 };
 
 interface IRegisterForm {
@@ -36,9 +36,10 @@ interface IRegisterForm {
 
 export const sendRegisterRequest = async (
   newUser: IRegisterForm,
-  setLoggedCallback,
   setErrorCallback
-) => {
+): Promise<IUserDataDTO> => {
+  let response: IUserDataDTO = null;
+
   const formData = new FormData();
   formData.append("name", newUser.nickname);
   formData.append("password", newUser.password);
@@ -47,13 +48,11 @@ export const sendRegisterRequest = async (
 
   await axios
     .post(API_USER_REGISTER, formData)
-    .then((response) => {
-      if (response.status === 200) {
-        setLoggedCallback(response.data);
-      }
-    })
+    .then((response) => (response = response.data))
     .catch((error) => {
       const errorMessage = error.response.data.message;
       setErrorCallback(errorMessage);
     });
+
+  return response;
 };

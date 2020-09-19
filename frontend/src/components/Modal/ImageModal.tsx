@@ -14,7 +14,7 @@ const ImageModal = () => {
       isVisible={imageContext.isActive}
       className="image-modal"
     >
-      <ImageForm />
+      <ImageForm onSubmitSucces={imageContext.closeImageModal} />
     </Modal>
   );
 };

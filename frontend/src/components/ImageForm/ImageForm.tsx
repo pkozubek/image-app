@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useHistory } from "react-router-dom";
 import { API_IMAGES } from "../../API/images";
 import { AuthContext } from "../../context/authContext";
 import { useForm } from "../../hooks/useForm";
@@ -30,9 +31,16 @@ const defaultAddImageForm: IAddImageFormState = {
   },
 };
 
-const ImageForm = () => {
+interface IModalFormProps {
+  onSubmitSucces?: () => void;
+}
+
+const ImageForm = ({ onSubmitSucces }: IModalFormProps) => {
   const { userData } = useContext(AuthContext);
+  const history = useHistory();
   const [formState, inputHandler] = useForm(defaultAddImageForm, false);
+
+  const { post } = useHttp();
 
   const submitForm = async (ev) => {
     ev.preventDefault();
@@ -48,12 +56,12 @@ const ImageForm = () => {
       formData.append("image", image.value);
 
       await post(API_IMAGES, formData);
+      if (onSubmitSucces) onSubmitSucces();
+
+      if (history.location.pathname === "/") window.location.reload();
+      else history.push("/");
     }
   };
-
-  const { isValid, inputs } = formState;
-  const { title, description, image } = inputs;
-  const { post, data, isLoading } = useHttp();
 
   return (
     <form onSubmit={submitForm}>

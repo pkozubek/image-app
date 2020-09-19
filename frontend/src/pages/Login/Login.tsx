@@ -41,14 +41,15 @@ export default (): JSX.Element => {
   ) => {
     event.preventDefault();
 
-    await sendLoginRequest(
+    const loginResponse = await sendLoginRequest(
       {
         name: formState.inputs.nickname.value,
         password: formState.inputs.password.value,
       },
-      setLogged,
       setError
     );
+
+    if (loginResponse) setLogged(loginResponse);
   };
 
   const onRegisterRedirect = (

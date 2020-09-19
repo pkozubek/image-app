@@ -1,18 +1,13 @@
 import React, { useReducer } from "react";
+import { IUserDataDTO } from "../interfaces/IUserDataDTO";
 
 interface ReducerState {
-  userData: {
-    id: string;
-    name: string;
-  };
+  userData: IUserDataDTO;
 }
 
 export interface ContextInterface {
-  userData: {
-    id: string;
-    name: string;
-  };
-  setLogged: (willBeLogged: boolean) => void;
+  userData: IUserDataDTO;
+  setLogged: (userData: IUserDataDTO) => void;
 }
 
 export interface AuthProviderInterface {
@@ -53,7 +48,7 @@ export const AuthProvider: React.FC<AuthProviderInterface> = (
 ): JSX.Element => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const setLogged = (userData) => {
+  const setLogged = (userData: IUserDataDTO) => {
     dispatch({
       type: "SET_LOGGED",
       userData,

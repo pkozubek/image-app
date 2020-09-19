@@ -6,6 +6,7 @@ import Button from "../../components/Button/Button";
 import ConfirmationModal from "../../components/Modal/ConfirmationModal";
 import ImageForm from "./ImageForm";
 import "./Image.scss";
+import Spinner from "../../components/Spinner/Spinner";
 
 export default function Image() {
   const params: { id: string } = useParams();
@@ -29,36 +30,38 @@ export default function Image() {
     setEdited(true);
   };
 
-  const onConfirm = () => {
-    del(`${API_IMAGES}/${imageId}`);
+  const onConfirm = async () => {
+    await del(`${API_IMAGES}/${imageId}`);
     history.push("/");
   };
 
-  let content: JSX.Element | String = "loading";
+  let content: JSX.Element | String = <Spinner />;
 
   if (!isLoading && data !== null) {
     const { image } = data;
-    content = (
-      <>
-        <figure className="image-page__figure">
-          <img
-            className="image-page__img"
-            src={`${image.url}`}
-            alt={image.name}
-          />
-        </figure>
-        {isEdited ? (
-          <ImageForm name={image.name} />
-        ) : (
-          <>
-            <h2 className="image-page__title">{image.name}</h2>
-            <p className="image-page__description">{image.description}</p>
-            <Button onClick={onEdit}>Edit Image data</Button>
-          </>
-        )}
-        <Button onClick={onDelete}>Delete Image</Button>
-      </>
-    );
+    if (image) {
+      content = (
+        <>
+          <figure className="image-page__figure">
+            <img
+              className="image-page__img"
+              src={`${image.url}`}
+              alt={image.name}
+            />
+          </figure>
+          {isEdited ? (
+            <ImageForm name={image.name} />
+          ) : (
+            <>
+              <h2 className="image-page__title">{image.name}</h2>
+              <p className="image-page__description">{image.description}</p>
+              <Button onClick={onEdit}>Edit Image data</Button>
+            </>
+          )}
+          <Button onClick={onDelete}>Delete Image</Button>
+        </>
+      );
+    }
   }
 
   return (

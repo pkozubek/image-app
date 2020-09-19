@@ -59,17 +59,19 @@ export default (): JSX.Element => {
   ) => {
     event.preventDefault();
 
-    if (isValid)
-      sendRegisterRequest(
+    if (isValid) {
+      const registerResponse = await sendRegisterRequest(
         {
           nickname: nickname.value,
           password: password.value,
           email: email.value,
           avatar: avatar.value,
         },
-        setLogged,
         setError
       );
+
+      if (registerResponse) setLogged(registerResponse);
+    }
   };
 
   const onLoginRedirect = (
