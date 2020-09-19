@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { API_IMAGES } from "../../API/API";
+import { API_IMAGES } from "../../API/images";
 import { AuthContext } from "../../context/authContext";
 import { useForm } from "../../hooks/useForm";
 import { useHttp } from "../../hooks/useHttp";

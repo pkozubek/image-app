@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { useHttp } from "../../hooks/useHttp";
-import { API_IMAGES } from "../../API/API";
+import { API_IMAGES } from "../../API/images";
 import Button from "../../components/Button/Button";
 import ConfirmationModal from "../../components/Modal/ConfirmationModal";
 import ImageForm from "./ImageForm";

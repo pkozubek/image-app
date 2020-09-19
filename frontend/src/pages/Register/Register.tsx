@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
-import axios from "axios";
 
 import Input from "../../components/Input/Input";
 import { useForm } from "../../hooks/useForm";
@@ -13,9 +12,9 @@ import AuthenticateLayout from "../../components/AuthenticateLayout/Authenticate
 import Button from "../../components/Button/Button";
 import { AuthContext } from "../../context/authContext";
 import ImageUpload from "../../components/ImageUpload/ImageUpload";
-import { API_USER_REGISTER } from "../../API/API";
 import { IFormStateProperty } from "../../interfaces/IuseForm";
 import ErrorModal from "../../components/Modal/ErrorModal";
+import { sendRegisterRequest } from "../../API/auth";
 
 interface IRegisterFormState {
   nickname: IFormStateProperty;
@@ -45,7 +44,7 @@ const defaultRegisterInputs: IRegisterFormState = {
 
 export default (): JSX.Element => {
   const history = useHistory();
-  const auth = useContext(AuthContext);
+  const { setLogged } = useContext(AuthContext);
 
   const [error, setError] = useState(null);
   const [formState, inputHandler] = useForm<IRegisterFormState>(
@@ -60,25 +59,17 @@ export default (): JSX.Element => {
   ) => {
     event.preventDefault();
 
-    if (isValid) {
-      const formData = new FormData();
-      formData.append("name", nickname.value);
-      formData.append("password", password.value);
-      formData.append("email", email.value);
-      formData.append("avatar", avatar.value);
-
-      await axios
-        .post(API_USER_REGISTER, formData)
-        .then((response) => {
-          if (response.status === 200) {
-            auth.setLogged(response.data);
-          }
-        })
-        .catch((error) => {
-          const errorMessage = error.response.data.message;
-          setError(errorMessage);
-        });
-    }
+    if (isValid)
+      sendRegisterRequest(
+        {
+          nickname: nickname.value,
+          password: password.value,
+          email: email.value,
+          avatar: avatar.value,
+        },
+        setLogged,
+        setError
+      );
   };
 
   const onLoginRedirect = (

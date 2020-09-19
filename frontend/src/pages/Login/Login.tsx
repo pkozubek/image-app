@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import axios from "axios";
 import { useHistory } from "react-router-dom";
 
 import { useForm } from "../../hooks/useForm";
@@ -10,13 +9,7 @@ import { AuthContext } from "../../context/authContext";
 import ErrorModal from "../../components/Modal/ErrorModal";
 import AuthenticateLayout from "../../components/AuthenticateLayout/AuthenticateLayout";
 import { IFormStateProperty } from "../../interfaces/IuseForm";
-import { API_USER_LOGIN } from "../../API/API";
-
-interface IformDateInterface {
-  name: string;
-  password: string;
-  email?: string;
-}
+import { sendLoginRequest } from "../../API/auth";
 
 interface ILoginFormState {
   nickname: IFormStateProperty;
@@ -41,29 +34,21 @@ export default (): JSX.Element => {
   );
 
   const [error, setError] = useState(null);
-  const auth = useContext(AuthContext);
+  const { setLogged } = useContext(AuthContext);
 
   const onSendForm = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault();
 
-    const formData: IformDateInterface = {
-      name: formState.inputs.nickname.value,
-      password: formState.inputs.password.value,
-    };
-
-    await axios
-      .post(API_USER_LOGIN, formData)
-      .then((response) => {
-        if (response.status === 200) {
-          auth.setLogged(response.data);
-        }
-      })
-      .catch((error) => {
-        const errorMessage = error.response.data.message;
-        setError(errorMessage);
-      });
+    await sendLoginRequest(
+      {
+        name: formState.inputs.nickname.value,
+        password: formState.inputs.password.value,
+      },
+      setLogged,
+      setError
+    );
   };
 
   const onRegisterRedirect = (
