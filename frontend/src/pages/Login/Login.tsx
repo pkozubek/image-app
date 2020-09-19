@@ -6,7 +6,7 @@ import { useForm } from "../../hooks/useForm";
 import Input from "../../components/Input/Input";
 import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from "../../utils/validators";
 import Button from "../../components/Button/Button";
-import { AuthContext } from "../../context/auth-context";
+import { AuthContext } from "../../context/authContext";
 import ErrorModal from "../../components/Modal/ErrorModal";
 import AuthenticateLayout from "../../components/AuthenticateLayout/AuthenticateLayout";
 import { IFormStateProperty } from "../../interfaces/IuseForm";

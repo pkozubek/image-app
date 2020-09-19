@@ -1,9 +1,12 @@
 import React, { useContext } from "react";
 import NavItem from "./NavItem/NavItem";
 import "./NavItem.scss";
-import { AuthContext } from "../../../../context/auth-context";
-import { useHistory } from "react-router-dom";
-import { ImageModalContext } from "../../../../context/image-modal-context";
+import { AuthContext } from "../../../../context/authContext";
+import {
+  ImageModalContext,
+  IsMobileContext,
+} from "../../../../context/uiContext";
+import Button from "../../../Button/Button";
 
 interface INavContainerProps {
   onClick?: () => void;
@@ -12,6 +15,7 @@ interface INavContainerProps {
 const NavItemContainer = ({ onClick }: INavContainerProps) => {
   const { setLogged } = useContext(AuthContext);
   const imageContext: any = useContext(ImageModalContext);
+  const isMobile = useContext(IsMobileContext);
 
   const onLogoutClick = () => {
     onClick();
@@ -19,11 +23,18 @@ const NavItemContainer = ({ onClick }: INavContainerProps) => {
   };
 
   const onAddImageClick = () => {
-    console.log("click");
     imageContext.openImageCreate();
   };
 
-  console.log(imageContext);
+  const imageAdd = isMobile ? (
+    <NavItem onClick={onClick} link={"/imageadd"}>
+      Add Image
+    </NavItem>
+  ) : (
+    <Button className="menu-items__add-image" onClick={onAddImageClick}>
+      Add Image
+    </Button>
+  );
 
   return (
     <ul className="menu-items">
@@ -33,7 +44,7 @@ const NavItemContainer = ({ onClick }: INavContainerProps) => {
       <NavItem onClick={onClick} link={"/users"}>
         Users
       </NavItem>
-      <button onClick={onAddImageClick}>Add Image</button>
+      {imageAdd}
       <NavItem
         className="menu-items__logout"
         onClick={onLogoutClick}

@@ -11,7 +11,7 @@ import {
 } from "../../utils/validators";
 import AuthenticateLayout from "../../components/AuthenticateLayout/AuthenticateLayout";
 import Button from "../../components/Button/Button";
-import { AuthContext } from "../../context/auth-context";
+import { AuthContext } from "../../context/authContext";
 import ImageUpload from "../../components/ImageUpload/ImageUpload";
 import { API_USER_REGISTER } from "../../API/API";
 import { IFormStateProperty } from "../../interfaces/IuseForm";

@@ -2,8 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.scss";
 import App from "./App";
-import { AuthProvider } from "./context/auth-context";
-import { ImageModalProvider } from "./context/image-modal-context";
+import { AuthProvider } from "./context/authContext";
+import { ImageModalProvider } from "./context/uiContext";
 
 ReactDOM.render(
   <AuthProvider>

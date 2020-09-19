@@ -26,6 +26,7 @@ function reducer(state: ReducerState, action) {
 }
 
 export const ImageModalContext = React.createContext({});
+export const IsMobileContext = React.createContext(false);
 
 export const ImageModalProvider = (props): JSX.Element => {
   const [state, dispatch] = useReducer(reducer, initialState);
