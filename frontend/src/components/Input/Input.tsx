@@ -60,6 +60,14 @@ const Input = ({
     onInput(id, inputState.value, inputState.isValid);
   }, [onInput, id, inputState.value, inputState.isValid]);
 
+  useEffect(() => {
+    dispatchChange({
+      type: "CHANGE",
+      value: value,
+      validators: validators,
+    });
+  }, [value]);
+
   const handleTouching = () => {
     dispatchChange({ type: "TOUCH" });
   };

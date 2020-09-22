@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { useHttp } from "../../hooks/useHttp";
 import { API_IMAGES } from "../../API/images";
 import Button from "../../components/Button/Button";
 import ConfirmationModal from "../../components/Modal/ConfirmationModal";
-import ImageForm from "./ImageForm";
 import "./Image.scss";
 import Spinner from "../../components/Spinner/Spinner";
+import { ImageModalContext } from "../../context/uiContext";
 
 export default function Image() {
   const params: { id: string } = useParams();
   const imageId = params.id;
   const history = useHistory();
+  const imageContext: any = useContext(ImageModalContext);
 
   const [isConfirmationVisible, setConfirmationVisible] = useState(false);
-  const [isEdited, setEdited] = useState(false);
   const { get, del, data, isLoading } = useHttp();
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export default function Image() {
   };
 
   const onEdit = () => {
-    setEdited(true);
+    imageContext.openImageEdit(data.image);
   };
 
   const onConfirm = async () => {
@@ -49,15 +49,9 @@ export default function Image() {
               alt={image.name}
             />
           </figure>
-          {isEdited ? (
-            <ImageForm name={image.name} />
-          ) : (
-            <>
-              <h2 className="image-page__title">{image.name}</h2>
-              <p className="image-page__description">{image.description}</p>
-              <Button onClick={onEdit}>Edit Image data</Button>
-            </>
-          )}
+          <h2 className="image-page__title">{image.name}</h2>
+          <p className="image-page__description">{image.description}</p>
+          <Button onClick={onEdit}>Edit Image data</Button>
           <Button onClick={onDelete}>Delete Image</Button>
         </>
       );

@@ -24,13 +24,20 @@ const formReducer = (state, action) => {
         isValid: isFormValid,
       };
     case "SET_FORM":
-      return { ...state, inputs: action.inputs, isValid: action.isFormValid };
+      return { ...state, inputs: action.inputs, isValid: action.isValid };
     default:
       return state;
   }
 };
 
-export function useForm<T>(initialInputs: T, initialValidity?: boolean) {
+export function useForm<T>(
+  initialInputs: T,
+  initialValidity?: boolean
+): [
+  { inputs: T; isValid: boolean },
+  (id: string, value: string, isValid: boolean, isOptional?: boolean) => void,
+  (inputData: T, formValidity: boolean) => void
+] {
   const [formState, dispatchFormChange] = useReducer(formReducer, {
     inputs: initialInputs,
     isValid: initialValidity,

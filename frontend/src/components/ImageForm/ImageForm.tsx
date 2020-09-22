@@ -1,7 +1,8 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { API_IMAGES } from "../../API/images";
+import { API_IMAGES, updateImageData } from "../../API/images";
 import { AuthContext } from "../../context/authContext";
+import { ImageModalContext } from "../../context/uiContext";
 import { useForm } from "../../hooks/useForm";
 import { useHttp } from "../../hooks/useHttp";
 import { IFormStateProperty } from "../../interfaces/IuseForm";
@@ -37,16 +38,20 @@ interface IModalFormProps {
 
 const ImageForm = ({ onSubmitSucces }: IModalFormProps) => {
   const { userData } = useContext(AuthContext);
+  const imageContext = useContext(ImageModalContext);
   const history = useHistory();
-  const [formState, inputHandler] = useForm(defaultAddImageForm, false);
+
+  const [formState, inputHandler, setForm] = useForm(
+    defaultAddImageForm,
+    false
+  );
 
   const { post } = useHttp();
+  const { isValid, inputs } = formState;
+  const { title, description, image } = inputs;
 
   const submitForm = async (ev) => {
     ev.preventDefault();
-
-    const { isValid, inputs } = formState;
-    const { title, description, image } = inputs;
 
     if (isValid) {
       const formData = new FormData();
@@ -63,23 +68,61 @@ const ImageForm = ({ onSubmitSucces }: IModalFormProps) => {
     }
   };
 
+  const updateImage = async (ev) => {
+    ev.preventDefault();
+
+    await updateImageData(imageContext.imageData.id, {
+      name: title.value,
+      description: description.value,
+    });
+
+    window.location.reload();
+  };
+
+  useEffect(() => {
+    if (imageContext.imageData) {
+      console.log(imageContext.imageData);
+      setForm(
+        {
+          title: {
+            value: imageContext.imageData.name,
+            isValid: false,
+          },
+          description: {
+            value: imageContext.imageData.description,
+            isValid: false,
+          },
+          image: {
+            value: "",
+            isValid: true,
+          },
+        },
+        true
+      );
+    }
+  }, [imageContext.imageData, setForm]);
+
   return (
-    <form onSubmit={submitForm}>
+    <form onSubmit={imageContext.imageData ? updateImage : submitForm}>
       <Input
         id="title"
         onInput={inputHandler}
         label="Image name:"
         validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(5)]}
+        value={title.value}
       />
-      <ImageUpload id="image" onChange={inputHandler} alt="image-preview" />
+      {!imageContext.imageData && (
+        <ImageUpload id="image" onChange={inputHandler} alt="image-preview" />
+      )}
       <Input
         id="description"
         onInput={inputHandler}
         label="Description :"
         validators={[VALIDATOR_REQUIRE()]}
+        value={description.value}
       />
       <Button isDisabled={!formState.isValid} confirmation>
-        Submit
+        {imageContext.imageData ? "Edit" : "Submit"}
       </Button>
     </form>
   );
