@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { useHttp } from "../../hooks/useHttp";
-import { API_IMAGES } from "../../API/images";
+import { addViewToImage, API_IMAGES } from "../../API/images";
 import Button from "../../components/Button/Button";
 import ConfirmationModal from "../../components/Modal/ConfirmationModal";
 import "./Image.scss";
@@ -35,7 +35,13 @@ export default function Image() {
     history.push("/");
   };
 
+  const onCloseModal = () => setConfirmationVisible(false);
+
   let content: JSX.Element | String = <Spinner />;
+
+  useEffect(() => {
+    addViewToImage(imageId);
+  }, []);
 
   if (!isLoading && data !== null) {
     const { image } = data;
@@ -65,6 +71,7 @@ export default function Image() {
         question="Do you realy want to delete this ?"
         isVisible={isConfirmationVisible}
         onConfirm={onConfirm}
+        onCancel={onCloseModal}
       />
     </div>
   );

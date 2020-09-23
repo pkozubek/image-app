@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Card from "../../../components/Card/Card";
 import AvatarImage from "../../../components/AvatarImage/AvatarImage";
 
-const SingleUser = ({ id, userName, avatar, numberOfViews, imagesCount }) => {
+const SingleUser = ({ id, userName, avatar, imagesCount }) => {
   return (
     <li className="single-user">
       <Card className="single-user__content">

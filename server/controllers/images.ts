@@ -101,8 +101,8 @@ export const updateImage = async (req, res, next: NextFunction) => {
     try {
       updatedImage = await Image.findById(id);
 
-      updatedImage.name = name;
-      updatedImage.description = description;
+      if (name) updatedImage.name = name;
+      if (description) updatedImage.description = description;
 
       try {
         await updatedImage.save();
@@ -117,6 +117,21 @@ export const updateImage = async (req, res, next: NextFunction) => {
   }
 
   res.status(200).json(updatedImage.toObject({ getters: true }));
+};
+
+export const addView = async (req, res, next: NextFunction) => {
+  const id = req.params.id;
+  let updatedImage: any = await Image.findById(id);
+  if (!updateImage) return next(new HttpError("Image does not exist", 400));
+
+  updatedImage.views += 1;
+  try {
+    await updatedImage.save();
+  } catch (error) {
+    return next(error);
+  }
+
+  res.status(200).json({});
 };
 
 export const deleteImage = async (req, res, next) => {

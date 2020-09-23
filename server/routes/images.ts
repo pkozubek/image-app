@@ -16,8 +16,9 @@ router.post(
   controllers.createImage
 );
 
-router.patch("/:id", [check("name").not().isEmpty()], controllers.updateImage);
+router.post("/add_view/:id", controllers.addView);
 
+router.patch("/:id", [check("name").not().isEmpty()], controllers.updateImage);
 router.delete("/:id", controllers.deleteImage);
 
 export default router;
