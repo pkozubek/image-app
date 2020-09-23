@@ -7,12 +7,14 @@ import ConfirmationModal from "../../components/Modal/ConfirmationModal";
 import "./Image.scss";
 import Spinner from "../../components/Spinner/Spinner";
 import { ImageModalContext } from "../../context/uiContext";
+import { AuthContext } from "../../context/authContext";
 
 export default function Image() {
   const params: { id: string } = useParams();
   const imageId = params.id;
   const history = useHistory();
   const imageContext: any = useContext(ImageModalContext);
+  const { userData } = useContext(AuthContext);
 
   const [isConfirmationVisible, setConfirmationVisible] = useState(false);
   const { get, del, data, isLoading } = useHttp();
@@ -45,6 +47,9 @@ export default function Image() {
 
   if (!isLoading && data !== null) {
     const { image } = data;
+    const { userID } = image;
+    const isOwner = userID === userData.id;
+
     if (image) {
       content = (
         <>
@@ -57,12 +62,18 @@ export default function Image() {
           </figure>
           <h2 className="image-page__title">{image.name}</h2>
           <p className="image-page__description">{image.description}</p>
-          <Button onClick={onEdit}>Edit Image data</Button>
-          <Button onClick={onDelete}>Delete Image</Button>
+          {isOwner && (
+            <>
+              <Button onClick={onEdit}>Edit Image data</Button>
+              <Button onClick={onDelete}>Delete Image</Button>
+            </>
+          )}
         </>
       );
     }
   }
+
+  console.log(data);
 
   return (
     <div className="image-page__container">
