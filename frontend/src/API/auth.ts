@@ -12,18 +12,9 @@ interface IFormDateInterface {
 
 export const sendLoginRequest = async (
   formData: IFormDateInterface,
-  setErrorCallback
+  setErrorCallback: (error) => void
 ): Promise<IUserDataDTO> => {
-  let response: IUserDataDTO = null;
-
-  await axios
-    .post(API_USER_LOGIN, formData)
-    .then((response) => (response = response.data))
-    .catch((error) => {
-      const errorMessage = error.response.data.message;
-      setErrorCallback(errorMessage);
-    });
-
+  const response: IUserDataDTO = await axios.post(API_USER_LOGIN, formData);
   return response;
 };
 
@@ -36,23 +27,14 @@ interface IRegisterForm {
 
 export const sendRegisterRequest = async (
   newUser: IRegisterForm,
-  setErrorCallback
+  setErrorCallback: (error) => void
 ): Promise<IUserDataDTO> => {
-  let response: IUserDataDTO = null;
-
   const formData = new FormData();
   formData.append("name", newUser.nickname);
   formData.append("password", newUser.password);
   formData.append("email", newUser.email);
   formData.append("avatar", newUser.avatar);
 
-  await axios
-    .post(API_USER_REGISTER, formData)
-    .then((response) => (response = response.data))
-    .catch((error) => {
-      const errorMessage = error.response.data.message;
-      setErrorCallback(errorMessage);
-    });
-
+  const response: IUserDataDTO = await axios.post(API_USER_REGISTER, formData);
   return response;
 };

@@ -1,12 +1,11 @@
 import express from "express";
 import { check } from "express-validator";
 import * as controllers from "../controllers/users";
+import { authMiddleware } from "../middlewares/auth";
 import { fileUpload } from "../middlewares/fileUpload";
 const router = express.Router();
 
-router.get("/", controllers.getUsersData);
-router.get("/:id", controllers.getUserData);
-
+router.post("/login", controllers.loginUser);
 router.post(
   "/register",
   fileUpload.single("avatar"),
@@ -18,7 +17,10 @@ router.post(
   controllers.registerUser
 );
 
-router.post("/login", controllers.loginUser);
+router.use(authMiddleware);
+
+router.get("/", controllers.getUsersData);
+router.get("/:id", controllers.getUserData);
 router.delete("/:id", controllers.deleteUser);
 router.patch(
   "/:id",

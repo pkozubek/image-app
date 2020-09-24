@@ -2,6 +2,8 @@ import HttpError from "../models/httpError";
 import { validationResult } from "express-validator";
 import User from "../models/user";
 import { NextFunction } from "express";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 export const getUsersData = async (req, res) => {
   const users = await User.find({}, "-password").populate("images");
@@ -31,16 +33,33 @@ export const loginUser = async (req, res, next: NextFunction) => {
 
   let existingUser;
   try {
-    existingUser = await User.findOne({ name, password });
+    existingUser = await User.findOne({ name });
   } catch (error) {
     return next(new HttpError("Something went wrong", 401));
   }
 
   if (!existingUser) {
-    return next(new HttpError("Wrong name, password combination", 401));
+    return next(new HttpError("User doesnt exist", 401));
   }
 
-  res.status(200).json({ name: existingUser.name, id: existingUser._id });
+  let isValidPassword = false;
+  try {
+    isValidPassword = await bcrypt.compare(password, existingUser.password);
+  } catch (e) {
+    return next(new HttpError("Login error", 401));
+  }
+
+  if (!isValidPassword) {
+    return next(new HttpError("Password does not exist", 401));
+  }
+
+  const token = jwt.sign(
+    { userID: existingUser._id, email: existingUser.email },
+    "secret_key",
+    { expiresIn: "1h" }
+  );
+
+  res.json({ name: existingUser.name, id: existingUser._id, token });
 };
 
 export const registerUser = async (req, res, next: NextFunction) => {
@@ -58,10 +77,11 @@ export const registerUser = async (req, res, next: NextFunction) => {
     }
     if (registeredUser) return next(new HttpError("User already exist", 400));
 
+    const hashedPassword = await bcrypt.hash(password, 12);
     newUser = new User({
       name,
       email,
-      password,
+      password: hashedPassword,
       avatar: req.file
         ? `${req.protocol}://${req.headers.host}/${req.file.path}`
         : undefined,
@@ -77,7 +97,13 @@ export const registerUser = async (req, res, next: NextFunction) => {
     return next(new HttpError("Wrong register data", 400));
   }
 
-  res.status(200).json({ name: newUser.name, id: newUser._id });
+  const token = jwt.sign(
+    { userID: newUser._id, email: newUser.email },
+    "secret_key",
+    { expiresIn: "1h" }
+  );
+
+  res.status(200).json({ name: newUser.name, id: newUser._id, token });
 };
 
 export const updateUser = async (req, res, next: NextFunction) => {

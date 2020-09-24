@@ -2,12 +2,15 @@ import express from "express";
 import { check } from "express-validator";
 import * as controllers from "../controllers/images";
 import { fileUpload } from "../middlewares/fileUpload";
+import { authMiddleware } from "../middlewares/auth";
 
 const router = express.Router();
 
 router.get("/", controllers.getAllImages);
 router.get("/user/:id", controllers.getUserImages);
 router.get("/:id", controllers.getImageById);
+
+router.use(authMiddleware);
 
 router.post(
   "/",
