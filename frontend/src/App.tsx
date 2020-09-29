@@ -14,8 +14,8 @@ import Register from "./pages/Register/Register";
 import Image from "./pages/Image/Image";
 import { AuthContext } from "./context/authContext";
 import Layout from "./Layout";
-import { IsMobileContext } from "./context/uiContext";
 import ImageAdd from "./pages/ImageAdd/ImageAdd";
+import { IUserDataWithExpirationDate } from "./interfaces/IUserDataDTO";
 
 const defaultRoutes = [
   <Route exact path="/">
@@ -27,9 +27,27 @@ const defaultRoutes = [
 ];
 
 export default (): JSX.Element => {
-  const { userData } = useContext(AuthContext);
-  const isMobile = useContext(IsMobileContext);
+  const { userData, setLogged } = useContext(AuthContext);
   const [routes, setRoutes] = useState(defaultRoutes);
+
+  useEffect(() => {
+    const storageUserData: IUserDataWithExpirationDate = JSON.parse(
+      localStorage.getItem("userData")
+    );
+
+    if (
+      !userData &&
+      storageUserData &&
+      storageUserData.token &&
+      new Date(storageUserData.expirationDate) > new Date()
+    ) {
+      const tokenTimeLeft =
+        new Date(storageUserData.expirationDate).getTime() -
+        new Date().getTime();
+
+      setLogged(storageUserData, tokenTimeLeft);
+    } else localStorage.removeItem("userData");
+  }, []);
 
   useEffect(() => {
     if (!userData) setRoutes(defaultRoutes);

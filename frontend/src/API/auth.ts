@@ -14,8 +14,8 @@ export const sendLoginRequest = async (
   formData: IFormDateInterface,
   setErrorCallback: (error) => void
 ): Promise<IUserDataDTO> => {
-  const response: IUserDataDTO = await axios.post(API_USER_LOGIN, formData);
-  return response;
+  const response = await axios.post(API_USER_LOGIN, formData);
+  return response.data;
 };
 
 interface IRegisterForm {

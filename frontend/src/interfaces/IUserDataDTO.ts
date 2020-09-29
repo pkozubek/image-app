@@ -3,3 +3,7 @@ export interface IUserDataDTO {
   name: string;
   token: string;
 }
+
+export interface IUserDataWithExpirationDate extends IUserDataDTO {
+  expirationDate?: string;
+}

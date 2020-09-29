@@ -13,13 +13,13 @@ interface INavContainerProps {
 }
 
 const NavItemContainer = ({ onClick }: INavContainerProps) => {
-  const { setLogged } = useContext(AuthContext);
+  const { setLoggedOut } = useContext(AuthContext);
   const imageContext: any = useContext(ImageModalContext);
   const isMobile = useContext(IsMobileContext);
 
   const onLogoutClick = () => {
     onClick();
-    setLogged(null);
+    setLoggedOut();
   };
 
   const onAddImageClick = () => {

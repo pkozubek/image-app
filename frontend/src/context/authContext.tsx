@@ -7,7 +7,8 @@ interface ReducerState {
 
 export interface ContextInterface {
   userData: IUserDataDTO;
-  setLogged: (userData: IUserDataDTO) => void;
+  setLogged: (userData: IUserDataDTO, expirationDate?: number) => void;
+  setLoggedOut: () => void;
 }
 
 export interface AuthProviderInterface {
@@ -19,27 +20,23 @@ interface IActionInterface {
 }
 
 export interface ReducerAction extends IActionInterface {
-  userData: {
-    id: string;
-    name: string;
-  };
+  userData?: IUserDataDTO;
 }
 
-const initialState: ReducerState = {
-  userData: {
-    id: "5e5ec63223439e067c5671fd",
-    name: "kozi0892",
-  },
-};
+const initialState: ReducerState = null;
 
 function reducer(state: ReducerState, action: ReducerAction) {
   switch (action.type) {
     case "SET_LOGGED":
       return { ...state, userData: action.userData };
+    case "SET_LOGOUT":
+      return initialState;
     default:
       return state;
   }
 }
+
+let logTimer = null;
 
 export const AuthContext = React.createContext<Partial<ContextInterface>>({});
 
@@ -48,15 +45,24 @@ export const AuthProvider: React.FC<AuthProviderInterface> = (
 ): JSX.Element => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const setLogged = (userData: IUserDataDTO) => {
+  const setLogged = (userData: IUserDataDTO, expirationDate?: number) => {
+    const defaultExpiration = 60 * 60 * 1000;
+    logTimer = setTimeout(setLoggedOut, expirationDate || defaultExpiration);
+
     dispatch({
       type: "SET_LOGGED",
       userData,
     });
   };
 
+  const setLoggedOut = () => {
+    clearTimeout(logTimer);
+    localStorage.removeItem("userData");
+    dispatch({ type: "SET_LOGOUT" });
+  };
+
   return (
-    <AuthContext.Provider value={{ ...state, setLogged }}>
+    <AuthContext.Provider value={{ ...state, setLogged, setLoggedOut }}>
       {props.children}
     </AuthContext.Provider>
   );

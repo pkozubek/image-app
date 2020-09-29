@@ -10,6 +10,7 @@ import ErrorModal from "../../components/Modal/ErrorModal";
 import AuthenticateLayout from "../../components/AuthenticateLayout/AuthenticateLayout";
 import { IFormStateProperty } from "../../interfaces/IuseForm";
 import { sendLoginRequest } from "../../API/auth";
+import { IUserDataWithExpirationDate } from "../../interfaces/IUserDataDTO";
 
 interface ILoginFormState {
   nickname: IFormStateProperty;
@@ -34,7 +35,7 @@ export default (): JSX.Element => {
   );
 
   const [error, setError] = useState(null);
-  const { setLogged } = useContext(AuthContext);
+  const { setLogged, setLoggedOut } = useContext(AuthContext);
 
   const onSendForm = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -49,7 +50,18 @@ export default (): JSX.Element => {
       setError
     );
 
-    if (loginResponse) setLogged(loginResponse);
+    if (loginResponse) {
+      const tokenTime = 1000 * 60 * 60;
+      const expirationDate = new Date(new Date().getTime() + tokenTime);
+
+      const userDataObject: IUserDataWithExpirationDate = {
+        ...loginResponse,
+        expirationDate: expirationDate.toISOString(),
+      };
+
+      localStorage.setItem("userData", JSON.stringify(userDataObject));
+      setLogged(loginResponse);
+    }
   };
 
   const onRegisterRedirect = (

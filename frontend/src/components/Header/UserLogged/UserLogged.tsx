@@ -5,11 +5,11 @@ import { AuthContext } from "../../../context/authContext";
 import "./UserLogged.scss";
 
 export default function UserLogged() {
-  const { setLogged, userData } = useContext(AuthContext);
+  const { setLoggedOut, userData } = useContext(AuthContext);
   const history = useHistory();
 
   const onClick = () => {
-    setLogged(null);
+    setLoggedOut();
     history.push("/");
   };
 
