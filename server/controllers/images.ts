@@ -100,6 +100,8 @@ export const updateImage = async (req, res, next: NextFunction) => {
   if (errors.isEmpty()) {
     try {
       updatedImage = await Image.findById(id);
+      if (req.userData.userID && req.userData.userID !== updatedImage.userID)
+        return next(new HttpError("Can not update not your image", 400));
 
       if (name) updatedImage.name = name;
       if (description) updatedImage.description = description;
@@ -140,11 +142,15 @@ export const deleteImage = async (req, res, next) => {
   let deletedImage;
   try {
     deletedImage = await Image.findById(id).populate("userID");
+
+    if (req.userData.userID != deletedImage.userID._id)
+      return next(new HttpError("Can not delete your image", 400));
   } catch (error) {
     return next(error);
   }
 
   if (!deletedImage) return next(new HttpError("Image does not exist", 500));
+
   try {
     const session = await mongoose.startSession();
     session.startTransaction();
@@ -153,6 +159,7 @@ export const deleteImage = async (req, res, next) => {
     await deletedImage.remove({ session: session });
     await session.commitTransaction();
   } catch (error) {
+    console.log(error);
     return next(error);
   }
 

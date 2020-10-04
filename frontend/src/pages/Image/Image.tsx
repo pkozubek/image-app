@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { useHttp } from "../../hooks/useHttp";
-import { addViewToImage, API_IMAGES } from "../../API/images";
+import { addViewToImage, API_IMAGES, deleteImage } from "../../API/images";
 import Button from "../../components/Button/Button";
 import ConfirmationModal from "../../components/Modal/ConfirmationModal";
 import "./Image.scss";
@@ -17,7 +17,7 @@ export default function Image() {
   const { userData } = useContext(AuthContext);
 
   const [isConfirmationVisible, setConfirmationVisible] = useState(false);
-  const { get, del, data, isLoading } = useHttp();
+  const { get, data, isLoading } = useHttp();
 
   useEffect(() => {
     get(`${API_IMAGES}/${imageId}`);
@@ -33,7 +33,7 @@ export default function Image() {
   };
 
   const onConfirm = async () => {
-    await del(`${API_IMAGES}/${imageId}`);
+    await deleteImage(imageId, userData.token);
     history.push("/");
   };
 
@@ -43,7 +43,7 @@ export default function Image() {
 
   useEffect(() => {
     addViewToImage(imageId);
-  }, []);
+  }, [imageId]);
 
   if (!isLoading && data !== null) {
     const { image } = data;
@@ -72,8 +72,6 @@ export default function Image() {
       );
     }
   }
-
-  console.log(data);
 
   return (
     <div className="image-page__container">

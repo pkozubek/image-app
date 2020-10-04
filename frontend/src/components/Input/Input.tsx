@@ -66,7 +66,7 @@ const Input = ({
       value: value,
       validators: validators,
     });
-  }, [value]);
+  }, [value, validators]);
 
   const handleTouching = () => {
     dispatchChange({ type: "TOUCH" });

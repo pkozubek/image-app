@@ -18,10 +18,10 @@ import ImageAdd from "./pages/ImageAdd/ImageAdd";
 import { IUserDataWithExpirationDate } from "./interfaces/IUserDataDTO";
 
 const defaultRoutes = [
-  <Route exact path="/">
+  <Route key="base" exact path="/">
     <Login />
   </Route>,
-  <Route path="/register">
+  <Route key="register" path="/register">
     <Register />
   </Route>,
 ];
@@ -46,26 +46,26 @@ export default (): JSX.Element => {
         new Date().getTime();
 
       setLogged(storageUserData, tokenTimeLeft);
-    } else localStorage.removeItem("userData");
-  }, []);
+    }
+  }, [userData, setLogged]);
 
   useEffect(() => {
     if (!userData) setRoutes(defaultRoutes);
     else {
       const routes = [
-        <Route path="/" exact>
+        <Route key="base" path="/" exact>
           <Images />
         </Route>,
-        <Route path="/users" exact>
+        <Route key="users" path="/users" exact>
           <UsersPage />
         </Route>,
-        <Route path="/users/:id" exact>
+        <Route key="userid" path="/users/:id" exact>
           <UserPage />
         </Route>,
-        <Route path="/image/:id" exact>
+        <Route key="imageid" path="/image/:id" exact>
           <Image />
         </Route>,
-        <Route path="/imageadd" exact>
+        <Route key="imageadd" path="/imageadd" exact>
           <ImageAdd />
         </Route>,
       ];

@@ -57,7 +57,6 @@ export const AuthProvider: React.FC<AuthProviderInterface> = (
 
   const setLoggedOut = () => {
     clearTimeout(logTimer);
-    localStorage.removeItem("userData");
     dispatch({ type: "SET_LOGOUT" });
   };
 

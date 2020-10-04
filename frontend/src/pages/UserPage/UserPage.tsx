@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 
 import "./UserPage.scss";
@@ -8,18 +8,30 @@ import ImagesContainer from "../../components/ImagesContainer/ImagesContainer";
 import { useHttp } from "../../hooks/useHttp";
 import { API_IMAGES } from "../../API/images";
 import Spinner from "../../components/Spinner/Spinner";
+import { getUserData } from "../../API/users";
+import { AuthContext } from "../../context/authContext";
+
+const defaultAvatar =
+  "https://images.pexels.com/photos/839011/pexels-photo-839011.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260";
 
 const UserPage = () => {
   const params: { id: string } = useParams();
   const userId = params.id;
   const history = useHistory();
+  const { userData } = useContext(AuthContext);
+  const [user, setUser] = useState<any>("");
 
   const { get, data, isLoading } = useHttp();
 
+  const asyncEffect = useCallback(async () => {
+    const gatheredUser = await getUserData(userId, userData.token);
+    if (gatheredUser) setUser(gatheredUser);
+  }, [userId, userData.token]);
+
   useEffect(() => {
     get(API_IMAGES + `/user/${userId}`);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    asyncEffect();
+  }, [asyncEffect]);
 
   const onImageClick = (id) => {
     history.push(`/image/${id}`);
@@ -41,11 +53,7 @@ const UserPage = () => {
 
   return (
     <div>
-      <UserInfo
-        nickname="test"
-        description="some description"
-        src="https://images.pexels.com/photos/839011/pexels-photo-839011.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-      />
+      <UserInfo nickname={user.name} src={user.avatar || defaultAvatar} />
       <div className="user-images">
         <h2 className="user-images__title">Images: </h2>
         <ImagesContainer className="user-images__container">

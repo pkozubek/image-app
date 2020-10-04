@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
-export const useHttp = () => {
+export const useHttp = (token?: string) => {
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
@@ -24,7 +24,15 @@ export const useHttp = () => {
 
   const post = async (url: string, data: object | FormData) => {
     setLoading(true);
-    await axios.post(url, data).then(handleSuccess).catch(handleError);
+    await axios
+      .post(url, {
+        ...data,
+        headers: {
+          authorization: token,
+        },
+      })
+      .then(handleSuccess)
+      .catch(handleError);
   };
 
   const patch = async (url: string, data) => {

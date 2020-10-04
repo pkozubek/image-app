@@ -4,7 +4,7 @@ import Card from "../../../components/Card/Card";
 import AvatarImage from "../../../components/AvatarImage/AvatarImage";
 import "./UserInfo.scss";
 
-const UserInfo = ({ nickname, description, src }) => {
+const UserInfo = ({ nickname, src }) => {
   return (
     <Card className="user-info">
       <AvatarImage
@@ -13,7 +13,6 @@ const UserInfo = ({ nickname, description, src }) => {
         className="user-info__avatar"
       />
       <h2 className="user-info__nickname">{nickname}</h2>
-      <p className="user-info__description">{description}</p>
     </Card>
   );
 };

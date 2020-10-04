@@ -23,6 +23,7 @@ const Layout = ({ children }) => {
 
   useEffect(() => {
     setIsMobile(MOBILE_WIDTH > refObject.current.getBoundingClientRect().width);
+    //eslint-disable-next-line
   }, [refObject.current]);
 
   return (

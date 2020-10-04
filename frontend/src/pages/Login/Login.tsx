@@ -35,7 +35,7 @@ export default (): JSX.Element => {
   );
 
   const [error, setError] = useState(null);
-  const { setLogged, setLoggedOut } = useContext(AuthContext);
+  const { setLogged } = useContext(AuthContext);
 
   const onSendForm = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>

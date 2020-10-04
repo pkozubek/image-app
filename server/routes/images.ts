@@ -9,6 +9,7 @@ const router = express.Router();
 router.get("/", controllers.getAllImages);
 router.get("/user/:id", controllers.getUserImages);
 router.get("/:id", controllers.getImageById);
+router.post("/add_view/:id", controllers.addView);
 
 router.use(authMiddleware);
 
@@ -18,8 +19,6 @@ router.post(
   [check("name").not().isEmpty(), check("author").not().isEmpty()],
   controllers.createImage
 );
-
-router.post("/add_view/:id", controllers.addView);
 
 router.patch("/:id", [check("name").not().isEmpty()], controllers.updateImage);
 router.delete("/:id", controllers.deleteImage);

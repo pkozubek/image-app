@@ -1,10 +1,9 @@
 import React, { useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { API_IMAGES, updateImageData } from "../../API/images";
+import { addImage, updateImageData } from "../../API/images";
 import { AuthContext } from "../../context/authContext";
 import { ImageModalContext } from "../../context/uiContext";
 import { useForm } from "../../hooks/useForm";
-import { useHttp } from "../../hooks/useHttp";
 import { IFormStateProperty } from "../../interfaces/IuseForm";
 import { VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from "../../utils/validators";
 import Button from "../Button/Button";
@@ -46,7 +45,6 @@ const ImageForm = ({ onSubmitSucces }: IModalFormProps) => {
     false
   );
 
-  const { post } = useHttp();
   const { isValid, inputs } = formState;
   const { title, description, image } = inputs;
 
@@ -54,13 +52,15 @@ const ImageForm = ({ onSubmitSucces }: IModalFormProps) => {
     ev.preventDefault();
 
     if (isValid) {
-      const formData = new FormData();
-      formData.append("name", title.value);
-      formData.append("description", description.value);
-      formData.append("author", userData.id);
-      formData.append("image", image.value);
-
-      await post(API_IMAGES, formData);
+      await addImage(
+        {
+          name: title.value,
+          description: description.value,
+          autorId: userData.id,
+          image: image.value,
+        },
+        userData.token
+      );
       if (onSubmitSucces) onSubmitSucces();
 
       if (history.location.pathname === "/") window.location.reload();
@@ -71,17 +71,20 @@ const ImageForm = ({ onSubmitSucces }: IModalFormProps) => {
   const updateImage = async (ev) => {
     ev.preventDefault();
 
-    await updateImageData(imageContext.imageData.id, {
-      name: title.value,
-      description: description.value,
-    });
+    await updateImageData(
+      imageContext.imageData.id,
+      {
+        name: title.value,
+        description: description.value,
+      },
+      userData.token
+    );
 
     window.location.reload();
   };
 
   useEffect(() => {
     if (imageContext.imageData) {
-      console.log(imageContext.imageData);
       setForm(
         {
           title: {
