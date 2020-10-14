@@ -125,8 +125,8 @@ export const addView = async (req, res, next: NextFunction) => {
   const id = req.params.id;
   let updatedImage: any = await Image.findById(id);
   if (!updateImage) return next(new HttpError("Image does not exist", 400));
-
   updatedImage.views += 1;
+
   try {
     await updatedImage.save();
   } catch (error) {

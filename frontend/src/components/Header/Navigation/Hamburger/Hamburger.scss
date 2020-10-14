@@ -1,10 +1,10 @@
 .hamburger {
   color: white;
-  margin-right: 3em;
+  margin-right: 1em;
 
   &__icon {
-    width: 300%;
-    height: 300%;
+    width: 3em;
+    height: 3em;
   }
 
   @media (min-width: 768px) {

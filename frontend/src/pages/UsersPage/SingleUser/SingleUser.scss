@@ -1,7 +1,11 @@
 .single-user {
   margin: 1rem;
-  width: calc(30% - 2rem);
   min-width: 15rem;
+  width: calc(100% - 2em);
+
+  @media (min-width: 768px) {
+    width: calc(30% - 2rem);
+  }
 
   &__container {
     display: flex;

@@ -1,6 +1,11 @@
 .Single-image {
-  margin: 5px;
-  width: calc(25% - 10px);
+  margin: 1em auto;
+  width: calc(100% - 1em);
+
+  @media (min-width: 768px) {
+    margin: 1em;
+    width: calc(25% - 10px);
+  }
 
   &__image {
     width: 100%;

@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import { BsCardImage } from "react-icons/bs";
 
 import "./UserPage.scss";
 
@@ -10,9 +11,7 @@ import { API_IMAGES } from "../../API/images";
 import Spinner from "../../components/Spinner/Spinner";
 import { getUserData } from "../../API/users";
 import { AuthContext } from "../../context/authContext";
-
-const defaultAvatar =
-  "https://images.pexels.com/photos/839011/pexels-photo-839011.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260";
+import { defaultAvatar } from "../../utils/defaults";
 
 const UserPage = () => {
   const params: { id: string } = useParams();
@@ -37,29 +36,38 @@ const UserPage = () => {
     history.push(`/image/${id}`);
   };
 
-  let gatheredImages = <Spinner />;
+  let renderedImages = isLoading && <Spinner />;
 
-  if (!isLoading && data !== null) {
+  const images = data ? data.images : [];
+  if (!isLoading && images.length > 0) {
     const { images } = data;
-    gatheredImages = images.map((singleImg) => (
-      <img
-        key={images.name}
-        src={singleImg.url}
-        alt={singleImg.name}
-        onClick={() => onImageClick(singleImg.id)}
-      />
-    ));
+    renderedImages = (
+      <>
+        <h2 className="user-images__title">Images: </h2>
+        <ImagesContainer className="user-images__container">
+          {images.map((singleImg, index) => (
+            <img
+              key={images.name + index.toString()}
+              src={singleImg.url}
+              alt={singleImg.name}
+              onClick={() => onImageClick(singleImg.id)}
+            />
+          ))}
+        </ImagesContainer>
+      </>
+    );
+  } else if (!isLoading && images.length === 0) {
+    renderedImages = (
+      <div className="user-images__placeholder">
+        <BsCardImage /> <span>Users did not upload any image</span>
+      </div>
+    );
   }
 
   return (
     <div>
       <UserInfo nickname={user.name} src={user.avatar || defaultAvatar} />
-      <div className="user-images">
-        <h2 className="user-images__title">Images: </h2>
-        <ImagesContainer className="user-images__container">
-          {gatheredImages}
-        </ImagesContainer>
-      </div>
+      <div className="user-images">{renderedImages}</div>
     </div>
   );
 };

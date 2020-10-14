@@ -1,8 +1,12 @@
 .user-info {
-  width: 50%;
+  width: 90%;
   margin: 1em auto 0;
   padding: 25px;
   text-align: center;
+
+  @media (min-width: 768px) {
+    width: 50%;
+  }
 
   &__avatar {
     width: 6rem;

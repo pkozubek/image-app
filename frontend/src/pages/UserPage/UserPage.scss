@@ -1,6 +1,28 @@
 .user-images {
-  width: 50%;
+  width: calc(90%);
   margin: 5px auto;
+
+  @media (min-width: 768px) {
+    width: 50%;
+  }
+
+  &__placeholder {
+    margin-top: 1em;
+    text-align: center;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      width: 3em;
+      height: 3em;
+    }
+
+    span {
+      margin-left: 1em;
+    }
+  }
 
   &__container {
     margin-bottom: 50px;

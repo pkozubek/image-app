@@ -10,7 +10,7 @@ interface ISingleImageProps {
 
 export default function SingleImage({ imageData }: ISingleImageProps) {
   const history = useHistory();
-  const { _id, url, name, userID, views, likes } = imageData;
+  const { _id, url, name, userID, views } = imageData;
   const { name: author } = userID;
 
   const onClick = useCallback(() => {
@@ -21,7 +21,7 @@ export default function SingleImage({ imageData }: ISingleImageProps) {
     <div className="Single-image" onClick={onClick}>
       <img className="Single-image__image" src={`${url}`} alt={name} />
       <div className="Single-image__info">
-        <IoIosEye /> {views} <IoMdHeart /> {likes}{" "}
+        <IoIosEye /> {views}
         <span className="Single-image__info__author">author: {author}</span>
       </div>
     </div>
