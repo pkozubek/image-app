@@ -30,7 +30,8 @@ const UserPage = () => {
   useEffect(() => {
     get(API_IMAGES + `/user/${userId}`);
     asyncEffect();
-  }, [asyncEffect]);
+    //eslint-disable-next-line
+  }, [asyncEffect, userId]);
 
   const onImageClick = (id) => {
     history.push(`/image/${id}`);

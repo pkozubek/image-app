@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { useHistory } from "react-router-dom";
-import { IoIosEye, IoMdHeart } from "react-icons/io";
+import { IoIosEye } from "react-icons/io";
 
 import "./SingleImage.scss";
 
